@@ -32,7 +32,7 @@ Game::~Game()
 
 void Game::createMap()
 {
-	for (int x = 0; x <= 800; x += 64) {
+	for (int x = 0; x <= 1280; x += 64) {
 		this->phase1.setPlatform(sf::Vector2f((float)x, 512.f), "images/grass.png", "GRASS", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
 		this->phase1.setPlatform(sf::Vector2f((float)x, 512.f), "images/ground1.png", "GROUND_1", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
 
@@ -43,12 +43,12 @@ void Game::createMap()
 
 void Game::initPlayers()
 {
-	this->player1 = new Player(&this->graphicsManager, sf::Vector2f(500.f, 0.f), "images/player.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), &this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
+	this->player1 = new Player(&this->graphicsManager, sf::Vector2f(100.f, 0.f), "images/player.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), &this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
 }
 
 void Game::initEnemies()
 {
-	this->enemy1 = new Enemy(&this->graphicsManager, sf::Vector2f(200.f, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED);
+	this->enemy1 = new Enemy(&this->graphicsManager, sf::Vector2f(700.f, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED);
 	this->enemy1->setPlayer(this->player1);
 }
 

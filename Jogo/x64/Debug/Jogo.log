@@ -1,2 +1,6 @@
-﻿  Game.cpp
-  Jogo.vcxproj -> D:\Users\eduar\Desktop\Jogo-eduardo3 - Copia\x64\Debug\Jogo.exe
+﻿  ArrowAttack.cpp
+  EnemyProjectile.cpp
+  Game.cpp
+  main.cpp
+  Gerando Código...
+  Jogo.vcxproj -> E:\Visual Studio\Projetos\atual\x64\Debug\Jogo.exe

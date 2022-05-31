@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Phase.h"
 #include "Enemy.h"
+#include "EnemyProjectile.h"
 
 class Game
 {

@@ -2,7 +2,7 @@
 
 GraphicsManager::GraphicsManager()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(800, 640), "Game TecProg");
+	this->window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Game TecProg");
 }
 
 GraphicsManager::~GraphicsManager()

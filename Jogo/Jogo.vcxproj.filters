@@ -13,87 +13,117 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ENTITIES">
+      <UniqueIdentifier>{7166865c-4567-436d-a9d4-5d924235ac07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENTITIES\CHARACTERS">
+      <UniqueIdentifier>{997c9bde-f9f4-4f53-a2a2-54f6bb4ebab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LISTS">
+      <UniqueIdentifier>{2723fa28-d972-44ec-b027-352b83ae73b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MANAGERS">
+      <UniqueIdentifier>{e0edf7ea-c91b-401c-9981-55f56218dc1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PRINCIPAL">
+      <UniqueIdentifier>{003063d1-b25f-4603-bb71-e2632ae0bb37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PHASE">
+      <UniqueIdentifier>{c5bb84cc-bb90-42b4-a7c0-0fc02d394618}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="PlatformList.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsManager.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>PRINCIPAL</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Phase.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>PRINCIPAL</Filter>
     </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>MANAGERS</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>MANAGERS</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsManager.cpp">
+      <Filter>MANAGERS</Filter>
     </ClCompile>
     <ClCompile Include="SwordAttack.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>MANAGERS</Filter>
+    </ClCompile>
+    <ClCompile Include="PlatformList.cpp">
+      <Filter>LISTS</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>ENTITIES\CHARACTERS</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>ENTITIES</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>ENTITIES</Filter>
+    </ClCompile>
+    <ClCompile Include="Phase.cpp">
+      <Filter>PHASE</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyProjectile.cpp">
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrowAttack.cpp">
+      <Filter>MANAGERS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="PlatformList.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Phase.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="SwordAttack.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>PRINCIPAL</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>MANAGERS</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>MANAGERS</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsManager.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>MANAGERS</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordAttack.h">
+      <Filter>MANAGERS</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>LISTS</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformList.h">
+      <Filter>LISTS</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>ENTITIES\CHARACTERS</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>ENTITIES</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>ENTITIES</Filter>
+    </ClInclude>
+    <ClInclude Include="Phase.h">
+      <Filter>PHASE</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyProjectile.h">
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrowAttack.h">
+      <Filter>MANAGERS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
