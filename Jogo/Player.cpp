@@ -9,15 +9,17 @@ const float ATTACKING_ANIMATION_SWITCH_TIME = 0.1f;
 const float JUMP_HEIGHT = 450.f;
 const float GRAVITY = 981.f;
 const float JUMP_SPEED = -sqrtf(2.f * GRAVITY * JUMP_HEIGHT);
-const sf::Vector2f AUX_VECTOR_1 = sf::Vector2f(81.f, 71.f);
-const sf::Vector2f AUX_VECTOR_2 = sf::Vector2f(81.f, -71.f);
+const sf::Vector2f AUX_VECTOR = sf::Vector2f(55.f, 51.f);
+
+const float WIDTH_AUX = 2.f;
+const float HEIGHT_AUX = 2.6f;
 
 Player::Player(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
 	float* dt, float spriteScale, float speed) :
 	Character(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale)
 {
 	this->speed = speed;
-	this->attackingTexture = this->graphicsManager->loadTextures("images/player_attacking.png", "PLAYER_ATTACKING");
+	this->attackingTexture = this->graphicsManager->loadTextures("images/player_attackingTeste.png", "PLAYER_ATTACKING");
 	this->initAnimations();
 	this->initVariables();
 }
@@ -119,15 +121,15 @@ void Player::updatePositions()
 
 	if (!this->attacking) {
 		if (this->facingRight)
-			this->sprite.setPosition(this->position - this->body.getSize() / 2.f);
+			this->sprite.setPosition(sf::Vector2f(this->position.x + this->body.getSize().x * (WIDTH_AUX / this->spriteScale), this->position.y + this->body.getSize().y * (HEIGHT_AUX / this->spriteScale)));
 		else
-			this->sprite.setPosition(sf::Vector2f(this->position.x + this->body.getSize().x / 2.f, this->position.y - this->body.getSize().y / 2.f));
+			this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x * (WIDTH_AUX / this->spriteScale), this->position.y + this->body.getSize().y * (HEIGHT_AUX / this->spriteScale)));
 	}
 	else {
 		if (this->facingRight)
-			this->sprite.setPosition((this->position - this->body.getSize() / 2.f) - AUX_VECTOR_1);
+			this->sprite.setPosition((this->position + this->body.getSize() - AUX_VECTOR));
 		else
-			this->sprite.setPosition(sf::Vector2f(this->position.x + this->body.getSize().x / 2.f, this->position.y - this->body.getSize().y / 2.f) + AUX_VECTOR_2);
+			this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x + AUX_VECTOR.x, this->position.y + this->body.getSize().y - AUX_VECTOR.y));
 	}
 }
 

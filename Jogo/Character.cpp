@@ -7,9 +7,10 @@ Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, st
 	Entity(graphicsManager, position, pathToTexture, textureName, bodySize)
 {
 	this->dt = dt;
+	this->spriteScale = spriteScale;
 
-	this->sprite.setPosition(this->position - this->body.getSize() / 2.f);
-	this->sprite.setScale(sf::Vector2f(spriteScale, spriteScale));
+	this->sprite.setPosition(this->position + this->body.getSize());
+	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
 	this->sprite.setOrigin(this->body.getSize() / 2.f);
 
 	this->velocity = sf::Vector2f(0.f, 0.f);
@@ -20,6 +21,7 @@ Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, st
 Character::Character() :
 	Entity()
 {
+	this->spriteScale = 1.f;
 	this->dt = nullptr;
 	this->facingRight = true;
 	this->gravity = GRAVITY;
@@ -32,9 +34,9 @@ Character::~Character()
 void Character::flip()
 {
 	if (this->facingRight)
-		this->sprite.setScale(-this->sprite.getScale().x, this->sprite.getScale().y);
+		this->sprite.setScale(-this->spriteScale, this->spriteScale);
 	else
-		this->sprite.setScale(-this->sprite.getScale().x, this->sprite.getScale().y);
+		this->sprite.setScale(this->spriteScale, this->spriteScale);
 
 	this->facingRight = !this->facingRight;
 }

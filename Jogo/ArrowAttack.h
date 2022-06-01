@@ -1,6 +1,7 @@
 #pragma once
 
-#include "EnemyProjectile.h"
+#include "Collider.h"
+class EnemyProjectile;
 
 class ArrowAttack
 {
@@ -14,7 +15,7 @@ private:
 	Collider collider;
 
 public:
-	ArrowAttack(sf::Vector2f position = sf::Vector2f(0.f, 0.f), Player* player = nullptr);
+	ArrowAttack(sf::Vector2f position = sf::Vector2f(0.f, 0.f), EnemyProjectile* enemy = nullptr);
 	~ArrowAttack();
 
 	Collider* getCollider() { return &this->collider; }
@@ -24,5 +25,6 @@ public:
 	void update();
 	void updatePosition();
 	void updateFlip();
+	void updateMovement();
 };
 

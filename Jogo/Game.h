@@ -13,6 +13,7 @@ private:
 
 	Player* player1;
 	Enemy* enemy1;
+	EnemyProjectile* enemy2;
 
 	Phase phase1;
 

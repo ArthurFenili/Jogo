@@ -1,8 +1,8 @@
 #include "Game.h"
 
-const float PLAYER_WIDTH = 26.f * 3.f;
-const float PLAYER_HEIGHT = 35.f * 3.f;
-const float PLAYER_SPRITE_SCALE = 0.115f;
+const float PLAYER_WIDTH = 32.f * 2.f;
+const float PLAYER_HEIGHT = 35.f * 2.6f;
+const float PLAYER_SPRITE_SCALE = 3.f;
 const float PLAYER_SPEED = 200.f;
 const float PLATFORM_WIDTH = 64.f;
 const float PLATFORM_HEIGHT = 64.f;
@@ -27,6 +27,7 @@ Game::Game()
 Game::~Game()
 {
 	delete this->enemy1;
+	delete this->enemy2;
 	delete this->player1;
 }
 
@@ -38,18 +39,21 @@ void Game::createMap()
 
 		this->phase1.setPlatform(sf::Vector2f((float)x, 576.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
 		this->phase1.setPlatform(sf::Vector2f((float)x, 640.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-	}		
+	}
 }
 
 void Game::initPlayers()
 {
-	this->player1 = new Player(&this->graphicsManager, sf::Vector2f(100.f, 0.f), "images/player.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), &this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
+	this->player1 = new Player(&this->graphicsManager, sf::Vector2f(200.f, 0.f), "images/playerTeste.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), &this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
 }
 
 void Game::initEnemies()
 {
-	this->enemy1 = new Enemy(&this->graphicsManager, sf::Vector2f(700.f, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED);
+	this->enemy1 = new Enemy(&this->graphicsManager, sf::Vector2f(550.f, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED);
 	this->enemy1->setPlayer(this->player1);
+
+	this->enemy2 = new EnemyProjectile(&this->graphicsManager, sf::Vector2f(750.f, 0.f), "images/archer.png", "ARCHER", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED);
+	this->enemy2->setPlayer(this->player1);
 }
 
 // Verifica constantemente várias ações que são necessárias para o bom funcionamento da aplicação
@@ -58,6 +62,7 @@ void Game::update()
 	this->updateSFMLEvents();
 	this->player1->update();
 	this->enemy1->move();
+	this->enemy2->update();
 	this->updateCollision();
 }
 
@@ -84,8 +89,10 @@ void Game::updateCollision()
 {
 	sf::Vector2f directionPlayerTmp;  // Vetor de direções
 	sf::Vector2f directionEnemyTmp;
+	sf::Vector2f directionEnemy2Tmp;
 	Collider* colliderPlayerTmp = this->player1->getCollider();  // Objeto Collider do player
 	Collider* colliderEnemyTmp = this->enemy1->getCollider();
+	Collider* colliderEnemy2Tmp = this->enemy2->getCollider();
 
 	for (int i = 0; i < this->phase1.getPlatformList()->getSize(); i++) {
 		/* Se verdadeiro, o player colidiu com algum bloco */
@@ -93,8 +100,10 @@ void Game::updateCollision()
 			this->player1->updateCollision(directionPlayerTmp);
 		if (this->phase1.getPlatformList()->operator[](i)->getCollider()->isColliding(colliderEnemyTmp, &directionEnemyTmp))
 			this->enemy1->updateCollision(directionEnemyTmp);
+		if (this->phase1.getPlatformList()->operator[](i)->getCollider()->isColliding(colliderEnemy2Tmp, &directionEnemy2Tmp))
+			this->enemy2->updateCollision(directionEnemy2Tmp);
 	}
-		
+
 }
 
 // Desenha todos os objetos do jogo na janela
@@ -105,14 +114,17 @@ void Game::render()
 	// Desenha os blocos do mapa
 	for (int i = 0; i < this->phase1.getPlatformList()->getSize(); i++)
 		this->phase1.renderShape(i);
-	
+
 	// Desenha o player
 	this->player1->renderSprite();
-	this->player1->renderSwordHitBox_TMP();
+	//this->player1->renderSwordHitBox_TMP();
 
-	
 	this->graphicsManager.renderShape(this->enemy1->getShape());
-	this->enemy1->renderSprite();
+	this->enemy2->renderSprite();
+
+	this->graphicsManager.renderShape(this->enemy2->getShape());
+	this->enemy2->renderSprite();
+	this->enemy2->renderArrowHitbox_TMP();
 
 	this->graphicsManager.displayWindow();  // Imprime todos os objetos que foram renderizados na janela
 }

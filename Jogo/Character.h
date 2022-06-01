@@ -14,6 +14,8 @@ protected:
 	bool facingRight;
 	float gravity;
 
+	float spriteScale;
+
 public:
 	Character(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
 		float* dt, float spriteScale);
@@ -26,4 +28,3 @@ public:
 
 	bool getFacingRight() { return this->facingRight; }
 };
-
