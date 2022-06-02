@@ -13,11 +13,6 @@ private:
 	GraphicsManager graphicsManager;
 
 	Player* player1;
-	Enemy* enemy1;
-	EnemyProjectile* enemy2;
-
-	EntitiesList skeletonList;
-	EntitiesList archerList;
 
 	Phase phase1;
 
@@ -34,7 +29,6 @@ public:
 	void initEnemies();
 
 	void update();
-	void updateEnemies();
 	void updateSFMLEvents();
 	void updateDeltaTime();
 	void updateCollision();

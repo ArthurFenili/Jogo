@@ -7,7 +7,7 @@ class Enemy : public Character
 {
 private:
 	Player* player1;
-	float speed;
+	AnimationManager* animation;
 
 public:
 	Enemy(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
@@ -16,8 +16,9 @@ public:
 	~Enemy();
 
 	void setPlayer(Player* player) { this->player1 = player; }
-	
-	void move();
+
 	void update();
-	void updateCollision(sf::Vector2f direction);
+	void updateMovement();
+	void updatePositions();
+	void updateAnimation();
 };

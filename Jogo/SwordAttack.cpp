@@ -1,7 +1,7 @@
 #include "SwordAttack.h"
 #include "Player.h"
 
-const float HITBOX_WIDTH = 80.f;
+const float HITBOX_WIDTH = 85.f;
 const float HITBOX_HEIGHT = 80.f;
 
 SwordAttack::SwordAttack(sf::Vector2f position, Player* player)
@@ -15,9 +15,10 @@ SwordAttack::SwordAttack(sf::Vector2f position, Player* player)
 	this->hitbox.setSize(sf::Vector2f(HITBOX_WIDTH, HITBOX_HEIGHT));
 	this->hitbox.setOrigin(this->hitbox.getSize() / 2.f);
 
+	this->hitbox.setFillColor(sf::Color(0, 0, 0, 0));
 	this->hitbox.setOutlineColor(sf::Color::Green);
 	this->hitbox.setOutlineThickness(1.f);
-	
+
 	this->collider.setBody(&this->hitbox);
 }
 
@@ -33,7 +34,7 @@ void SwordAttack::update()
 
 void SwordAttack::updatePosition()
 {
-	this->hitbox.setPosition(sf::Vector2f(this->playerBody->getPosition().x + (this->playerBody->getSize().x / 2.f), this->playerBody->getPosition().y));
+	this->hitbox.setPosition(sf::Vector2f(this->playerBody->getPosition().x + (this->playerBody->getSize().x / 1.5f), this->playerBody->getPosition().y));
 }
 
 void SwordAttack::updateFlip()

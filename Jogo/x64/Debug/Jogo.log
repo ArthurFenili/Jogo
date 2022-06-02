@@ -1,2 +1,3 @@
-﻿  ArrowAttack.cpp
+﻿  Game.cpp
+E:\Visual Studio\Projetos\Jogo\Jogo\Game.cpp(66,17): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
   Jogo.vcxproj -> E:\Visual Studio\Projetos\Jogo\x64\Debug\Jogo.exe

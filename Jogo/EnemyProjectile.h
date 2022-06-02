@@ -10,7 +10,7 @@ class EnemyProjectile :
 {
 private:
     Player* player1;
-    float speed;
+    AnimationManager* animation;
 
     bool attacking;
 
@@ -31,10 +31,9 @@ public:
     bool getAttacking() { return this->attacking; }
     
     void update();
-    void updateMovementInput();
+    void updateMovement();
     void updatePosition();
-    void updateSprite();
-    void updateCollision(sf::Vector2f direction);
+    void updateAnimation();
 
     void renderArrowHitbox_TMP();
 };
