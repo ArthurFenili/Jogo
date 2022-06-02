@@ -31,7 +31,7 @@ public:
 
 	void renderSprite() { this->graphicsManager->renderSprite(&this->sprite); }
 
-	void loseHp() { (this->hp)--; }
+	void loseHp(int hp) { (this->hp) -= hp; }
 	bool isDead();
 
 	bool getFacingRight() { return this->facingRight; }

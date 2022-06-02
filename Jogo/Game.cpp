@@ -16,8 +16,8 @@ const float SKELETON_HEIGHT = 35.f * 2.6f;
 const float SKELETON_SPRITE_SCALE = 3.f;
 const float SKELETON_SPEED = 30.f;
 
-const float ARCHER_WIDTH = 64.f * 2.f;
-const float ARCHER_HEIGHT = 31.f * 2.6f;
+const float ARCHER_WIDTH = 31.f * 2.f;
+const float ARCHER_HEIGHT = 40.f * 2.6f;
 const float ARCHER_SPRITE_SCALE = 3.f;
 const float ARCHER_SPEED = 30.f;
 
@@ -64,14 +64,14 @@ void Game::initPlayers()
 void Game::initEnemies()
 {
 	std::srand(time(NULL));
-	for (int i = 0; i < (3 + rand() % (10 + 1 - 3)); i++) {
+	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
 		float pos = (float)(std::rand() % 1280);
 		this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
 	}
 
-	for (int i = 0; i < (3 + rand() % (10 + 1 - 3)); i++) {
+	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
 		float pos = (float)(std::rand() % 1280);
-		this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/archer.png", "ARCHER", sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), &this->dt, ARCHER_SPRITE_SCALE, ARCHER_SPEED, this->player1);
+		this->phase1.setEnemy2(sf::Vector2f(pos, 0.f), "images/archer.png", "ARCHER", sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), &this->dt, ARCHER_SPRITE_SCALE, ARCHER_SPEED, this->player1);
 	}
 }
 
@@ -80,15 +80,19 @@ void Game::update()
 {
 	this->updateSFMLEvents();
 	this->phase1.update();
+	this->graphicsManager.updateView(this->player1->getShape());
 	this->updateCollision();
 }
 
 // Verifica se o usuário pediu para fechar a janela
 void Game::updateSFMLEvents()
 {
-	while (this->graphicsManager.pollEvent(&this->sfEvent))
+	while (this->graphicsManager.pollEvent(&this->sfEvent)) {
 		if (this->sfEvent.type == sf::Event::Closed)
 			this->graphicsManager.closeWindow();
+		if (this->sfEvent.type == sf::Event::Resized)
+			this->graphicsManager.resizeView();
+	}
 }
 
 // Calcula o Delta Time constantemente
@@ -123,7 +127,7 @@ void Game::updateCollision()
 			else {
 				this->player1->setIsSlow(false);
 				if (phasePlatformList->operator[](i)->getObstacleType() == 1) // FIRE
-					this->player1->loseHp();
+					this->player1->loseHp(1);
 				else if (phasePlatformList->operator[](i)->getObstacleType() == 3) // TELEPORT
 					this->player1->getShape()->setPosition(sf::Vector2f(340.f, 0.f));
 			}
@@ -134,7 +138,12 @@ void Game::updateCollision()
 				static_cast<Character*>(phaseEntitiesList->operator[](j))->updateCollision(directionEnemyTmp);
 			if (this->player1 && this->player1->getSwordHitbox())
 				if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntitiesList->operator[](j)->getShape()->getGlobalBounds()))
-					static_cast<Character*>(phaseEntitiesList->operator[](j))->loseHp();
+					static_cast<Character*>(phaseEntitiesList->operator[](j))->loseHp(1);
+
+			// COLISÃO COM SKELETON
+			if (phaseEntitiesList->operator[](j)->getEntityType() == 2) // SKELETON
+				if (this->player1->getCollider()->isColliding(phaseEntitiesList->operator[](j)->getCollider(), &directionEnemyTmp))
+					this->player1->loseHp(2);
 		}
 	}
 }
@@ -143,6 +152,8 @@ void Game::updateCollision()
 void Game::render()
 {
 	this->graphicsManager.clearWindow();  // Limpa a janela
+
+	this->graphicsManager.setView();
 
 	this->phase1.render();
 

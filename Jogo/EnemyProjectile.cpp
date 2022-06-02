@@ -53,7 +53,7 @@ void EnemyProjectile::deleteArrow()
 void EnemyProjectile::update() {
 	this->updateMovement();
 	this->updatePosition();
-	this->updateAnimation();
+	//this->updateAnimation();
 }
 
 void EnemyProjectile::updateMovement() {
