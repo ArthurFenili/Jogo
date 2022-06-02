@@ -5,6 +5,7 @@
 #include "Phase.h"
 #include "Enemy.h"
 #include "EnemyProjectile.h"
+#include "EntitiesList.h"
 
 class Game
 {
@@ -14,6 +15,9 @@ private:
 	Player* player1;
 	Enemy* enemy1;
 	EnemyProjectile* enemy2;
+
+	EntitiesList skeletonList;
+	EntitiesList archerList;
 
 	Phase phase1;
 
@@ -30,6 +34,7 @@ public:
 	void initEnemies();
 
 	void update();
+	void updateEnemies();
 	void updateSFMLEvents();
 	void updateDeltaTime();
 	void updateCollision();

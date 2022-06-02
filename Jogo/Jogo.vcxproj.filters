@@ -78,6 +78,9 @@
     <ClCompile Include="ArrowAttack.cpp">
       <Filter>MANAGERS</Filter>
     </ClCompile>
+    <ClCompile Include="EntitiesList.cpp">
+      <Filter>LISTS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="ArrowAttack.h">
       <Filter>MANAGERS</Filter>
+    </ClInclude>
+    <ClInclude Include="EntitiesList.h">
+      <Filter>LISTS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

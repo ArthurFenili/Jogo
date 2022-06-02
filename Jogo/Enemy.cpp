@@ -40,6 +40,11 @@ void Enemy::move()
 	this->sprite.setPosition(this->position);
 }
 
+void Enemy::update()
+{
+	this->move();
+}
+
 void Enemy::updateCollision(sf::Vector2f direction)
 {
 	if (direction.x < 0.f)

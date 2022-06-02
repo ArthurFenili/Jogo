@@ -28,6 +28,7 @@ public:
 
     void deleteArrow();
     const float& getDT() { return *this->dt; }
+    bool getAttacking() { return this->attacking; }
     
     void update();
     void updateMovementInput();

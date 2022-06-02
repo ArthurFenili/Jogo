@@ -26,5 +26,6 @@ public:
 	void updatePosition();
 	void updateFlip();
 	void updateMovement();
+	bool checkCollision();
 };
 

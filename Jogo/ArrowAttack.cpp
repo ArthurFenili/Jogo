@@ -18,7 +18,6 @@ ArrowAttack::ArrowAttack(sf::Vector2f position, EnemyProjectile* enemy)
 	this->hitbox.setOutlineColor(sf::Color::Green);
 	this->hitbox.setOutlineThickness(1.f);
 
-	this->collider.setBody(&this->hitbox);
 }
 
 ArrowAttack::~ArrowAttack()
@@ -29,13 +28,14 @@ void ArrowAttack::update()
 {
 	this->updatePosition();
 	this->updateFlip();
+	this->updateMovement();
 }
 
 void ArrowAttack::updatePosition()
 {
-
-	this->hitbox.setPosition(sf::Vector2f(this->enemyBody->getPosition().x + (this->enemyBody->getSize().x / 2.f), this->enemyBody->getPosition().y));
-	std::cout << "atacou" << std::endl;
+	if(this->enemy->getAttacking())
+		this->hitbox.setPosition(sf::Vector2f(this->enemyBody->getPosition().x + (this->enemyBody->getSize().x / 2.f), this->enemyBody->getPosition().y));
+	//std::cout << "atacou" << std::endl;
 }
 
 void ArrowAttack::updateFlip()
@@ -46,13 +46,27 @@ void ArrowAttack::updateFlip()
 		this->hitbox.setSize(sf::Vector2f(-HITBOX_WIDTH, HITBOX_HEIGHT));
 }
 
-void ArrowAttack::updateMovement() {
+
+bool ArrowAttack::checkCollision() {
 	sf::Vector2f direction;
-	while (!(this->getCollider()->isColliding(this->enemy->getPlayer()->getCollider(), &direction))) {
-		if (this->enemy->getFacingRight())
-			this->hitbox.move(1.f * (this->enemy->getDT()), 0);
-		else
-			this->hitbox.move(-1.f * (this->enemy->getDT()), 0);
+	direction.x = 0;
+	direction.y = 0;
+	if (this->getCollider()->isColliding(this->enemy->getPlayer()->getCollider(), &direction)) {
+		return true;
 	}
-	this->enemy->deleteArrow();
+	else {
+		return false;
+	}
 }
+
+
+void ArrowAttack::updateMovement() {
+	//while (!this->checkCollision()) {
+		if (this->enemy->getFacingRight())
+			this->hitbox.move(100.f * (this->enemy->getDT()), 0);
+		else
+			this->hitbox.move(100.f * (this->enemy->getDT()), 0);
+	//}
+	//this->enemy->deleteArrow();
+}
+

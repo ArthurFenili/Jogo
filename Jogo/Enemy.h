@@ -18,6 +18,6 @@ public:
 	void setPlayer(Player* player) { this->player1 = player; }
 	
 	void move();
-
+	void update();
 	void updateCollision(sf::Vector2f direction);
 };

@@ -150,6 +150,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyProjectile.cpp" />
+    <ClCompile Include="EntitiesList.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="SwordAttack.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyProjectile.h" />
+    <ClInclude Include="EntitiesList.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="Collider.h" />

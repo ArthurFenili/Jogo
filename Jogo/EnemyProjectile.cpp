@@ -35,14 +35,16 @@ void EnemyProjectile::move()
 
 	if (this->player1->getPosition().x > this->getPosition().x) {
 		this->velocity.x = 1.f * this->speed;
-		this->body.move(this->velocity * (*this->dt));
+		//this->body.move(this->velocity * (*this->dt));
 		this->facingRight = true;
 	}
 	if (this->player1->getPosition().x < this->getPosition().x) {
 		this->velocity.x = -1.f * this->speed;
-		this->body.move(this->velocity * (*this->dt));
+		//this->body.move(this->velocity * (*this->dt));
 		this->facingRight = false;
 	}
+
+	this->body.move(this->velocity * (*this->dt));
 
 	this->position = this->body.getPosition();
 	this->sprite.setPosition(this->position);
@@ -51,6 +53,7 @@ void EnemyProjectile::move()
 void EnemyProjectile::deleteArrow()
 {
 	if (this->arrowHitbox) {
+		std::cout << "aa" << std::endl;
 		delete this->arrowHitbox;
 		this->arrowHitbox = nullptr;
 	}
