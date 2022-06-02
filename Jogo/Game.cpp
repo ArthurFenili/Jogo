@@ -71,15 +71,19 @@ void Game::update()
 {
 	this->updateSFMLEvents();
 	this->phase1.update();
+	this->graphicsManager.updateView(this->player1->getShape());
 	this->updateCollision();
 }
 
 // Verifica se o usuário pediu para fechar a janela
 void Game::updateSFMLEvents()
 {
-	while (this->graphicsManager.pollEvent(&this->sfEvent))
+	while (this->graphicsManager.pollEvent(&this->sfEvent)) {
 		if (this->sfEvent.type == sf::Event::Closed)
 			this->graphicsManager.closeWindow();
+		if (this->sfEvent.type == sf::Event::Resized)
+			this->graphicsManager.resizeView();
+	}
 }
 
 // Calcula o Delta Time constantemente
@@ -134,6 +138,8 @@ void Game::render()
 {
 	this->graphicsManager.clearWindow();  // Limpa a janela
 	
+	this->graphicsManager.setView();
+
 	this->phase1.render();
 
 	this->graphicsManager.displayWindow();  // Imprime todos os objetos que foram renderizados na janela

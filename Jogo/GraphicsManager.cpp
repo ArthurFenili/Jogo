@@ -3,6 +3,7 @@
 GraphicsManager::GraphicsManager()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(800, 640), "Game TecProg");
+	this->view.setSize(512.f, 512.f);
 }
 
 GraphicsManager::~GraphicsManager()
@@ -38,4 +39,10 @@ sf::Texture* GraphicsManager::loadTextures(std::string pathToTexture, std::strin
 	this->textures.insert(std::pair<std::string, sf::Texture*>(textureName, tmp));
 
 	return tmp;
+}
+
+void GraphicsManager::resizeView()
+{
+	float aspectRatio = (float)this->window->getSize().x / (float)this->window->getSize().y;
+	this->view.setSize(512.f * aspectRatio, 512.f);
 }
