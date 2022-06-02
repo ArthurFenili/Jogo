@@ -1,14 +1,5 @@
-﻿  Character.cpp
-  Enemy.cpp
-  Entity.cpp
-  EntityList.cpp
-  Game.cpp
-  GraphicsManager.cpp
+﻿  Enemy.cpp
   Phase.cpp
   Platform.cpp
-  PlatformList.cpp
-  Player.cpp
-  SwordAttack.cpp
-  main.cpp
   Gerando Código...
   Jogo.vcxproj -> D:\Users\eduar\Desktop\Jogo-eduardo2\x64\Debug\Jogo.exe

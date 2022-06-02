@@ -1,9 +1,13 @@
 #include "GraphicsManager.h"
 
+const unsigned int WINDOW_WIDTH = 800;
+const unsigned int WINDOW_HEIGHT = 600;
+const float VIEW_SIZE = 512.f;
+
 GraphicsManager::GraphicsManager()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(800, 640), "Game TecProg");
-	this->view.setSize(512.f, 512.f);
+	this->window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game TecProg");
+	this->view.setSize(VIEW_SIZE, VIEW_SIZE);
 }
 
 GraphicsManager::~GraphicsManager()
@@ -44,5 +48,5 @@ sf::Texture* GraphicsManager::loadTextures(std::string pathToTexture, std::strin
 void GraphicsManager::resizeView()
 {
 	float aspectRatio = (float)this->window->getSize().x / (float)this->window->getSize().y;
-	this->view.setSize(512.f * aspectRatio, 512.f);
+	this->view.setSize(VIEW_SIZE * aspectRatio, VIEW_SIZE);
 }

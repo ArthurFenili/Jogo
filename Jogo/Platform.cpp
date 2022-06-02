@@ -13,9 +13,6 @@ Platform::Platform(GraphicsManager* graphicsManager, sf::Vector2f position, std:
 		this->obstacleType = TELEPORT;
 
 	this->body.setTexture(this->texture);
-
-	this->body.setOutlineColor(sf::Color::Red);
-	this->body.setOutlineThickness(1.f);
 }
 
 Platform::~Platform()

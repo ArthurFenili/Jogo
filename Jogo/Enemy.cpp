@@ -16,10 +16,6 @@ Enemy::Enemy(GraphicsManager* graphicsManager, sf::Vector2f position, std::strin
 	this->animation->setUVRect(this->texture);
 
 	this->sprite.setTexture(*this->texture);
-
-	this->body.setFillColor(sf::Color(0, 0, 0, 0));
-	this->body.setOutlineColor(sf::Color::Red);
-	this->body.setOutlineThickness(1.f);
 }
 
 Enemy::Enemy()

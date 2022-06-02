@@ -1,7 +1,7 @@
 #include "Game.h"
 
 const float WINDOW_WIDTH = 800.f;
-const float WINDOW_HEIGHT = 640.f;
+const float WINDOW_HEIGHT = 600.f;
 
 const float PLATFORM_WIDTH = 64.f;
 const float PLATFORM_HEIGHT = 64.f;
@@ -38,13 +38,9 @@ void Game::createMap()
 {
 	for (int x = 0; x <= (int)WINDOW_WIDTH; x += (int)PLATFORM_WIDTH) {
 		if (x <= (int)WINDOW_WIDTH / 2)
-			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/ground1.png", "GROUND_1", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
+			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/block.png", "BLOCK", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
 		else
-			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/slime_floor.png", "SLOW", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 448.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 512.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 576.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 640.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
+			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/slow.png", "SLOW", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
 	}
 
 	this->phase1.setPlatform(sf::Vector2f(80.f, 384.f - 64.f), "images/fire.png", "FIRE", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
@@ -106,31 +102,36 @@ void Game::updateCollision()
 	EntityList* phaseEntityList = this->phase1.getEntityList();
 
 	for (int i = 0; i < phasePlatformList->getSize(); i++) {
-		if (phasePlatformList->operator[](i)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp) && this->player1) {
-			this->player1->updateCollision(directionPlayerTmp);
+		// NÃO É FIRE
+		if (phasePlatformList->operator[](i)->getObstacleType() != 1) {
+			
+			if (phasePlatformList->operator[](i)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp) && this->player1) {
+				this->player1->updateCollision(directionPlayerTmp);
 
-			/* FAZER UMA FUNÇÃO NA CLASSE DO PLAYER PARA ESSAS OPERAÇÕES: */
-			if (directionPlayerTmp.y < 0.f)
-				this->player1->setCanJump(true);
+				if (directionPlayerTmp.y < 0.f)
+					this->player1->setCanJump(true);
 
-			if (phasePlatformList->operator[](i)->getObstacleType() == 2) // SLOW
-				this->player1->setIsSlow(true);
-			else {
-				this->player1->setIsSlow(false);
-				if (phasePlatformList->operator[](i)->getObstacleType() == 1) // FIRE
-					this->player1->loseHp();
-				else if (phasePlatformList->operator[](i)->getObstacleType() == 3) // TELEPORT
-					this->player1->getShape()->setPosition(sf::Vector2f(340.f, 0.f));
+				if (phasePlatformList->operator[](i)->getObstacleType() == 2) // SLOW
+					this->player1->setIsSlow(true);
+				else {
+					this->player1->setIsSlow(false);
+					if (phasePlatformList->operator[](i)->getObstacleType() == 3) // TELEPORT
+						this->player1->getShape()->setPosition(sf::Vector2f(500.f, 320.f));
+				}
+			}
+
+			for (int j = 1; j < phaseEntityList->getSize(); j++) {
+				if (phasePlatformList->operator[](i)->getCollider()->isColliding(phaseEntityList->operator[](j)->getCollider(), &directionEnemyTmp))
+					static_cast<Character*>(phaseEntityList->operator[](j))->updateCollision(directionEnemyTmp);
+				if (this->player1 && this->player1->getSwordHitbox())
+					if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntityList->operator[](j)->getShape()->getGlobalBounds()))
+						static_cast<Character*>(phaseEntityList->operator[](j))->loseHp();
 			}
 		}
 
-		for (int j = 1; j < phaseEntityList->getSize(); j++) {
-			if (phasePlatformList->operator[](i)->getCollider()->isColliding(phaseEntityList->operator[](j)->getCollider(), &directionEnemyTmp))
-				static_cast<Character*>(phaseEntityList->operator[](j))->updateCollision(directionEnemyTmp);
-			if (this->player1 && this->player1->getSwordHitbox())
-				if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntityList->operator[](j)->getShape()->getGlobalBounds()))
-					static_cast<Character*>(phaseEntityList->operator[](j))->loseHp();
-		}
+		else
+			if (this->player1->getShape()->getGlobalBounds().intersects(phasePlatformList->operator[](i)->getShape()->getGlobalBounds()))
+				this->player1->loseHp();
 	}
 }
 

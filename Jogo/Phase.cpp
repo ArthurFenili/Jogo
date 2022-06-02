@@ -42,12 +42,9 @@ void Phase::update()
 
 void Phase::render()
 {
-	for (int i = 0; i < this->entityList.getSize(); i++) {
-		this->entityList[i]->renderShape();
-		this->entityList[i]->renderSprite();
-	}
-
-	for (int i = 0; i < this->platformList.getSize(); i++) {
+	for (int i = 0; i < this->platformList.getSize(); i++)
 		this->platformList[i]->renderShape();
-	}
+
+	for (int i = 0; i < this->entityList.getSize(); i++)
+		this->entityList[i]->renderSprite();
 }
