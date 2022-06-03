@@ -8,7 +8,6 @@ EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f 
 	Character(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
 
 {
-	this->arrowHitbox = new ArrowAttack(this->position, this);
 	this->speed = speed;
 	this->player1 = nullptr;
 
@@ -23,6 +22,13 @@ EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f 
 	this->body.setOutlineColor(sf::Color::Red);
 	this->body.setOutlineThickness(1.f);
 	this->attacking = false;
+
+	shootTimer = 0;
+
+	projectile.setFillColor(sf::Color::Magenta);
+	projectile.setRadius(5.f);
+	projectiles.push_back(projectile);
+
 }
 
 EnemyProjectile::EnemyProjectile()
@@ -30,29 +36,17 @@ EnemyProjectile::EnemyProjectile()
 	this->animation = nullptr;
 	this->player1 = nullptr;
 	this->speed = 0.f;
-	this->arrowHitbox = nullptr;
 }
 
 EnemyProjectile::~EnemyProjectile()
 {
-	if (this->arrowHitbox) {
-		delete this->arrowHitbox;
-	}
 	delete this->animation;
-}
-
-void EnemyProjectile::deleteArrow()
-{
-	if (this->arrowHitbox) {
-		std::cout << "aa" << std::endl;
-		delete this->arrowHitbox;
-		this->arrowHitbox = nullptr;
-	}
 }
 
 void EnemyProjectile::update() {
 	this->updateMovement();
 	this->updatePosition();
+	this->updateAttack();
 	//this->updateAnimation();
 }
 
@@ -76,13 +70,34 @@ void EnemyProjectile::updateMovement() {
 	this->sprite.setPosition(this->position);
 
 	//----------------------
+}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::J)) {
-		this->attacking = true;
+void EnemyProjectile::updateAttack()
+{
+	if (shootTimer < 1000)
+		shootTimer++;
+
+	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (shootTimer >= 1000)) {
+		projectile.setPosition(this->body.getPosition());
+		projectiles.push_back(projectile);
+		shootTimer = 0;
+		std::cout << projectiles.size() << std::endl;
 	}
 
-	if (this->attacking)
-		this->velocity.x = 0.f;
+	for (int i = 0; i < projectiles.size(); i++) {
+		projectiles[i].move(-100.f * (*this->dt), 0.f);
+
+		std::cout << projectiles[i].getPosition().x << std::endl;
+
+		if (projectiles[i].getPosition().x < 0) {
+			projectiles.erase(projectiles.begin() + i);
+		}
+	}
+
+	for (size_t i = 0; i < projectiles.size(); i++) {
+		std::cout << "printou" << std::endl;
+		this->graphicsManager->drawProjectile(projectiles[i]);
+	}
 }
 
 void EnemyProjectile::updatePosition() {
@@ -98,8 +113,4 @@ void EnemyProjectile::updateAnimation()
 {
 	this->animation->update(0, *this->dt);
 	this->sprite.setTextureRect(this->animation->getUVRect());
-}
-
-void EnemyProjectile::renderArrowHitbox_TMP() {
-	this->graphicsManager->renderShape(this->arrowHitbox->getShape());
 }

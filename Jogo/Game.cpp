@@ -64,10 +64,10 @@ void Game::initPlayers()
 void Game::initEnemies()
 {
 	std::srand(time(NULL));
-	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
-		float pos = (float)(std::rand() % 1280);
-		this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
-	}
+	//for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
+		//float pos = (float)(std::rand() % 1280);
+		//this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
+	//}
 
 	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
 		float pos = (float)(std::rand() % 1280);
@@ -114,7 +114,7 @@ void Game::updateCollision()
 	PlatformList* phasePlatformList = this->phase1.getPlatformList();
 	EntitiesList* phaseEntitiesList = this->phase1.getEntityList();
 
-	for (int i = 0; i < phasePlatformList->getSize(); i++) {
+	for (int i = 0; i < (int)phasePlatformList->getSize(); i++) {
 		if (phasePlatformList->operator[](i)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp) && this->player1) {
 			this->player1->updateCollision(directionPlayerTmp);
 
@@ -133,7 +133,7 @@ void Game::updateCollision()
 			}
 		}
 
-		for (int j = 1; j < phaseEntitiesList->getSize(); j++) {
+		for (int j = 1; j < (int)phaseEntitiesList->getSize(); j++) {
 			if (phasePlatformList->operator[](i)->getCollider()->isColliding(phaseEntitiesList->operator[](j)->getCollider(), &directionEnemyTmp))
 				static_cast<Character*>(phaseEntitiesList->operator[](j))->updateCollision(directionEnemyTmp);
 			if (this->player1 && this->player1->getSwordHitbox())

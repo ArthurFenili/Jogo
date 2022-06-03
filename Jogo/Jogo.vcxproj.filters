@@ -81,6 +81,9 @@
     <ClCompile Include="EntitiesList.cpp">
       <Filter>LISTS</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="EntitiesList.h">
       <Filter>LISTS</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

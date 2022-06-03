@@ -152,6 +152,7 @@
     <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="EntitiesList.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="SwordAttack.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="EntitiesList.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Game.h" />

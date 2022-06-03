@@ -2,7 +2,11 @@
 
 #include "Character.h"
 #include "Player.h"
-#include "ArrowAttack.h"
+#include "Projectile.h"
+
+//------
+#include<vector>
+#include<SFML/Graphics.hpp>
 
 
 class EnemyProjectile :
@@ -14,7 +18,13 @@ private:
 
     bool attacking;
 
-    ArrowAttack* arrowHitbox;
+    //------------
+    int shootTimer;
+
+    sf::CircleShape projectile;
+    std::vector<sf::CircleShape> projectiles;
+
+
 public:
     EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string TextureName, sf::Vector2f bodySize,
         float* dt, float spriteScale, float speed);
@@ -24,17 +34,14 @@ public:
     void setPlayer(Player* player) { this->player1 = player; }
     Player* getPlayer() { return player1; }
 
-    void move();
-
-    void deleteArrow();
     const float& getDT() { return *this->dt; }
     bool getAttacking() { return this->attacking; }
-    
+
+    //---------------
     void update();
     void updateMovement();
+    void updateAttack();
     void updatePosition();
     void updateAnimation();
-
-    void renderArrowHitbox_TMP();
 };
 
