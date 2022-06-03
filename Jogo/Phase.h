@@ -3,6 +3,8 @@
 #include "EntityList.h"
 #include "PlatformList.h"
 #include "Enemy.h"
+#include <fstream>
+#include <sstream>
 
 class Phase
 {
@@ -20,6 +22,8 @@ public:
 	void setEnemy(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale, float speed, Player* player);
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }
+
+	void loadMap(std::string mapFileName);
 
 	void update();
 

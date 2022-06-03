@@ -19,6 +19,8 @@ Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, st
 	this->facingRight = true;
 
 	this->hp = 1000;
+
+	this->body.setFillColor(sf::Color(0, 0, 0, 0));
 }
 
 Character::Character() :

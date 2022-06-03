@@ -1,5 +1,4 @@
-﻿  Enemy.cpp
-  Phase.cpp
-  Platform.cpp
+﻿  Character.cpp
+  Entity.cpp
   Gerando Código...
   Jogo.vcxproj -> D:\Users\eduar\Desktop\Jogo-eduardo2\x64\Debug\Jogo.exe

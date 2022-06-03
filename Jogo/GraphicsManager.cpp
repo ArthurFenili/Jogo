@@ -6,7 +6,7 @@ const float VIEW_SIZE = 512.f;
 
 GraphicsManager::GraphicsManager()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game TecProg");
+	this->window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 64), "Game TecProg");
 	this->view.setSize(VIEW_SIZE, VIEW_SIZE);
 }
 

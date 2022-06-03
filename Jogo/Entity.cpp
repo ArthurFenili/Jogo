@@ -12,6 +12,9 @@ Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::str
 	this->body.setOrigin(this->body.getSize() / 2.f);
 
 	this->collider.setBody(&this->body);
+
+	this->body.setOutlineColor(sf::Color::Red);
+	this->body.setOutlineThickness(1.f);
 }
 
 Entity::Entity()

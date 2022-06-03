@@ -36,15 +36,7 @@ Game::~Game()
 
 void Game::createMap()
 {
-	for (int x = 0; x <= (int)WINDOW_WIDTH; x += (int)PLATFORM_WIDTH) {
-		if (x <= (int)WINDOW_WIDTH / 2)
-			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/block.png", "BLOCK", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		else
-			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/slow.png", "SLOW", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-	}
-
-	this->phase1.setPlatform(sf::Vector2f(80.f, 384.f - 64.f), "images/fire.png", "FIRE", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-	this->phase1.setPlatform(sf::Vector2f(300.f, 384.f - 64.f), "images/teleport.png", "TELEPORT", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
+	this->phase1.loadMap("images/map.txt");
 
 }
 
