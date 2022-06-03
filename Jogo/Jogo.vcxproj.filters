@@ -31,6 +31,9 @@
     <Filter Include="PHASE">
       <UniqueIdentifier>{c5bb84cc-bb90-42b4-a7c0-0fc02d394618}</UniqueIdentifier>
     </Filter>
+    <Filter Include="STATES">
+      <UniqueIdentifier>{62d39d4f-6882-4ec3-a99a-dc55ca975689}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -75,14 +78,17 @@
     <ClCompile Include="EnemyProjectile.cpp">
       <Filter>ENTITIES\CHARACTERS</Filter>
     </ClCompile>
-    <ClCompile Include="ArrowAttack.cpp">
-      <Filter>MANAGERS</Filter>
-    </ClCompile>
     <ClCompile Include="EntitiesList.cpp">
       <Filter>LISTS</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>ENTITIES</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>STATES</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>STATES</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,14 +134,17 @@
     <ClInclude Include="EnemyProjectile.h">
       <Filter>ENTITIES\CHARACTERS</Filter>
     </ClInclude>
-    <ClInclude Include="ArrowAttack.h">
-      <Filter>MANAGERS</Filter>
-    </ClInclude>
     <ClInclude Include="EntitiesList.h">
       <Filter>LISTS</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>ENTITIES</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>STATES</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>STATES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,9 +20,9 @@ private:
 
     //------------
     int shootTimer;
-
-    sf::CircleShape projectile;
-    std::vector<sf::CircleShape> projectiles;
+ // DEIXAR PRIVADO E FAZER FUNÇÕES PRA DAR RENDER NA PHASE
+    sf::RectangleShape* projectile;
+    std::vector<sf::RectangleShape*> projectiles;
 
 
 public:
@@ -36,6 +36,8 @@ public:
 
     const float& getDT() { return *this->dt; }
     bool getAttacking() { return this->attacking; }
+
+    std::vector<sf::RectangleShape*>* getVectorProjectiles() { return &projectiles; }
 
     //---------------
     void update();

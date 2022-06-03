@@ -65,8 +65,8 @@ void Game::initEnemies()
 {
 	std::srand(time(NULL));
 	//for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
-		//float pos = (float)(std::rand() % 1280);
-		//this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
+	//	float pos = (float)(std::rand() % 1280);
+	//	this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
 	//}
 
 	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {

@@ -1,4 +1,5 @@
 #include "Phase.h"
+#include "EnemyProjectile.h"
 
 Phase::Phase(GraphicsManager* graphicsManager)
 {
@@ -53,8 +54,19 @@ void Phase::render()
 {
 	for (int i = 0; i < this->entitiesList.getSize(); i++) {
 		this->entitiesList[i]->renderShape();
-		this->entitiesList[i]->renderSprite();
+		this->entitiesList[i]->renderSprite();	
+
+		if (i != 0) { // arrumar esse if pq se ativar os skeleton vai parar de funcionar pq vai tentar pegar projetil de skeleton
+					// talvez com um dynamic cast (??)
+			EnemyProjectile* tmp = static_cast<EnemyProjectile*>(this->entitiesList[i]);
+			for (int j = 0; j < tmp->getVectorProjectiles()->size(); j++) { 
+				if (tmp->getVectorProjectiles()->size() > 0) {
+					this->graphicsManager->renderShape(tmp->getVectorProjectiles()->operator[](j));
+				}
+			}
+		}
 	}
+
 
 	for (int i = 0; i < this->platformList.getSize(); i++) {
 		this->platformList[i]->renderShape();

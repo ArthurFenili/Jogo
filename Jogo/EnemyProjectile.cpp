@@ -25,8 +25,10 @@ EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f 
 
 	shootTimer = 0;
 
-	projectile.setFillColor(sf::Color::Magenta);
-	projectile.setRadius(5.f);
+	projectile = new sf::RectangleShape();
+
+	projectile->setFillColor(sf::Color::Magenta);
+	projectile->setSize(sf::Vector2f(10.f, 10.f));
 	projectiles.push_back(projectile);
 
 }
@@ -41,6 +43,7 @@ EnemyProjectile::EnemyProjectile()
 EnemyProjectile::~EnemyProjectile()
 {
 	delete this->animation;
+	delete projectile;
 }
 
 void EnemyProjectile::update() {
@@ -74,29 +77,34 @@ void EnemyProjectile::updateMovement() {
 
 void EnemyProjectile::updateAttack()
 {
-	if (shootTimer < 1000)
+	if (shootTimer < 2000)
 		shootTimer++;
 
-	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (shootTimer >= 1000)) {
-		projectile.setPosition(this->body.getPosition());
+	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (shootTimer >= 2000)) {
+
+		projectile = new sf::RectangleShape();
+		projectile->setFillColor(sf::Color::Magenta);
+		projectile->setSize(sf::Vector2f(10.f, 10.f));
+
+		projectile->setPosition(this->body.getPosition());
 		projectiles.push_back(projectile);
 		shootTimer = 0;
 		std::cout << projectiles.size() << std::endl;
 	}
 
 	for (int i = 0; i < projectiles.size(); i++) {
-		projectiles[i].move(-100.f * (*this->dt), 0.f);
+		projectiles[i]->move(-300.f * (*this->dt), 0.f);
 
-		std::cout << projectiles[i].getPosition().x << std::endl;
+		//std::cout << projectiles[i].getPosition().x << std::endl;
 
-		if (projectiles[i].getPosition().x < 0) {
+		if (projectiles[i]->getPosition().x < 0) {
 			projectiles.erase(projectiles.begin() + i);
 		}
 	}
 
-	for (size_t i = 0; i < projectiles.size(); i++) {
-		std::cout << "printou" << std::endl;
-		this->graphicsManager->drawProjectile(projectiles[i]);
+	for (int i = 0; i < projectiles.size(); i++) {
+		//std::cout << "printou" << std::endl;
+		this->graphicsManager->getWindow()->draw(*projectiles[i]);
 	}
 }
 
