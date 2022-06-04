@@ -9,10 +9,10 @@ const float ATTACKING_ANIMATION_SWITCH_TIME = 0.1f;
 const float JUMP_HEIGHT = 450.f;
 const float GRAVITY = 981.f;
 const float JUMP_SPEED = -sqrtf(2.f * GRAVITY * JUMP_HEIGHT);
-const sf::Vector2f AUX_VECTOR = sf::Vector2f(55.f, 51.f);
+const sf::Vector2f AUX_VECTOR = sf::Vector2f(48.f, 45.f);
 
-const float WIDTH_AUX = 2.f;
-const float HEIGHT_AUX = 2.6f;
+const float WIDTH_AUX = 2.2f;
+const float HEIGHT_AUX = 1.8f;
 
 Player::Player(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
 	float* dt, float spriteScale, float speed) :

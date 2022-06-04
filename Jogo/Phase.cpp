@@ -1,8 +1,9 @@
 #include "Phase.h"
 
-Phase::Phase(GraphicsManager* graphicsManager)
+Phase::Phase(GraphicsManager* graphicsManager, float* dt)
 {
 	this->graphicsManager = graphicsManager;
+	this->dt = dt;
 }
 
 Phase::Phase()
@@ -17,7 +18,7 @@ Phase::~Phase()
 void Phase::setPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize)
 {
 	Platform* tmp = nullptr;
-	tmp = new Platform(this->graphicsManager, position, pathToTexture, textureName, bodySize);
+	tmp = new Platform(this->graphicsManager, position, pathToTexture, textureName, bodySize, this->dt);
 
 	this->platformList.addPlatform(tmp);
 }
@@ -78,15 +79,26 @@ void Phase::loadMap(std::string mapFileName)
 	for (int i = 0; i < map.size(); i++) {
 		for (int j = 0; j < map[i].size(); j++) {
 			if (map[i][j].x != -1 && map[i][j].y != -1) {
-
 				if (map[i][j].x == 0 && map[i][j].y == 0)
-					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/block.png", "BLOCK", sf::Vector2f(64.f, 64.f));
-				else if (map [i][j].x == 0 && map[i][j].y == 1)
-					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/teleport.png", "TELEPORT", sf::Vector2f(64.f, 64.f));
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile0.png", "TILE_0", sf::Vector2f(64.f, 64.f));
 				else if (map[i][j].x == 1 && map[i][j].y == 0)
-					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/slow.png", "SLOW", sf::Vector2f(64.f, 64.f));
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile1.png", "SLOW", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 2 && map[i][j].y == 0)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile2.png", "TILE_2", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 3 && map[i][j].y == 0)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile3.png", "TILE_3", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 4 && map[i][j].y == 0)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile4.png", "TILE_4", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 0 && map[i][j].y == 1)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/portal.png", "TELEPORT", sf::Vector2f(64.f, 64.f));
 				else if (map[i][j].x == 1 && map[i][j].y == 1)
 					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/fire.png", "FIRE", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 2 && map[i][j].y == 1)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/door.png", "DOOR", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 3 && map[i][j].y == 1)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile5.png", "TILE_5", sf::Vector2f(64.f, 64.f));
+				else if (map[i][j].x == 4 && map[i][j].y == 1)
+					this->setPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/window.png", "WINDOW", sf::Vector2f(64.f, 64.f));
 			}
 		}
 	}

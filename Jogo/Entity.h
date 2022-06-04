@@ -14,8 +14,10 @@ protected:
 
 	Collider collider;
 
+	float* dt;
+
 public:
-	Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize);
+	Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt);
 	Entity();
 	~Entity();
 

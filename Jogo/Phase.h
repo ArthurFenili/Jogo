@@ -13,8 +13,10 @@ private:
 	EntityList entityList;
 	PlatformList platformList;
 
+	float* dt;
+
 public:
-	Phase(GraphicsManager* graphicsManager);
+	Phase(GraphicsManager* graphicsManager, float* dt);
 	Phase();
 	~Phase();
 

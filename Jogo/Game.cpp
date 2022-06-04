@@ -1,13 +1,10 @@
 #include "Game.h"
 
-const float WINDOW_WIDTH = 800.f;
-const float WINDOW_HEIGHT = 600.f;
-
 const float PLATFORM_WIDTH = 64.f;
 const float PLATFORM_HEIGHT = 64.f;
 
-const float PLAYER_WIDTH = 32.f * 2.f;
-const float PLAYER_HEIGHT = 35.f * 2.6f;
+const float PLAYER_WIDTH = 32.f * 1.6f;
+const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
 const float PLAYER_SPEED = 200.f;
 
@@ -18,7 +15,7 @@ const float SKELETON_SPEED = 30.f;
 
 Game::Game()
 {
-	this->phase1 = Phase(&this->graphicsManager);
+	this->phase1 = Phase(&this->graphicsManager, &this->dt);
 
 	this->createMap();
 
@@ -36,13 +33,13 @@ Game::~Game()
 
 void Game::createMap()
 {
-	this->phase1.loadMap("images/map.txt");
+	this->phase1.loadMap("images/mapa2.txt");
 
 }
 
 void Game::initPlayers()
 {
-	this->player1 = new Player(&this->graphicsManager, sf::Vector2f(500.f, 0.f), "images/player.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), &this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
+	this->player1 = new Player(&this->graphicsManager, sf::Vector2f(900.f, 1400.f), "images/player.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), &this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
 	this->phase1.addEntity(this->player1);
 }
 
@@ -58,6 +55,10 @@ void Game::initEnemies()
 void Game::update()
 {
 	this->updateSFMLEvents();
+	for (int i = 0; i < this->phase1.getPlatformList()->getSize(); i++) {
+		if (this->phase1.getPlatformList()->operator[](i)->getObstacleType() == 1 || this->phase1.getPlatformList()->operator[](i)->getObstacleType() == 3)
+			this->phase1.getPlatformList()->operator[](i)->updateAnimation();
+	}
 	this->phase1.update();
 	this->graphicsManager.updateView(this->player1->getShape());
 	this->updateCollision();
@@ -94,8 +95,8 @@ void Game::updateCollision()
 	EntityList* phaseEntityList = this->phase1.getEntityList();
 
 	for (int i = 0; i < phasePlatformList->getSize(); i++) {
-		// NÃO É FIRE
-		if (phasePlatformList->operator[](i)->getObstacleType() != 1) {
+		// NÃO É FIRE e NÃO É WINDOW
+		if (phasePlatformList->operator[](i)->getObstacleType() != 1 && phasePlatformList->operator[](i)->getObstacleType() != 5) {
 			
 			if (phasePlatformList->operator[](i)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp) && this->player1) {
 				this->player1->updateCollision(directionPlayerTmp);
@@ -108,7 +109,7 @@ void Game::updateCollision()
 				else {
 					this->player1->setIsSlow(false);
 					if (phasePlatformList->operator[](i)->getObstacleType() == 3) // TELEPORT
-						this->player1->getShape()->setPosition(sf::Vector2f(500.f, 320.f));
+						this->player1->getShape()->setPosition(sf::Vector2f(900.f, 1400.f));
 				}
 			}
 

@@ -1,9 +1,10 @@
 #include "Entity.h"
 
-Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize)
+Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt)
 {
 	this->graphicsManager = graphicsManager;
 	this->position = position;
+	this->dt = dt;
 
 	this->texture = this->graphicsManager->loadTextures(pathToTexture, textureName);
 

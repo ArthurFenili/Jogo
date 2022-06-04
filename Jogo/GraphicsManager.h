@@ -23,7 +23,7 @@ public:
 
 	void displayWindow() { this->window->display(); }
 
-	void clearWindow() { this->window->clear(); }
+	void clearWindow() { this->window->clear(sf::Color(53, 53, 95)); }
 
 	void closeWindow() { this->window->close(); }
 

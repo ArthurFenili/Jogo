@@ -8,8 +8,6 @@ protected:
 	sf::Sprite sprite;
 	sf::Vector2f velocity;
 
-	float* dt;
-
 	float spriteScale;
 	float gravity;
 	float speed;
