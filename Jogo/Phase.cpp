@@ -21,10 +21,10 @@ Phase::~Phase()
 {
 }
 
-Platform Phase::createPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize)
+Platform Phase::createPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float spriteScale)
 {
 	Platform* tmp = nullptr;
-	tmp = new Platform(this->graphicsManager, position, pathToTexture, textureName, bodySize, this->dt);
+	tmp = new Platform(this->graphicsManager, position, pathToTexture, textureName, bodySize, this->dt, spriteScale);
 
 	return *tmp;
 }

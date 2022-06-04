@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt)
+Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale)
 {
 	this->graphicsManager = graphicsManager;
 	this->position = position;

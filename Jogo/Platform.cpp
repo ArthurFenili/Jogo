@@ -6,8 +6,8 @@ const unsigned int FIRE_ANIMATION_COLUMNS = 6;
 const unsigned int ANIMATION_ROWS = 1;
 const float SWITCH_TIME = 0.2f;
 
-Platform::Platform(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt) :
-	Entity(graphicsManager, position, pathToTexture, textureName, bodySize, dt)
+Platform::Platform(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale) :
+	Entity(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale)
 {
 	this->obstacleType = NONE;
 	this->animation = nullptr;

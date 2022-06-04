@@ -1,7 +1,7 @@
 #pragma once
 
 #include "EntityList.h"
-#include "PlatformList.h"
+#include "Platform.h"
 #include "Enemy.h"
 #include <fstream>
 #include <sstream>
@@ -21,7 +21,7 @@ public:
 	Phase();
 	~Phase();
 
-	Platform createPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize);
+	Platform createPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float spriteScale = 1.f);
 	void setEnemy(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale, float speed, Player* player);
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }

@@ -4,7 +4,7 @@ const float GRAVITY = 981.f;
 
 Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
 	float* dt, float spriteScale, float speed) :
-	Entity(graphicsManager, position, pathToTexture, textureName, bodySize, dt)
+	Entity(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale)
 {
 	this->spriteScale = spriteScale;
 	this->speed = speed;

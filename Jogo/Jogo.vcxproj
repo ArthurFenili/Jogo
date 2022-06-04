@@ -150,12 +150,10 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityList.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="SwordAttack.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="PlatformList.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Phase.cpp" />
@@ -167,12 +165,10 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityList.h" />
-    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Platform.h" />
-    <ClInclude Include="PlatformList.h" />
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Phase.h" />

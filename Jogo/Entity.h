@@ -9,6 +9,7 @@ protected:
 	GraphicsManager* graphicsManager;
 	sf::Texture* texture;
 
+	sf::Sprite sprite;
 	sf::RectangleShape body;
 	sf::Vector2f position;
 
@@ -17,7 +18,7 @@ protected:
 	float* dt;
 
 public:
-	Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt);
+	Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale);
 	Entity();
 	~Entity();
 

@@ -5,7 +5,7 @@
 class Character : public Entity
 {
 protected:
-	sf::Sprite sprite;
+	//sf::Sprite sprite;
 	sf::Vector2f velocity;
 
 	float spriteScale;
