@@ -55,10 +55,6 @@ void Game::initEnemies()
 void Game::update()
 {
 	this->updateSFMLEvents();
-	for (int i = 0; i < this->phase1.getPlatformList()->getSize(); i++) {
-		if (this->phase1.getPlatformList()->operator[](i)->getObstacleType() == 1 || this->phase1.getPlatformList()->operator[](i)->getObstacleType() == 3)
-			this->phase1.getPlatformList()->operator[](i)->updateAnimation();
-	}
 	this->phase1.update();
 	this->graphicsManager.updateView(this->player1->getShape());
 	this->updateCollision();
@@ -91,40 +87,36 @@ void Game::updateCollision()
 	sf::Vector2f directionPlayerTmp;  // Vetor de direções
 	sf::Vector2f directionEnemyTmp;
 
-	PlatformList* phasePlatformList = this->phase1.getPlatformList();
+	Platform** phasePlatformList = this->phase1.getPlatformList();
 	EntityList* phaseEntityList = this->phase1.getEntityList();
 
-	for (int i = 0; i < phasePlatformList->getSize(); i++) {
-		// NÃO É FIRE e NÃO É WINDOW
-		if (phasePlatformList->operator[](i)->getObstacleType() != 1 && phasePlatformList->operator[](i)->getObstacleType() != 5) {
-			
-			if (phasePlatformList->operator[](i)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp) && this->player1) {
-				this->player1->updateCollision(directionPlayerTmp);
+	for (int i = 0; i < 30; i++) {
+		for (int j = 0; j < 50; j++) {
+			if (phasePlatformList[i][j].getObstacleType() != 1 && phasePlatformList[i][j].getObstacleType() != 5 && phasePlatformList[i][j].getObstacleType() != 6) {
+				if (phasePlatformList[i][j].getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp)) {
+					this->player1->updateCollision(directionPlayerTmp);
 
-				if (directionPlayerTmp.y < 0.f)
-					this->player1->setCanJump(true);
-
-				if (phasePlatformList->operator[](i)->getObstacleType() == 2) // SLOW
-					this->player1->setIsSlow(true);
-				else {
-					this->player1->setIsSlow(false);
-					if (phasePlatformList->operator[](i)->getObstacleType() == 3) // TELEPORT
-						this->player1->getShape()->setPosition(sf::Vector2f(900.f, 1400.f));
+					if (directionPlayerTmp.y < 0.f)
+						this->player1->setCanJump(true);
+					if (phasePlatformList[i][j].getObstacleType() == 2)
+						this->player1->setIsSlow(true);
+					else {
+						this->player1->setIsSlow(false);
+						if (phasePlatformList[i][j].getObstacleType() == 3)
+							this->player1->getShape()->setPosition(sf::Vector2f(900.f, 1400.f));
+					}
+				}
+				for (int k = 1; k < phaseEntityList->getSize();  k++) {
+					if (phasePlatformList[i][j].getCollider()->isColliding(phaseEntityList->operator[](k)->getCollider(), &directionEnemyTmp))
+						static_cast<Character*>(phaseEntityList->operator[](k))->updateCollision(directionEnemyTmp);
+					if (this->player1 && this->player1->getSwordHitbox())
+						if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntityList->operator[](k)->getShape()->getGlobalBounds()))
+							static_cast<Character*>(phaseEntityList->operator[](k))->loseHp();
 				}
 			}
-
-			for (int j = 1; j < phaseEntityList->getSize(); j++) {
-				if (phasePlatformList->operator[](i)->getCollider()->isColliding(phaseEntityList->operator[](j)->getCollider(), &directionEnemyTmp))
-					static_cast<Character*>(phaseEntityList->operator[](j))->updateCollision(directionEnemyTmp);
-				if (this->player1 && this->player1->getSwordHitbox())
-					if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntityList->operator[](j)->getShape()->getGlobalBounds()))
-						static_cast<Character*>(phaseEntityList->operator[](j))->loseHp();
-			}
-		}
-
-		else
-			if (this->player1->getShape()->getGlobalBounds().intersects(phasePlatformList->operator[](i)->getShape()->getGlobalBounds()))
+			else if (phasePlatformList[i][j].getObstacleType() == 1 && this->player1->getShape()->getGlobalBounds().intersects(phasePlatformList[i][j].getShape()->getGlobalBounds()))
 				this->player1->loseHp();
+		}
 	}
 }
 

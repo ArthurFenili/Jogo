@@ -22,11 +22,21 @@ Platform::Platform(GraphicsManager* graphicsManager, sf::Vector2f position, std:
 		this->obstacleType = DOOR;
 	else if (textureName == "WINDOW")
 		this->obstacleType = WINDOW;
+	else if (textureName == "NO_COLLIDER")
+		this->obstacleType = NO_COLLIDER;
+		
 
 	if (this->obstacleType == FIRE || this->obstacleType == TELEPORT)
 		this->initAnimations();
 	else
 		this->body.setTexture(this->texture);
+}
+
+Platform::Platform() :
+	Entity()
+{
+	this->animation = nullptr;
+	this->obstacleType = NONE;
 }
 
 Platform::~Platform()

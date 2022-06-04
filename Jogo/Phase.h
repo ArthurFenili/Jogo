@@ -11,7 +11,8 @@ class Phase
 private:
 	GraphicsManager* graphicsManager;
 	EntityList entityList;
-	PlatformList platformList;
+
+	Platform** platformList2;
 
 	float* dt;
 
@@ -20,7 +21,7 @@ public:
 	Phase();
 	~Phase();
 
-	void setPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize);
+	Platform createPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize);
 	void setEnemy(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale, float speed, Player* player);
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }
@@ -32,5 +33,5 @@ public:
 	void render();
 
 	EntityList* getEntityList() { return &this->entityList; }
-	PlatformList* getPlatformList() { return &this->platformList; }
+	Platform** getPlatformList() { return this->platformList2; }
 };

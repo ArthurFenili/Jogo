@@ -32,6 +32,8 @@ public:
 	void resizeView();
 	void setView() { this->window->setView(this->view); }
 
+	sf::View getView() { return this->view; }
+
 	void renderShape(sf::RectangleShape* shape) { this->window->draw(*shape); }
 	void renderSprite(sf::Sprite* sprite) { this->window->draw(*sprite); }
 };
