@@ -98,15 +98,15 @@ void Phase::loadMap(std::string mapFileName)
 				else if (map[i][j].x == 4 && map[i][j].y == 0)
 					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile4.png", "TILE_4", sf::Vector2f(64.f, 64.f));
 				else if (map[i][j].x == 0 && map[i][j].y == 1)
-					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/portal.png", "TELEPORT", sf::Vector2f(64.f, 64.f));
+					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/portal.png", "TELEPORT", sf::Vector2f(64.f * 0.4f, 64.f), 2.3f);
 				else if (map[i][j].x == 1 && map[i][j].y == 1)
-					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/fire.png", "FIRE", sf::Vector2f(64.f, 64.f));
+					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/fire.png", "FIRE", sf::Vector2f(64.f * 0.3f, 64.f * 0.8f));
 				else if (map[i][j].x == 2 && map[i][j].y == 1)
 					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/door.png", "DOOR", sf::Vector2f(64.f, 64.f));
 				else if (map[i][j].x == 3 && map[i][j].y == 1)
 					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/tile5.png", "TILE_5", sf::Vector2f(64.f, 64.f));
 				else if (map[i][j].x == 4 && map[i][j].y == 1)
-					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/window.png", "WINDOW", sf::Vector2f(64.f, 64.f));
+					this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/window.png", "WINDOW", sf::Vector2f(64.f, 64.f), 3.f);
 			}
 			else {
 				this->platformList2[i][j] = this->createPlatform(sf::Vector2f((float)j * 64.f, (float)i * 64.f), "images/no_collider.png", "NO_COLLIDER", sf::Vector2f(64.f, 64.f));
@@ -149,11 +149,14 @@ void Phase::render()
 
 	for (int i = fromY; i < toY; i++)
 		for (int j = fromX; j < toX; j++)
-			if (this->platformList2[i][j].getObstacleType() != 6)
-				this->platformList2[i][j].renderShape();
+			if (this->platformList2[i][j].getObstacleType() != 6) {
+				this->platformList2[i][j].renderSprite();
+				//this->platformList2[i][j].renderShape();
+			}
+				
 
 	for (int i = 0; i < this->entityList.getSize(); i++) {
-		this->entityList[i]->renderShape();
+		//this->entityList[i]->renderShape();
 		this->entityList[i]->renderSprite();
 	}
 }

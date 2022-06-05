@@ -15,6 +15,7 @@ protected:
 
 	Collider collider;
 
+	float spriteScale;
 	float* dt;
 
 public:
@@ -23,7 +24,7 @@ public:
 	~Entity();
 
 	void renderShape() { this->graphicsManager->renderShape(&this->body); }
-	virtual void renderSprite() {}
+	virtual void renderSprite() { this->graphicsManager->renderSprite(&this->sprite); }
 
 	sf::RectangleShape* getShape() { return &this->body; }
 	sf::Vector2f getPosition() { return this->position; }

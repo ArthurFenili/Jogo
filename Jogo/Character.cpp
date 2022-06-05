@@ -6,7 +6,6 @@ Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, st
 	float* dt, float spriteScale, float speed) :
 	Entity(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale)
 {
-	this->spriteScale = spriteScale;
 	this->speed = speed;
 
 	this->sprite.setPosition(this->position + this->body.getSize());
@@ -18,16 +17,12 @@ Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, st
 	this->facingRight = true;
 
 	this->hp = 1000;
-
-	this->body.setFillColor(sf::Color(0, 0, 0, 0));
 }
 
 Character::Character() :
 	Entity()
 {
-	this->spriteScale = 1.f;
 	this->speed = 1.f;
-	this->dt = nullptr;
 	this->facingRight = true;
 	this->gravity = GRAVITY;
 	this->hp = 1000;

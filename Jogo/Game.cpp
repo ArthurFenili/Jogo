@@ -33,7 +33,7 @@ Game::~Game()
 
 void Game::createMap()
 {
-	this->phase1.loadMap("images/mapa2.txt");
+	this->phase1.loadMap("images/mapa_fase_1.txt");
 
 }
 
