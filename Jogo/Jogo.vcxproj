@@ -151,9 +151,11 @@
     <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="EntitiesList.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="NewGameState.cpp" />
+    <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="State.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="SwordAttack.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -171,9 +173,11 @@
     <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="EntitiesList.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="NewGameState.h" />
+    <ClInclude Include="PlayingState.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="State.h" />
-    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Game.h" />

@@ -84,10 +84,16 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>ENTITIES</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
+    <ClCompile Include="State.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>STATES</Filter>
+    </ClCompile>
+    <ClCompile Include="NewGameState.cpp">
+      <Filter>STATES</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingState.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,10 +146,16 @@
     <ClInclude Include="Projectile.h">
       <Filter>ENTITIES</Filter>
     </ClInclude>
-    <ClInclude Include="StateMachine.h">
+    <ClInclude Include="State.h">
       <Filter>STATES</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
+    <ClInclude Include="MainMenuState.h">
+      <Filter>STATES</Filter>
+    </ClInclude>
+    <ClInclude Include="NewGameState.h">
+      <Filter>STATES</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayingState.h">
       <Filter>STATES</Filter>
     </ClInclude>
   </ItemGroup>

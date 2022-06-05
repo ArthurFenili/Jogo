@@ -25,11 +25,7 @@ EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f 
 
 	shootTimer = 0;
 
-	projectile = new sf::RectangleShape();
-
-	projectile->setFillColor(sf::Color::Magenta);
-	projectile->setSize(sf::Vector2f(10.f, 10.f));
-	projectiles.push_back(projectile);
+	projectile = nullptr;
 
 }
 
@@ -89,22 +85,20 @@ void EnemyProjectile::updateAttack()
 		projectile->setPosition(this->body.getPosition());
 		projectiles.push_back(projectile);
 		shootTimer = 0;
-		std::cout << projectiles.size() << std::endl;
+		//std::cout << projectiles.size() << std::endl;
 	}
 
 	for (int i = 0; i < projectiles.size(); i++) {
-		projectiles[i]->move(-300.f * (*this->dt), 0.f);
+		if (this->player1->getPosition().x < this->getPosition().x)
+			projectiles[i]->move(-300.f * (*this->dt), 0.f);
+		else if (this->player1->getPosition().x > this->getPosition().x)
+			projectiles[i]->move(300.f * (*this->dt), 0.f);
 
 		//std::cout << projectiles[i].getPosition().x << std::endl;
 
-		if (projectiles[i]->getPosition().x < 0) {
+		if ((projectiles[i]->getPosition().x < 0) || (projectiles[i]->getPosition().x > 1280)) {
 			projectiles.erase(projectiles.begin() + i);
 		}
-	}
-
-	for (int i = 0; i < projectiles.size(); i++) {
-		//std::cout << "printou" << std::endl;
-		this->graphicsManager->getWindow()->draw(*projectiles[i]);
 	}
 }
 

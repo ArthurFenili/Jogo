@@ -1,2 +1,6 @@
-﻿  Phase.cpp
+﻿  PlayingState.cpp
+E:\Visual Studio\Projetos\Jogo\Jogo\PlayingState.cpp(70,17): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+  State.cpp
+  main.cpp
+  Gerando Código...
   Jogo.vcxproj -> E:\Visual Studio\Projetos\Jogo\x64\Debug\Jogo.exe

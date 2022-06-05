@@ -35,7 +35,5 @@ public:
 	void renderShape(sf::RectangleShape* shape) { this->window->draw(*shape); }
 	void renderSprite(sf::Sprite* sprite) { this->window->draw(*sprite); }
 
-	void drawProjectile(sf::CircleShape* shape) { this->window->draw(*shape); }
-
 	sf::RenderWindow* getWindow() { return window; }
 };
