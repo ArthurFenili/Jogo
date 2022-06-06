@@ -28,6 +28,7 @@ PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>*
 
 	this->dt = dt;
 	this->phase1 = Phase(this->graphicsManager);
+	this->exit = false;
 
 	this->createMap();
 
@@ -67,7 +68,7 @@ void PlayingState::initPlayers()
 
 void PlayingState::initEnemies()
 {
-	std::srand(time(NULL));
+	std::srand((unsigned int)time(nullptr));
 	//for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
 	//	float pos = (float)(std::rand() % 1280);
 	//	this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), &this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
@@ -83,7 +84,12 @@ void PlayingState::updateInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 		this->graphicsManager->resetView();
-		//aqui vai chamar a state de pause
+		this->insertState(new PauseState(this->graphicsManager, this->states, this->dt, &this->exit));
+		this->updateStateChange();
+	}
+
+	if (this->exit) {
+		this->graphicsManager->resetView();
 		this->removeCurrentState();
 		this->updateStateChange();
 	}

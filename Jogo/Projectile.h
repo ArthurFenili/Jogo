@@ -19,7 +19,7 @@ public:
     void moveProjectile(int index, float direction);
     void verifyErase(int index);
     void setUser(EnemyProjectile* user) { this->user = user; }
-    int getVectorSize() { return projectiles.size(); }
+    int getVectorSize() { return (int)projectiles.size(); }
     std::vector<sf::RectangleShape*>* getVectorProjectiles() { return &projectiles; }
 
 };

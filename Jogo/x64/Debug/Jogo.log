@@ -1,4 +1,2 @@
 ﻿  PlayingState.cpp
-E:\Visual Studio\Projetos\Jogo\Jogo\Projectile.h(22,25): warning C4267: 'return': conversão de 'size_t' para 'int', possível perda de dados
-E:\Visual Studio\Projetos\Jogo\Jogo\PlayingState.cpp(70,17): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
   Jogo.vcxproj -> E:\Visual Studio\Projetos\Jogo\x64\Debug\Jogo.exe

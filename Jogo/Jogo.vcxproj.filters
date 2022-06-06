@@ -99,6 +99,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="PauseState.cpp">
+      <Filter>STATES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseState.h">
+      <Filter>STATES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

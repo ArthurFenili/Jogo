@@ -11,6 +11,8 @@ private:
 
 	sf::Font font;
 	Button* newGameButton;
+	Button* continueButton;
+	Button* leaderboardButton;
 	Button* exitButton;
 public:
 	MainMenuState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
