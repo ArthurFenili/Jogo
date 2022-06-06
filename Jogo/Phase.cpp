@@ -56,8 +56,7 @@ void Phase::render()
 		this->entitiesList[i]->renderShape();
 		this->entitiesList[i]->renderSprite();	
 
-		if (i != 0) { // arrumar esse if pq se ativar os skeleton vai parar de funcionar pq vai tentar pegar projetil de skeleton
-					// talvez com um dynamic cast (??)
+		if (dynamic_cast<EnemyProjectile*>(this->entitiesList[i]) != nullptr) {
 			EnemyProjectile* tmp = static_cast<EnemyProjectile*>(this->entitiesList[i]);
 			for (int j = 0; j < tmp->getVectorProjectiles()->size(); j++) { 
 				if (tmp->getVectorProjectiles()->size() > 0) {
