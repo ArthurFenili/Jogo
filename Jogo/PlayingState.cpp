@@ -82,6 +82,8 @@ void PlayingState::initEnemies()
 void PlayingState::updateInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
+		this->graphicsManager->resetView();
+		//aqui vai chamar a state de pause
 		this->removeCurrentState();
 		this->updateStateChange();
 	}

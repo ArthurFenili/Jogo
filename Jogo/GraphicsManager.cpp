@@ -41,6 +41,12 @@ sf::Texture* GraphicsManager::loadTextures(std::string pathToTexture, std::strin
 	return tmp;
 }
 
+void GraphicsManager::resetView()
+{
+	this->view.setCenter(sf::Vector2f(1280.f / 2, 720.f / 2));
+	this->setView();
+}
+
 void GraphicsManager::resizeView()
 {
 	float aspectRatio = (float)this->window->getSize().x / (float)this->window->getSize().y;

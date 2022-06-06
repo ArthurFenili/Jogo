@@ -23,5 +23,3 @@ public:
     std::vector<sf::RectangleShape*>* getVectorProjectiles() { return &projectiles; }
 
 };
-
-// TIRAR PROJETIL DE ENEMY PROJECTILE E CRIAR AQUI NESSA CLASSE

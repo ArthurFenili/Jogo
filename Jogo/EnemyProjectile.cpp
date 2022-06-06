@@ -5,7 +5,7 @@ const float HEIGHT_AUX = 2.6f;
 
 EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, 
 	float* dt, float spriteScale, float speed):
-	Character(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
+	Enemy(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
 
 {
 	this->speed = speed;
@@ -57,12 +57,12 @@ void EnemyProjectile::updateMovement() {
 	if (this->player1->getPosition().x > this->getPosition().x) {
 		this->velocity.x = 1.f * this->speed;
 		//this->body.move(this->velocity * (*this->dt));
-		this->facingRight = true;
+		//this->facingRight = true;
 	}
 	if (this->player1->getPosition().x < this->getPosition().x) {
 		this->velocity.x = -1.f * this->speed;
 		//this->body.move(this->velocity * (*this->dt));
-		this->facingRight = false;
+		//this->facingRight = false;
 	}
 
 	this->body.move(this->velocity * (*this->dt));

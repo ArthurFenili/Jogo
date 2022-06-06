@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Character.h"
+#include "Enemy.h"
 #include "Player.h"
 #include "Projectile.h"
 
@@ -10,11 +10,9 @@
 
 
 class EnemyProjectile :
-    public Character
+    public Enemy
 {
 private:
-    Player* player1;
-    AnimationManager* animation;
 
     bool attacking;
 
@@ -29,9 +27,6 @@ public:
         float* dt, float spriteScale, float speed);
     EnemyProjectile();
     ~EnemyProjectile();
-    
-    void setPlayer(Player* player) { this->player1 = player; }
-    Player* getPlayer() { return player1; }
 
     const float& getDT() { return *this->dt; }
     bool getAttacking() { return this->attacking; }

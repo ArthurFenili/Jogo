@@ -54,3 +54,11 @@ State& State::getCurrentState()
 {
 	return (*states->top());
 }
+
+void State::updateMousePositions()
+{
+	this->mousePosScreen = sf::Mouse::getPosition();
+	this->mousePosWindow = sf::Mouse::getPosition(*this->graphicsManager->getWindow());
+	this->mousePosView = this->graphicsManager->getWindow()->mapPixelToCoords(sf::Mouse::getPosition(*this->graphicsManager->getWindow()));
+
+}

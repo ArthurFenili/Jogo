@@ -4,6 +4,7 @@
 #include <stack>
 #include <SFML/Graphics.hpp>
 #include "GraphicsManager.h"
+#include "Button.h"
 
 class State
 {
@@ -16,6 +17,11 @@ protected:
 	bool insert;
 	bool replace;
 	bool remove;
+
+	sf::Vector2i mousePosScreen;
+	sf::Vector2i mousePosWindow;
+	sf::Vector2f mousePosView;
+
 public:
 	State(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
 	virtual ~State();
@@ -25,6 +31,7 @@ public:
 	void updateStateChange();
 	State& getCurrentState();
 
+	virtual void updateMousePositions();
 	virtual void updateInput() = 0;
 	virtual void update(float dt) = 0;
 	virtual void render() = 0;

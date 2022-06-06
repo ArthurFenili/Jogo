@@ -28,12 +28,14 @@ public:
 	void closeWindow() { this->window->close(); }
 
 	void updateView(sf::RectangleShape* body) { this->view.setCenter(body->getPosition()); }
+	void resetView();
 
 	void resizeView();
 	void setView() { this->window->setView(this->view); }
 
 	void renderShape(sf::RectangleShape* shape) { this->window->draw(*shape); }
 	void renderSprite(sf::Sprite* sprite) { this->window->draw(*sprite); }
+	void renderText(sf::Text* text) { this->window->draw(*text); }
 
 	sf::RenderWindow* getWindow() { return window; }
 };

@@ -5,7 +5,7 @@
 
 class Enemy : public Character
 {
-private:
+protected:
 	Player* player1;
 	AnimationManager* animation;
 
