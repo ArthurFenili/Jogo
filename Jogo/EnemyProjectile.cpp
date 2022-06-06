@@ -25,7 +25,9 @@ EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f 
 
 	shootTimer = 0;
 
-	projectile = nullptr;
+	projectile = new Projectile();
+
+	projectile->setUser(this);
 
 }
 
@@ -39,7 +41,7 @@ EnemyProjectile::EnemyProjectile()
 EnemyProjectile::~EnemyProjectile()
 {
 	delete this->animation;
-	delete projectile;
+	delete this->projectile;
 }
 
 void EnemyProjectile::update() {
@@ -77,28 +79,16 @@ void EnemyProjectile::updateAttack()
 		shootTimer++;
 
 	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (shootTimer >= 2000)) {
-
-		projectile = new sf::RectangleShape();
-		projectile->setFillColor(sf::Color::Magenta);
-		projectile->setSize(sf::Vector2f(10.f, 10.f));
-
-		projectile->setPosition(this->body.getPosition());
-		projectiles.push_back(projectile);
+		projectile->createProjectile();
 		shootTimer = 0;
-		//std::cout << projectiles.size() << std::endl;
 	}
 
-	for (int i = 0; i < projectiles.size(); i++) {
+	for (int i = 0; i < projectile->getVectorSize(); i++) {
 		if (this->player1->getPosition().x < this->getPosition().x)
-			projectiles[i]->move(-300.f * (*this->dt), 0.f);
+			projectile->moveProjectile(i, -1.f);
 		else if (this->player1->getPosition().x > this->getPosition().x)
-			projectiles[i]->move(300.f * (*this->dt), 0.f);
-
-		//std::cout << projectiles[i].getPosition().x << std::endl;
-
-		if ((projectiles[i]->getPosition().x < 0) || (projectiles[i]->getPosition().x > 1280)) {
-			projectiles.erase(projectiles.begin() + i);
-		}
+			projectile->moveProjectile(i, 1.f);
+		projectile->verifyErase(i);
 	}
 }
 

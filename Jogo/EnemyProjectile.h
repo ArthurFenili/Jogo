@@ -20,10 +20,9 @@ private:
 
     //------------
     int shootTimer;
- // DEIXAR PRIVADO E FAZER FUNÇÕES PRA DAR RENDER NA PHASE
-    sf::RectangleShape* projectile;
-    std::vector<sf::RectangleShape*> projectiles;
 
+    //---------------
+    Projectile* projectile;
 
 public:
     EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string TextureName, sf::Vector2f bodySize,
@@ -37,7 +36,7 @@ public:
     const float& getDT() { return *this->dt; }
     bool getAttacking() { return this->attacking; }
 
-    std::vector<sf::RectangleShape*>* getVectorProjectiles() { return &projectiles; }
+    std::vector<sf::RectangleShape*>* getVectorProjectiles() { return projectile->getVectorProjectiles(); }
 
     //---------------
     void update();
