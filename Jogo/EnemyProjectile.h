@@ -13,13 +13,8 @@ class EnemyProjectile :
     public Enemy
 {
 private:
-
     bool attacking;
-
-    //------------
     int shootTimer;
-
-    //---------------
     Projectile* projectile;
 
 public:

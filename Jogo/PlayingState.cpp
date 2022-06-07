@@ -27,8 +27,9 @@ PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>*
 	std::cout << "PlayingState" << std::endl;
 
 	this->dt = dt;
-	this->phase1 = Phase(this->graphicsManager);
+	this->phase1 = Phase(this->graphicsManager, &score);
 	this->exit = false;
+	this->score = 0;
 
 	this->createMap();
 
@@ -88,6 +89,12 @@ void PlayingState::updateInput()
 		this->updateStateChange();
 	}
 
+	if (this->player1->isDead()) {
+		this->graphicsManager->resetView();
+		this->insertState(new GameOverState(this->graphicsManager, this->states, this->dt), true);
+		this->updateStateChange();
+	}
+
 	if (this->exit) {
 		this->graphicsManager->resetView();
 		this->removeCurrentState();
@@ -144,6 +151,8 @@ void PlayingState::update(float dt)
 	this->phase1.update();
 	this->graphicsManager->updateView(this->player1->getShape());
 	this->updateCollision();
+
+	std::cout << this->score << std::endl;
 
 }
 

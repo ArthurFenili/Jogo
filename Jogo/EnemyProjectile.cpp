@@ -6,7 +6,6 @@ const float HEIGHT_AUX = 2.6f;
 EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, 
 	float* dt, float spriteScale, float speed):
 	Enemy(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
-
 {
 	this->speed = speed;
 	this->player1 = nullptr;
@@ -21,12 +20,10 @@ EnemyProjectile::EnemyProjectile(GraphicsManager* graphicsManager, sf::Vector2f 
 	this->body.setFillColor(sf::Color(0, 0, 0, 0));
 	this->body.setOutlineColor(sf::Color::Red);
 	this->body.setOutlineThickness(1.f);
+
 	this->attacking = false;
-
 	shootTimer = 0;
-
 	projectile = new Projectile();
-
 	projectile->setUser(this);
 
 }
@@ -69,8 +66,6 @@ void EnemyProjectile::updateMovement() {
 
 	this->position = this->body.getPosition();
 	this->sprite.setPosition(this->position);
-
-	//----------------------
 }
 
 void EnemyProjectile::updateAttack()
@@ -78,7 +73,7 @@ void EnemyProjectile::updateAttack()
 	if (shootTimer < 2000)
 		shootTimer++;
 
-	if ((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (shootTimer >= 2000)) {
+	if (shootTimer >= 2000) {
 		projectile->createProjectile();
 		shootTimer = 0;
 	}

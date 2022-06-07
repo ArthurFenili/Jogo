@@ -1,9 +1,10 @@
 #include "Phase.h"
 #include "EnemyProjectile.h"
 
-Phase::Phase(GraphicsManager* graphicsManager)
+Phase::Phase(GraphicsManager* graphicsManager, int* score)
 {
 	this->graphicsManager = graphicsManager;
+	this->score = score;
 }
 
 Phase::Phase()
@@ -41,12 +42,23 @@ void Phase::setEnemy2(sf::Vector2f position, std::string pathToTexture, std::str
 	this->entitiesList.addEntity(tmp);
 }
 
+void Phase::setEnemy3(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale, float speed, Player* player)
+{
+	Boss* tmp = nullptr;
+	tmp = new Boss(this->graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed);
+	tmp->setPlayer(player);
+
+	this->entitiesList.addEntity(tmp);
+}
+
 void Phase::update()
 {
 	for (int i = 0; i < this->entitiesList.getSize(); i++) {
 		this->entitiesList[i]->update();
-		if (static_cast<Character*>(this->entitiesList[i])->isDead())
+		if (static_cast<Character*>(this->entitiesList[i])->isDead()) {
 			this->entitiesList.removeEntity(this->entitiesList[i]);
+			(*this->score += 100);
+		}
 	}
 }
 

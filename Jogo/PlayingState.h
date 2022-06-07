@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Phase.h"
 #include "PauseState.h"
+#include "GameOverState.h"
 
 class PlayingState :
     public State
@@ -13,6 +14,8 @@ private:
 	Phase phase1;
 
 	bool exit;
+
+	int score;
 public:
 	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
 	~PlayingState();

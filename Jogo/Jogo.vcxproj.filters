@@ -103,7 +103,10 @@
       <Filter>MANAGERS</Filter>
     </ClCompile>
     <ClCompile Include="Boss.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>STATES</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,7 +177,10 @@
       <Filter>MANAGERS</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>STATES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
