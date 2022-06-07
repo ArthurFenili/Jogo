@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GraphicsManager.h"
-#include <iostream>
 
 class Ent
 {

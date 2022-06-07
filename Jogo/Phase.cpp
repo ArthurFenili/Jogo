@@ -1,9 +1,13 @@
 #include "Phase.h"
 
+const float SKELETON_SPEED = 30.f;
+const int SKELETON_HP = 500;
+
 Phase::Phase(GraphicsManager* graphicsManager, float* dt, int id) :
 	Ent(graphicsManager, dt, id)
 {
 	this->player = nullptr;
+
 	this->platformList = new Entity * [30];
 	for (int i = 0; i < 30; i++)
 		this->platformList[i] = new Entity[50];
@@ -19,20 +23,17 @@ Phase::Phase() :
 Phase::~Phase()
 {
 	this->player = nullptr;
-	this->platformList = nullptr;
 }
 
 Entity Phase::createEntity(int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName)
 {
 	if (id == ENEMY) {
 		Enemy* tmp = nullptr;
-		tmp = new Enemy(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, 30.f, 500);
+		tmp = new Enemy(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, SKELETON_SPEED, SKELETON_HP);
 		static_cast<Enemy*>(tmp)->setPlayer(this->player);
 		this->entityList.addEntity(tmp);
 		return *tmp;
 	}
-		
-
 	else if (id == FIRE || id == TELEPORT || id == SLOW) {
 		Obstacle* tmp = nullptr;
 		tmp = new Obstacle(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName);
@@ -108,7 +109,6 @@ void Phase::loadMap(std::string pathToTilemap)
 
 void Phase::update()
 {
-
 	for (int i = 0; i < this->entityList.getSize(); i++) {
 		if (this->entityList[i]->getId() != SLOW)
 			this->entityList[i]->update();
@@ -120,10 +120,10 @@ void Phase::update()
 
 void Phase::render()
 {
-	int fromX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) - 15;
-	int toX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) + 15;
-	int fromY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) - 15;
-	int toY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) + 15;
+	int fromX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) - 7;
+	int toX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) + 7;
+	int fromY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) - 7;
+	int toY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) + 7;
 
 	if (fromX < 0)
 		fromX = 0;
@@ -140,9 +140,10 @@ void Phase::render()
 			if (this->platformList[i][j].getId() != BACKGROUND)
 				this->platformList[i][j].renderSprite();
 				
-	for (int i = 0; i < this->entityList.getSize(); i++)
+	for (int i = 0; i < this->entityList.getSize(); i++) {
 		this->entityList[i]->renderSprite();
-		
+		this->entityList[i]->renderShape();
+	}
 }
 
 void Phase::clearPlatformList()

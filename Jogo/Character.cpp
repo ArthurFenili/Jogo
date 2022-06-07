@@ -8,19 +8,19 @@ Character::Character(GraphicsManager* graphicsManager, float* dt, int id, float 
 {
 	this->speed = speed;
 	this->hp = hp;
-
-	this->velocity = sf::Vector2f(0.f, 0.f);
 	this->gravity = GRAVITY;
 	this->facingRight = true;
+
+	this->velocity = sf::Vector2f(0.f, 0.f);
 }
 
 Character::Character() :
 	Entity()
 {
-	this->speed = 1.f;
-	this->facingRight = true;
+	this->speed = 100.f;
+	this->hp = 100;
 	this->gravity = GRAVITY;
-	this->hp = 1000;
+	this->facingRight = false;
 }
 
 Character::~Character()
@@ -60,9 +60,3 @@ void Character::flip()
 	this->facingRight = !this->facingRight;
 }
 
-bool Character::isDead()
-{
-	if (this->hp <= 0)
-		return true;
-	return false;
-}

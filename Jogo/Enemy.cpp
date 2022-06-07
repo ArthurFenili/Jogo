@@ -1,5 +1,9 @@
 #include "Enemy.h"
 
+const unsigned int SKELETON_ANIMATION_COLUMNS = 6;
+const unsigned int SKELETON_ANIMATION_ROWS = 1;
+const float SKELETON_ANIMATION_SWITCH_TIME = 0.3f;
+
 const float WIDTH_AUX = 2.f;
 const float HEIGHT_AUX = 2.6f;
 
@@ -8,13 +12,12 @@ Enemy::Enemy(GraphicsManager* graphicsManager, float* dt, int id, float spriteSc
 	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
 	this->player = nullptr;
-	this->initAnimation(6, 1, 0.3f);
+	this->initAnimation(SKELETON_ANIMATION_COLUMNS, SKELETON_ANIMATION_ROWS, SKELETON_ANIMATION_SWITCH_TIME);
 }
 
 Enemy::Enemy()
 {
 	this->player = nullptr;
-	this->speed = 0.f;
 }
 
 Enemy::~Enemy()
@@ -34,7 +37,7 @@ void Enemy::updateMovement()
 {
 	if (this->player->getPosition().x > this->getPosition().x)
 		this->move(1.f);
-	if (this->player->getPosition().x < this->getPosition().x)
+	else if (this->player->getPosition().x < this->getPosition().x)
 		this->move(-1.f);
 
 	this->velocity.y += 2.f * this->gravity * (*this->dt);

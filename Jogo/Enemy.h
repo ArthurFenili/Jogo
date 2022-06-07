@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Character.h"
 #include "Player.h"
 
 class Enemy : public Character
@@ -13,11 +12,11 @@ public:
 	Enemy();
 	~Enemy();
 
-	void setPlayer(Player* player) { this->player = player; }
-	Player* getPlayer() { return this->player; }
-	
 	void update();
 	void updateMovement();
 	void updatePositions();
 	void updateAnimation();
+
+	void setPlayer(Player* player) { this->player = player; }
+	Player* getPlayer() { return this->player; }
 };

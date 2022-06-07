@@ -2,7 +2,6 @@
 
 const unsigned int TELEPORT_ANIMATION_COLUMNS = 8;
 const unsigned int FIRE_ANIMATION_COLUMNS = 6;
-
 const unsigned int ANIMATION_ROWS = 1;
 const float SWITCH_TIME = 0.2f;
 
@@ -20,8 +19,6 @@ Obstacle::Obstacle(GraphicsManager* graphicsManager, float* dt, int id, float sp
 		this->initAnimation(FIRE_ANIMATION_COLUMNS, ANIMATION_ROWS, SWITCH_TIME);
 	else if (this->id == TELEPORT)
 		this->initAnimation(TELEPORT_ANIMATION_COLUMNS, ANIMATION_ROWS, SWITCH_TIME);
-	else
-		this->sprite.setTexture(*this->texture);
 
 	if (this->id == TELEPORT)
 		this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x * (TELEPORT_WIDTH_AUX / this->spriteScale) - 38.f, this->position.y - (this->body.getSize().y * (TELEPORT_HEIGHT_AUX / this->spriteScale))));
@@ -47,8 +44,6 @@ Obstacle::~Obstacle()
 
 void Obstacle::update()
 {
-	std::cout << "entrei na caralha do update da porra do obstacle\n";
-	this->sprite.setTexture(*this->texture);
 	this->animation->update(0, *this->dt);
 	this->sprite.setTextureRect(this->animation->getUVRect());
 }

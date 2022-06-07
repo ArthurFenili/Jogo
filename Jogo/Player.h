@@ -6,17 +6,16 @@
 class Player : public Character
 {
 private:
+	int animationRow;
+	AnimationManager* attackingAnimation;
+	sf::Texture* attackingTexture;
 	enum animationRows
 	{
 		PLAYER_IDLE = 0, PLAYER_RUNNING, PLAYER_JUMPING
 	};
 
-	int animationRow;
-	AnimationManager* attackingAnimation;
-	sf::Texture* attackingTexture;
 	bool isJumping;
 	bool canJump;
-	float jumpHeight;
 	bool isSlow;
 	bool attacking;
 
@@ -39,12 +38,12 @@ public:
 	void updateAnimation();
 	void updateAttackingAnimation();
 
+	void jump();
+
 	void setCanJump(bool canJump) { this->canJump = canJump; }
 	void setIsSlow(bool isSlow) { this->isSlow = isSlow; }
 
 	SwordAttack* getSwordHitbox() { return this->swordHitbox; }
 
 	void renderSwordHitBox_TMP() { this->graphicsManager->renderShape(this->swordHitbox->getShape()); }
-
-	void jump();
 };

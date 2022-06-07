@@ -16,10 +16,13 @@ Entity::Entity(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 	this->sprite.setPosition(this->position);
 	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
 	this->sprite.setOrigin(this->body.getSize() / 2.f);
+	this->sprite.setTexture(*this->texture);
 
 	this->animation = nullptr;
 
-	this->sprite.setTexture(*this->texture);
+	this->body.setFillColor(sf::Color::Transparent);
+	this->body.setOutlineColor(sf::Color::Red);
+	this->body.setOutlineThickness(1.f);
 }
 
 Entity::Entity() :
@@ -33,6 +36,7 @@ Entity::Entity() :
 Entity::~Entity()
 {
 	this->texture = nullptr;
+	this->animation = nullptr;
 }
 
 void Entity::initAnimation(unsigned int columns, unsigned int rows, float switchTime)

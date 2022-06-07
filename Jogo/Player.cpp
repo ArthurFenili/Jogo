@@ -2,15 +2,17 @@
 
 const unsigned int PLAYER_ANIMATION_COLUMNS = 6;
 const unsigned int PLAYER_ANIMATION_ROWS = 3;
+const float PLAYER_ANIMATION_SWITCH_TIME = 0.2f;
+
 const unsigned int ATTACKING_ANIMATION_COLUMNS = 6;
 const unsigned int ATTACKING_ANIMATION_ROWS = 1;
-const float PLAYER_ANIMATION_SWITCH_TIME = 0.2f;
 const float ATTACKING_ANIMATION_SWITCH_TIME = 0.1f;
+
 const float JUMP_HEIGHT = 450.f;
 const float GRAVITY = 981.f;
 const float JUMP_SPEED = -sqrtf(2.f * GRAVITY * JUMP_HEIGHT);
-const sf::Vector2f AUX_VECTOR = sf::Vector2f(48.f, 45.f);
 
+const sf::Vector2f AUX_VECTOR = sf::Vector2f(48.f, 45.f);
 const float WIDTH_AUX = 2.2f;
 const float HEIGHT_AUX = 1.8f;
 
@@ -18,35 +20,36 @@ Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 	std::string pathToTexture, std::string textureName, float speed, int hp) :
 	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
-	this->isSlow = false;
-	this->swordHitbox = nullptr;
+	this->initVariables();
+
 	this->attackingTexture = this->graphicsManager->loadTextures("images/player_attacking.png", "PLAYER_ATTACKING");
+
 	this->initAnimation(PLAYER_ANIMATION_COLUMNS, PLAYER_ANIMATION_ROWS, PLAYER_ANIMATION_SWITCH_TIME);
 	this->initAttackingAnimation();
-	this->initVariables();
 }
 
 Player::Player() :
 	Character()
 {
 	this->isSlow = false;
-	this->animationRow = PLAYER_IDLE;
-	this->attacking = false;
-	this->attackingAnimation = nullptr;
-	this->attackingTexture = nullptr;
 	this->canJump = false;
-	this->isJumping = true;
-	this->jumpHeight = JUMP_HEIGHT;
+	this->isJumping = false;
+	this->attacking = false;
+	this->animationRow = PLAYER_IDLE;
 	this->swordHitbox = nullptr;
+	this->attackingTexture = nullptr;
+	this->attackingAnimation = nullptr;
 }
 
 Player::~Player()
 {
 	this->attackingTexture = nullptr;
+
+	delete this->animation;
 	delete this->attackingAnimation;
+
 	if (this->swordHitbox)
 		delete this->swordHitbox;
-	delete this->animation;
 }
 
 void Player::initAttackingAnimation()
@@ -59,23 +62,22 @@ void Player::initAttackingAnimation()
 
 void Player::initVariables()
 {
-	this->animationRow = PLAYER_IDLE;
-	this->jumpHeight = JUMP_HEIGHT;
+	this->isSlow = false;
 	this->canJump = false;
-	this->isJumping = true;
+	this->isJumping = false;
 	this->attacking = false;
+	this->animationRow = PLAYER_IDLE;
+	this->swordHitbox = nullptr;
 }
 
 // Verifica constantemente várias ações que são necessárias para o bom funcionamento do player
 void Player::update()
 {
-	if (this) {
-		this->updateMovementInput();
-		this->updateAnimationRow();
-		this->updatePositions();
-		this->updateSprite();
-		this->isJumping = !this->canJump;
-	}
+	this->updateMovementInput();
+	this->updateAnimationRow();
+	this->updatePositions();
+	this->updateSprite();
+	this->isJumping = !this->canJump;
 }
 
 // Verifica se o jogador apertou alguma tecla que movimenta o personagem
@@ -148,7 +150,7 @@ void Player::updateSprite()
 	}
 	else {
 		this->updateAnimation();
-		if (swordHitbox) {
+		if (this->swordHitbox) {
 			delete this->swordHitbox;
 			this->swordHitbox = nullptr;
 		}
@@ -164,7 +166,7 @@ void Player::updateAnimation()
 
 void Player::updateAttackingAnimation()
 {
-	this->sprite.setTexture(*attackingTexture);
+	this->sprite.setTexture(*this->attackingTexture);
 	this->attackingAnimation->update(0, *this->dt);
 	this->sprite.setTextureRect(this->attackingAnimation->getUVRect());
 

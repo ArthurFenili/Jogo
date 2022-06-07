@@ -20,11 +20,13 @@ Game::Game()
 	this->phase1.loadMap("images/map1.txt");
 
 	this->player1 = new Player(&this->graphicsManager, &this->dt, 8, PLAYER_SPRITE_SCALE, sf::Vector2f(900.f, 1400.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", 200.f, 1000);
-	this->phase1.addEntity(this->player1);
-
 	this->phase1.setPlayer(this->player1);
 
+	this->phase1.createEntity(1, 1.f, sf::Vector2f(880.f, 1400.f), sf::Vector2f(64.f * 0.3f, 64.f * 0.8f), "images/fire.png", "FIRE");
+	this->phase1.createEntity(2, 2.3f, sf::Vector2f(500.f, 1400.f), sf::Vector2f(64.f * 0.4f, 64.f), "images/teleport.png", "TELEPORT");
 	this->phase1.createEntity(7, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+
+	this->phase1.addEntity(this->player1);
 
 	execute();
 }
@@ -89,7 +91,7 @@ void Game::updateCollision()
 						this->player1->setCanJump(true);
 				}
 				
-				for (int k = 1; k < phaseEntityList->getSize();  k++) {
+				for (int k = 0; k < phaseEntityList->getSize() - 1;  k++) {
 
 
 

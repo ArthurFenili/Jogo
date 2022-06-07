@@ -8,11 +8,11 @@ class Entity : public Ent
 {
 protected:
 	AnimationManager* animation;
-
 	sf::Texture* texture;
 
 	sf::Sprite sprite;
 	sf::RectangleShape body;
+
 	sf::Vector2f position;
 
 	Collider collider;
@@ -26,6 +26,8 @@ public:
 
 	void initAnimation(unsigned int columns, unsigned int rows, float switchTime);
 
+	virtual void update() {}	
+
 	void renderShape() { this->graphicsManager->renderShape(&this->body); }
 	void renderSprite() { this->graphicsManager->renderSprite(&this->sprite); }
 
@@ -34,7 +36,5 @@ public:
 
 	sf::Vector2f getPosition() { return this->position; }
 	Collider* getCollider() { return &this->collider; }
-
-	virtual void update() {}
 };
 
