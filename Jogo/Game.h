@@ -22,10 +22,6 @@ public:
 	Game();
 	~Game();
 
-	void createMap();
-	void initPlayers();
-	void initEnemies();
-
 	void update();
 	void updateSFMLEvents();
 	void updateDeltaTime();

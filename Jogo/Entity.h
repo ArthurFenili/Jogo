@@ -1,12 +1,14 @@
 #pragma once
 
-#include "GraphicsManager.h"
+#include "Ent.h"
 #include "Collider.h"
+#include "AnimationManager.h"
 
-class Entity
+class Entity : public Ent
 {
 protected:
-	GraphicsManager* graphicsManager;
+	AnimationManager* animation;
+
 	sf::Texture* texture;
 
 	sf::Sprite sprite;
@@ -16,17 +18,20 @@ protected:
 	Collider collider;
 
 	float spriteScale;
-	float* dt;
 
 public:
-	Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale);
+	Entity(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName);
 	Entity();
 	~Entity();
 
+	void initAnimation(unsigned int columns, unsigned int rows, float switchTime);
+
 	void renderShape() { this->graphicsManager->renderShape(&this->body); }
-	virtual void renderSprite() { this->graphicsManager->renderSprite(&this->sprite); }
+	void renderSprite() { this->graphicsManager->renderSprite(&this->sprite); }
 
 	sf::RectangleShape* getShape() { return &this->body; }
+	sf::Sprite* getSprite() { return &this->sprite; }
+
 	sf::Vector2f getPosition() { return this->position; }
 	Collider* getCollider() { return &this->collider; }
 

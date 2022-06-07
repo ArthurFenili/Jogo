@@ -14,15 +14,15 @@ const sf::Vector2f AUX_VECTOR = sf::Vector2f(48.f, 45.f);
 const float WIDTH_AUX = 2.2f;
 const float HEIGHT_AUX = 1.8f;
 
-Player::Player(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-	float* dt, float spriteScale, float speed) :
-	Character(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
+Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
+	std::string pathToTexture, std::string textureName, float speed, int hp) :
+	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
 	this->isSlow = false;
 	this->swordHitbox = nullptr;
-	this->speed = speed;
 	this->attackingTexture = this->graphicsManager->loadTextures("images/player_attacking.png", "PLAYER_ATTACKING");
-	this->initAnimations();
+	this->initAnimation(PLAYER_ANIMATION_COLUMNS, PLAYER_ANIMATION_ROWS, PLAYER_ANIMATION_SWITCH_TIME);
+	this->initAttackingAnimation();
 	this->initVariables();
 }
 
@@ -30,8 +30,6 @@ Player::Player() :
 	Character()
 {
 	this->isSlow = false;
-	this->speed = 0.f;
-	this->animation = nullptr;
 	this->animationRow = PLAYER_IDLE;
 	this->attacking = false;
 	this->attackingAnimation = nullptr;
@@ -44,19 +42,15 @@ Player::Player() :
 
 Player::~Player()
 {
-	delete this->animation;
+	this->attackingTexture = nullptr;
 	delete this->attackingAnimation;
 	if (this->swordHitbox)
 		delete this->swordHitbox;
+	delete this->animation;
 }
 
-void Player::initAnimations()
+void Player::initAttackingAnimation()
 {
-	this->animation = new AnimationManager();
-	this->animation->setImageCount(sf::Vector2u(PLAYER_ANIMATION_COLUMNS, PLAYER_ANIMATION_ROWS));
-	this->animation->setSwitchTime(PLAYER_ANIMATION_SWITCH_TIME);
-	this->animation->setUVRect(this->texture);
-
 	this->attackingAnimation = new AnimationManager();
 	this->attackingAnimation->setImageCount(sf::Vector2u(ATTACKING_ANIMATION_COLUMNS, ATTACKING_ANIMATION_ROWS));
 	this->attackingAnimation->setSwitchTime(ATTACKING_ANIMATION_SWITCH_TIME);

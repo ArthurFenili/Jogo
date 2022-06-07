@@ -1,37 +1,39 @@
 #pragma once
 
 #include "EntityList.h"
-#include "Platform.h"
 #include "Enemy.h"
+#include "Obstacle.h"
 #include <fstream>
 #include <sstream>
 
-class Phase
+class Phase : public Ent
 {
-private:
-	GraphicsManager* graphicsManager;
+protected:
+	Player* player;
+
 	EntityList entityList;
-
-	Platform** platformList2;
-
-	float* dt;
+	Entity** platformList;
 
 public:
-	Phase(GraphicsManager* graphicsManager, float* dt);
+	Phase(GraphicsManager* graphicsManager, float* dt, int id);
 	Phase();
 	~Phase();
 
-	Platform createPlatform(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float spriteScale = 1.f);
-	void setEnemy(sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale, float speed, Player* player);
+	Entity createEntity(int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName);
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }
 
-	void loadMap(std::string mapFileName);
+	void setPlayer(Player* player) { this->player = player; }
+	Player* getPlayer() { return this->player; }
+
+	void loadMap(std::string pathToTilemap);
 
 	void update();
 
 	void render();
 
 	EntityList* getEntityList() { return &this->entityList; }
-	Platform** getPlatformList() { return this->platformList2; }
+	Entity** getPlatformList() { return this->platformList; }
+
+	void clearPlatformList();
 };

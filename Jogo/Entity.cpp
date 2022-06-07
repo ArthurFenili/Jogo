@@ -1,12 +1,10 @@
 #include "Entity.h"
 
-Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, float* dt, float spriteScale)
+Entity::Entity(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName) :
+	Ent(graphicsManager, dt, id)
 {
-	this->graphicsManager = graphicsManager;
-	this->position = position;
-	this->dt = dt;
 	this->spriteScale = spriteScale;
-
+	this->position = position;
 	this->texture = this->graphicsManager->loadTextures(pathToTexture, textureName);
 
 	this->body.setPosition(this->position);
@@ -15,19 +13,32 @@ Entity::Entity(GraphicsManager* graphicsManager, sf::Vector2f position, std::str
 
 	this->collider.setBody(&this->body);
 
-	this->body.setFillColor(sf::Color::Transparent);
-	this->body.setOutlineColor(sf::Color::Red);
-	this->body.setOutlineThickness(1.f);
+	this->sprite.setPosition(this->position);
+	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
+	this->sprite.setOrigin(this->body.getSize() / 2.f);
+
+	this->animation = nullptr;
+
+	this->sprite.setTexture(*this->texture);
 }
 
-Entity::Entity()
+Entity::Entity() :
+	Ent()
 {
-	this->graphicsManager = nullptr;
+	this->animation = nullptr;
 	this->texture = nullptr;
-	this->dt = nullptr;
 	this->spriteScale = 1.f;
 }
 
 Entity::~Entity()
 {
+	this->texture = nullptr;
+}
+
+void Entity::initAnimation(unsigned int columns, unsigned int rows, float switchTime)
+{
+	this->animation = new AnimationManager();
+	this->animation->setImageCount(sf::Vector2u(columns, rows));
+	this->animation->setSwitchTime(switchTime);
+	this->animation->setUVRect(this->texture);
 }

@@ -24,6 +24,8 @@ SwordAttack::SwordAttack(sf::Vector2f position, Player* player)
 
 SwordAttack::~SwordAttack()
 {
+	this->player = nullptr;
+	this->playerBody = nullptr;
 }
 
 void SwordAttack::update()

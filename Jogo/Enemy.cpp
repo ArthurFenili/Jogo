@@ -3,30 +3,23 @@
 const float WIDTH_AUX = 2.f;
 const float HEIGHT_AUX = 2.6f;
 
-Enemy::Enemy(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize, 
-	float* dt, float spriteScale, float speed) :
-	Character(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
+Enemy::Enemy(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
+	std::string pathToTexture, std::string textureName, float speed, int hp) :
+	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
-	this->speed = speed;
-	this->player1 = nullptr;
-
-	this->animation = new AnimationManager();
-	this->animation->setImageCount(sf::Vector2u(6, 1));
-	this->animation->setSwitchTime(0.3f);
-	this->animation->setUVRect(this->texture);
-
-	this->sprite.setTexture(*this->texture);
+	this->player = nullptr;
+	this->initAnimation(6, 1, 0.3f);
 }
 
 Enemy::Enemy()
 {
-	this->animation = nullptr;
-	this->player1 = nullptr;
+	this->player = nullptr;
 	this->speed = 0.f;
 }
 
 Enemy::~Enemy()
 {
+	this->player = nullptr;
 	delete this->animation;
 }
 
@@ -39,9 +32,9 @@ void Enemy::update()
 
 void Enemy::updateMovement()
 {
-	if (this->player1->getPosition().x > this->getPosition().x)
+	if (this->player->getPosition().x > this->getPosition().x)
 		this->move(1.f);
-	if (this->player1->getPosition().x < this->getPosition().x)
+	if (this->player->getPosition().x < this->getPosition().x)
 		this->move(-1.f);
 
 	this->velocity.y += 2.f * this->gravity * (*this->dt);

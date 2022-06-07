@@ -1,19 +1,17 @@
 #pragma once
 
-#include "AnimationManager.h"
 #include "SwordAttack.h"
 #include "Character.h"
 
 class Player : public Character
 {
 private:
-	enum Rows
+	enum animationRows
 	{
 		PLAYER_IDLE = 0, PLAYER_RUNNING, PLAYER_JUMPING
 	};
 
 	int animationRow;
-	AnimationManager* animation;
 	AnimationManager* attackingAnimation;
 	sf::Texture* attackingTexture;
 	bool isJumping;
@@ -25,12 +23,11 @@ private:
 	SwordAttack* swordHitbox;
 
 public:
-	Player(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-		float* dt, float spriteScale, float speed);
+	Player(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, int hp);
 	Player();
 	~Player();
 
-	void initAnimations();
+	void initAttackingAnimation();
 	void initVariables();
 
 	void update();

@@ -6,16 +6,15 @@
 class Enemy : public Character
 {
 private:
-	Player* player1;
-	AnimationManager* animation;
+	Player* player;
 
 public:
-	Enemy(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-		float* dt, float spriteScale, float speed);
+	Enemy(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, int hp);
 	Enemy();
 	~Enemy();
 
-	void setPlayer(Player* player) { this->player1 = player; }
+	void setPlayer(Player* player) { this->player = player; }
+	Player* getPlayer() { return this->player; }
 	
 	void update();
 	void updateMovement();

@@ -9,23 +9,23 @@ protected:
 
 	float gravity;
 	float speed;
-
 	bool facingRight;
-
 	int hp;
 
 public:
-	Character(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-		float* dt, float spriteScale, float speed);
+	Character(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, int hp);
 	Character();
 	~Character();
+
+	virtual void update() {}
 
 	void updateCollision(sf::Vector2f direction);
 
 	void move(float dir_x);
 	void flip();
 
-	void renderSprite() { this->graphicsManager->renderSprite(&this->sprite); }
+	void setSpeed(float speed) { this->speed = speed; }
+	void setHp(int hp) { this->hp = hp; }
 
 	void loseHp() { (this->hp)--; }
 	bool isDead();

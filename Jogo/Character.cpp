@@ -2,21 +2,16 @@
 
 const float GRAVITY = 981.f;
 
-Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-	float* dt, float spriteScale, float speed) :
-	Entity(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale)
+Character::Character(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
+	std::string pathToTexture, std::string textureName, float speed, int hp) :
+	Entity(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName)
 {
 	this->speed = speed;
-
-	this->sprite.setPosition(this->position + this->body.getSize());
-	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
-	this->sprite.setOrigin(this->body.getSize() / 2.f);
+	this->hp = hp;
 
 	this->velocity = sf::Vector2f(0.f, 0.f);
 	this->gravity = GRAVITY;
 	this->facingRight = true;
-
-	this->hp = 1000;
 }
 
 Character::Character() :

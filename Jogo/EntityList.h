@@ -24,4 +24,3 @@ public:
 
 	Entity* pop(Entity* entity) { return this->entityList.pop(entity); }
 };
-
