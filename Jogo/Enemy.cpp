@@ -8,7 +8,7 @@ const float WIDTH_AUX = 2.f;
 const float HEIGHT_AUX = 2.6f;
 
 Enemy::Enemy(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
-	std::string pathToTexture, std::string textureName, float speed, int hp) :
+	std::string pathToTexture, std::string textureName, float speed, long int hp) :
 	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
 	this->player = nullptr;

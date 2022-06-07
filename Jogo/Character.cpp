@@ -3,7 +3,7 @@
 const float GRAVITY = 981.f;
 
 Character::Character(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
-	std::string pathToTexture, std::string textureName, float speed, int hp) :
+	std::string pathToTexture, std::string textureName, float speed, long int hp) :
 	Entity(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName)
 {
 	this->speed = speed;

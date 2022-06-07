@@ -13,7 +13,10 @@ Entity::Entity(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 
 	this->collider.setBody(&this->body);
 
-	this->sprite.setPosition(this->position);
+	if (id == DOOR)
+		this->sprite.setPosition(sf::Vector2f(this->position.x, this->position.y + 40.f));
+	else
+		this->sprite.setPosition(this->position);
 	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
 	this->sprite.setOrigin(this->body.getSize() / 2.f);
 

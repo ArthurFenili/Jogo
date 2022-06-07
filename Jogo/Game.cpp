@@ -7,7 +7,7 @@ const float PLAYER_WIDTH = 32.f * 1.6f;
 const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
 const float PLAYER_SPEED = 200.f;
-const int PLAYER_HP = 50000;
+const long int PLAYER_HP = 400000;
 
 const float SKELETON_WIDTH = 32.f * 2.f;
 const float SKELETON_HEIGHT = 35.f * 2.6f;
@@ -24,12 +24,12 @@ Game::Game()
 
 	this->phase1.loadMap("images/map1.txt");
 
-	this->player1 = new Player(&this->graphicsManager, &this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(930.f, 1400.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP);
+	this->player1 = new Player(&this->graphicsManager, &this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(704.f, 640.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP);
 	this->phase1.setPlayer(this->player1);
 
-	this->phase1.createEntity(FIRE, 1.f, sf::Vector2f(880.f, 1400.f), FIRE_SIZE, "images/fire.png", "FIRE");
-	this->phase1.createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(500.f, 1400.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
-	this->phase1.createEntity(ENEMY, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+	//this->phase1.createEntity(FIRE, 1.f, sf::Vector2f(880.f, 1400.f), FIRE_SIZE, "images/fire.png", "FIRE");
+	//this->phase1.createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(500.f, 1400.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+	//this->phase1.createEntity(ENEMY, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
 
 	this->phase1.addEntity(this->player1);
 
@@ -104,6 +104,7 @@ void Game::updateCollision()
 						if (this->player1 && this->player1->getSwordHitbox())
 							if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds()))
 								static_cast<Character*>(entityList->operator[](k))->loseHp();
+								
 					}
 					else if (this->player1) {
 						if (entityList->operator[](k)->getId() != FIRE && entityList->operator[](k)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp)) {

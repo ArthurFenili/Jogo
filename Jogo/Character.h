@@ -6,14 +6,14 @@ class Character : public Entity
 {
 protected:
 	float speed;
-	int hp;
+	long int hp;
 	float gravity;
 	bool facingRight;
 	
 	sf::Vector2f velocity;
 
 public:
-	Character(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, int hp);
+	Character(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, long int hp);
 	Character();
 	~Character();
 
@@ -28,7 +28,7 @@ public:
 
 	void setSpeed(float speed) { this->speed = speed; }
 
-	void setHp(int hp) { this->hp = hp; }
+	void setHp(long int hp) { this->hp = hp; }
 	void loseHp() { (this->hp)--; }
 
 	bool getFacingRight() { return this->facingRight; }

@@ -1,7 +1,7 @@
 #include "Phase.h"
 
 const float SKELETON_SPEED = 30.f;
-const int SKELETON_HP = 500;
+const long int SKELETON_HP = 125000;
 
 Phase::Phase(GraphicsManager* graphicsManager, float* dt, int id) :
 	Ent(graphicsManager, dt, id)

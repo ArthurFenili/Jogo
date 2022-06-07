@@ -22,7 +22,7 @@ const sf::Vector2f AUX_VECTOR = sf::Vector2f(46.f, 66.f);
 
 
 Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
-	std::string pathToTexture, std::string textureName, float speed, int hp) :
+	std::string pathToTexture, std::string textureName, float speed, long int hp) :
 	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
 	this->initVariables();
