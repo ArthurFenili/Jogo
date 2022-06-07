@@ -95,14 +95,14 @@ void Phase::loadMap(std::string pathToTilemap)
 				else if (map[i][j].x == 2 && map[i][j].y == 0)
 					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile2.png", "TILE_2");
 				else if (map[i][j].x == 0 && map[i][j].y == 1)
-					this->platformList[i][j] = this->createEntity(DOOR, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/door.png", "DOOR");
+					this->platformList[i][j] = this->createEntity(DOOR, 2.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f * 2.f), "images/door.png", "DOOR");
 				else if (map[i][j].x == 1 && map[i][j].y == 1)
 					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile3.png", "TILE_3");
 				else if (map[i][j].x == 2 && map[i][j].y == 1)
 					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile4.png", "TILE_4");
 			}
 			else
-				this->platformList[i][j] = this->createEntity(BACKGROUND, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/no_collider.png", "BACKGROUND");	
+				this->platformList[i][j] = this->createEntity(BACKGROUND, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "", "BACKGROUND");	
 		}
 	}
 }
@@ -120,10 +120,10 @@ void Phase::update()
 
 void Phase::render()
 {
-	int fromX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) - 7;
-	int toX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) + 7;
-	int fromY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) - 7;
-	int toY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) + 7;
+	int fromX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) - 10;
+	int toX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) + 10;
+	int fromY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) - 10;
+	int toY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) + 10;
 
 	if (fromX < 0)
 		fromX = 0;
@@ -137,13 +137,19 @@ void Phase::render()
 
 	for (int i = fromY; i < toY; i++)
 		for (int j = fromX; j < toX; j++)
-			if (this->platformList[i][j].getId() != BACKGROUND)
+			if (this->platformList[i][j].getId() != BACKGROUND) {
 				this->platformList[i][j].renderSprite();
+				this->platformList[i][j].renderShape();
+			}
+				
 				
 	for (int i = 0; i < this->entityList.getSize(); i++) {
 		this->entityList[i]->renderSprite();
 		this->entityList[i]->renderShape();
 	}
+
+	if (this->player->getSwordHitbox())
+		this->player->renderSwordHitBox_TMP();
 }
 
 void Phase::clearPlatformList()

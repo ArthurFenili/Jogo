@@ -1,9 +1,7 @@
 #pragma once
 
 #include <ctime>
-#include "Player.h"
 #include "Phase.h"
-#include "Enemy.h"
 
 class Game
 {
@@ -18,6 +16,10 @@ private:
 	sf::Clock dtClock;
 	float dt;
 
+	enum types {
+		PHASE = 0, FIRE = 1, TELEPORT = 2, SLOW = 3, BLOCK = 4, DOOR = 5, BACKGROUND = 6, ENEMY = 7, PLAYER = 8, SWORD = 9
+	};
+
 public:
 	Game();
 	~Game();
@@ -31,4 +33,3 @@ public:
 
 	void execute();
 };
-

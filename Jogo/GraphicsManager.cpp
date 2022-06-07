@@ -12,7 +12,6 @@ GraphicsManager::GraphicsManager()
 
 GraphicsManager::~GraphicsManager()
 {
-
 	/* INSPIRADO NO TUTORIAL DO MONITOR MATHEUS BURDA */
 
 	/* Desaloca as texturas */
@@ -27,6 +26,10 @@ GraphicsManager::~GraphicsManager()
 // Carrega as texturas e inserem elas no mapa de texturas (caso ainda não tenham sido criadas)
 sf::Texture* GraphicsManager::loadTextures(std::string pathToTexture, std::string textureName)
 {
+
+	if (textureName == "NONE" || textureName == "BACKGROUND")
+		return nullptr;
+
 	/* Tenta encontrar a textura no mapa de texturas a partir da string textureName */
 	std::map<std::string, sf::Texture*>::iterator it;
 	for (it = this->textures.begin(); it != this->textures.end(); ++it)

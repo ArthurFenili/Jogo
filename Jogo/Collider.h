@@ -11,10 +11,10 @@ public:
 	Collider(sf::RectangleShape* body = nullptr);
 	~Collider();
 
+	bool isColliding(Collider* other, sf::Vector2f* direction);
+
 	void setBody(sf::RectangleShape* body) { this->body = body; }
 	void move(float dx, float dy) { this->body->move(dx, dy); }
-
-	bool isColliding(Collider* other, sf::Vector2f* direction);
 
 	/* Retornam a posição e metade do tamanho do body */
 	sf::Vector2f getPosition() { return this->body->getPosition(); }

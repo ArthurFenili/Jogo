@@ -16,7 +16,9 @@ Entity::Entity(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 	this->sprite.setPosition(this->position);
 	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
 	this->sprite.setOrigin(this->body.getSize() / 2.f);
-	this->sprite.setTexture(*this->texture);
+
+	if (this->texture != nullptr)
+		this->sprite.setTexture(*this->texture);
 
 	this->animation = nullptr;
 

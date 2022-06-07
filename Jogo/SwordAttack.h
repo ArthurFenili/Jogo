@@ -1,26 +1,19 @@
 #pragma once
 
-#include "Collider.h"
+#include "Entity.h"
 
 class Player;
 
-class SwordAttack
+class SwordAttack : public Entity
 {
 private:
 	Player* player;
 	sf::RectangleShape* playerBody;
-
-	sf::RectangleShape hitbox;
-	sf::Vector2f position;
-
-	Collider collider;
 	
 public:
-	SwordAttack(sf::Vector2f position = sf::Vector2f(0.f, 0.f), Player* player = nullptr);
+	SwordAttack(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, Player* player = nullptr);
+	SwordAttack();
 	~SwordAttack();
-
-	sf::RectangleShape* getShape() { return &this->hitbox; }
-	Collider* getCollider() { return &this->collider; }
 
 	void update();
 	void updatePosition();

@@ -12,9 +12,14 @@ const float JUMP_HEIGHT = 450.f;
 const float GRAVITY = 981.f;
 const float JUMP_SPEED = -sqrtf(2.f * GRAVITY * JUMP_HEIGHT);
 
-const sf::Vector2f AUX_VECTOR = sf::Vector2f(48.f, 45.f);
+const float HITBOX_WIDTH = 85.f;
+const float HITBOX_HEIGHT = 80.f;
+
 const float WIDTH_AUX = 2.2f;
-const float HEIGHT_AUX = 1.8f;
+const float HEIGHT_AUX = 1.9f;
+
+const sf::Vector2f AUX_VECTOR = sf::Vector2f(46.f, 66.f);
+
 
 Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
 	std::string pathToTexture, std::string textureName, float speed, int hp) :
@@ -145,7 +150,7 @@ void Player::updateSprite()
 {
 	if (this->attacking) {
 		this->updateAttackingAnimation();
-		this->swordHitbox = new SwordAttack(this->position, this);
+		this->swordHitbox = new SwordAttack(this->graphicsManager, this->dt, SWORD, 0.f, this->position, sf::Vector2f(HITBOX_WIDTH, HITBOX_HEIGHT), "", "NONE", this);
 		this->swordHitbox->update();
 	}
 	else {

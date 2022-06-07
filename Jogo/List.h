@@ -9,16 +9,13 @@ Classe Lista que já foi implementada durante as aulas no Sistema Acadêmico
 template <class TL> class List
 {
 private:
-
 	template <class TE> class Element
 	{
 	private:
-
 		Element<TE>* pNext;
 		TE* pInfo;
 
 	public:
-
 		Element() {
 			pNext = nullptr;
 			pInfo = nullptr;

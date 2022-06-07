@@ -17,6 +17,8 @@ public:
 
 	sf::Texture* loadTextures(std::string pathToTexture, std::string textureName);
 
+	void resizeView();
+
 	bool pollEvent(sf::Event* sfEvent) { return this->window->pollEvent(*sfEvent); }
 
 	bool isWindowOpen() { return this->window->isOpen(); }
@@ -28,8 +30,7 @@ public:
 	void closeWindow() { this->window->close(); }
 
 	void updateView(sf::RectangleShape* body) { this->view.setCenter(body->getPosition()); }
-
-	void resizeView();
+	
 	void setView() { this->window->setView(this->view); }
 
 	sf::View getView() { return this->view; }

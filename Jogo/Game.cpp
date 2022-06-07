@@ -7,24 +7,29 @@ const float PLAYER_WIDTH = 32.f * 1.6f;
 const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
 const float PLAYER_SPEED = 200.f;
+const int PLAYER_HP = 50000;
 
 const float SKELETON_WIDTH = 32.f * 2.f;
 const float SKELETON_HEIGHT = 35.f * 2.6f;
 const float SKELETON_SPRITE_SCALE = 3.f;
-const float SKELETON_SPEED = 30.f;
+
+const float TELEPORT_SPRITE_SCALE = 2.3f;
+
+sf::Vector2f FIRE_SIZE = sf::Vector2f(64.f * 0.3f, 64.f * 0.8f);
+sf::Vector2f TELEPORT_SIZE = sf::Vector2f(64.f * 0.4f, 64.f);
 
 Game::Game()
 {
-	this->phase1 = Phase(&this->graphicsManager, &this->dt, 0);
+	this->phase1 = Phase(&this->graphicsManager, &this->dt, PHASE);
 
 	this->phase1.loadMap("images/map1.txt");
 
-	this->player1 = new Player(&this->graphicsManager, &this->dt, 8, PLAYER_SPRITE_SCALE, sf::Vector2f(900.f, 1400.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", 200.f, 1000);
+	this->player1 = new Player(&this->graphicsManager, &this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(930.f, 1400.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP);
 	this->phase1.setPlayer(this->player1);
 
-	this->phase1.createEntity(1, 1.f, sf::Vector2f(880.f, 1400.f), sf::Vector2f(64.f * 0.3f, 64.f * 0.8f), "images/fire.png", "FIRE");
-	this->phase1.createEntity(2, 2.3f, sf::Vector2f(500.f, 1400.f), sf::Vector2f(64.f * 0.4f, 64.f), "images/teleport.png", "TELEPORT");
-	this->phase1.createEntity(7, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+	this->phase1.createEntity(FIRE, 1.f, sf::Vector2f(880.f, 1400.f), FIRE_SIZE, "images/fire.png", "FIRE");
+	this->phase1.createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(500.f, 1400.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+	this->phase1.createEntity(ENEMY, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
 
 	this->phase1.addEntity(this->player1);
 
@@ -77,53 +82,44 @@ void Game::updateCollision()
 	sf::Vector2f directionPlayerTmp;  // Vetor de direções
 	sf::Vector2f directionEnemyTmp;
 	
-	Entity** phasePlatformList = this->phase1.getPlatformList(); // PLATAFORMAS (BLOCOS E BACKGROUND E DOOR)
-	EntityList* phaseEntityList = this->phase1.getEntityList(); // PLAYER, ENEMY E OBSTACULOS (FIRE, SLOW, TELEPORT)
+	Entity** platformList = this->phase1.getPlatformList(); // PLATAFORMAS (BLOCOS E BACKGROUND E DOOR)
+	EntityList* entityList = this->phase1.getEntityList(); // PLAYER, ENEMY E OBSTACULOS (FIRE, SLOW, TELEPORT)
 	
 	for (int i = 0; i < 30; i++) {
 		for (int j = 0; j < 50; j++) {
-			if (phasePlatformList[i][j].getId() == 4) {
+			if (platformList[i][j].getId() == BLOCK) {
 				
-				if (phasePlatformList[i][j].getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp)) {
+				if (platformList[i][j].getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp)) {
 					this->player1->updateCollision(directionPlayerTmp);
 
 					if (directionPlayerTmp.y < 0.f)
 						this->player1->setCanJump(true);
 				}
 				
-				for (int k = 0; k < phaseEntityList->getSize() - 1;  k++) {
-
-
-
-					if (phaseEntityList->operator[](k)->getId() == 7) {
-						if (phasePlatformList[i][j].getCollider()->isColliding(phaseEntityList->operator[](k)->getCollider(), &directionEnemyTmp))
-							static_cast<Character*>(phaseEntityList->operator[](k))->updateCollision(directionEnemyTmp);
+				for (int k = 0; k < entityList->getSize() - 1;  k++) {
+					if (entityList->operator[](k)->getId() == ENEMY) {
+						if (platformList[i][j].getCollider()->isColliding(entityList->operator[](k)->getCollider(), &directionEnemyTmp))
+							static_cast<Character*>(entityList->operator[](k))->updateCollision(directionEnemyTmp);
 
 						if (this->player1 && this->player1->getSwordHitbox())
-							if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntityList->operator[](k)->getShape()->getGlobalBounds()))
-								static_cast<Character*>(phaseEntityList->operator[](k))->loseHp();
+							if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds()))
+								static_cast<Character*>(entityList->operator[](k))->loseHp();
 					}
-
-
 					else if (this->player1) {
-						if (phaseEntityList->operator[](k)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp)) {
-							if (phaseEntityList->operator[](k)->getId() == 3)
+						if (entityList->operator[](k)->getId() != FIRE && entityList->operator[](k)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp)) {
+							if (entityList->operator[](k)->getId() == SLOW)
 								this->player1->setIsSlow(true);
-							else {
+							else if (entityList->operator[](k)->getId() == TELEPORT) {
 								this->player1->setIsSlow(false);
-								if (phaseEntityList->operator[](k)->getId() == 2)
-									this->player1->getShape()->setPosition(sf::Vector2f(900.f, 1400.f));
-								else if (phaseEntityList->operator[](k)->getId() == 1)
-									this->player1->loseHp();
+								this->player1->getShape()->setPosition(sf::Vector2f(900.f, 1400.f));
 							}
 						}
+						else if (entityList->operator[](k)->getId() == FIRE && this->player1->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
+							this->player1->setIsSlow(false);
+							this->player1->loseHp();
+						}
 					}
-
-
-
 				}
-
-
 			}		
 		}
 	}

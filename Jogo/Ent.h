@@ -11,7 +11,7 @@ protected:
 	int id;
 
 	enum types {
-		PHASE = 0, FIRE = 1, TELEPORT = 2, SLOW = 3, BLOCK = 4, DOOR = 5, BACKGROUND = 6, ENEMY = 7, PLAYER = 8
+		PHASE = 0, FIRE = 1, TELEPORT = 2, SLOW = 3, BLOCK = 4, DOOR = 5, BACKGROUND = 6, ENEMY = 7, PLAYER = 8, SWORD = 9
 	};
 
 public:
