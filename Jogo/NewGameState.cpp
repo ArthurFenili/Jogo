@@ -108,7 +108,7 @@ void NewGameState::update(float dt)
 
 void NewGameState::render()
 {
-	this->graphicsManager->clearWindow();
+	this->graphicsManager->clearWindow(-1);
 
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();

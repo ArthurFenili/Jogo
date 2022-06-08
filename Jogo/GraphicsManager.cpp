@@ -58,8 +58,10 @@ void GraphicsManager::clearWindow(int phase)
 {
 	if (phase == 0)
 		this->window->clear(sf::Color(90, 161, 238));
-	else
+	else if (phase == 1)
 		this->window->clear(sf::Color(53, 53, 95));
+	else
+		this->window->clear();
 }
 
 void GraphicsManager::resetView()

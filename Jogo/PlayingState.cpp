@@ -35,10 +35,12 @@ PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>*
 	this->exit = false;
 	this->score = 0;
 
+	this->createPlayers();
 	this->createMap();
 	this->createObstacles(FOREST_PHASE);
 	this->createEnemies(FOREST_PHASE);
-	this->createPlayers();
+
+	this->currentPhase->addEntity(this->player1);
 }
 
 PlayingState::~PlayingState()
@@ -74,20 +76,37 @@ void PlayingState::createObstacles(int phase)
 		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(18.f * 64.f, 11.f * 64.f), TELEPORT_SIZE, "images/teleport_p1.png", "TELEPORT_P1");
 		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(10.f * 64.f, 13.f * 64.f), TELEPORT_SIZE, "images/teleport_p1.png", "TELEPORT_P1");
 	}
+
+	else if (phase == CASTLE_PHASE) {
+		this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(15.f * 64.f, 23.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+		this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(25.f * 64.f, 19.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+		this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(9.f * 64.f, 15.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+		this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(19.f * 64.f, 10.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+		this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(25.f * 64.f, 10.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+		this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(34.f * 64.f, 13.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+
+		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(12.f * 64.f, 23.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(30.f * 64.f, 19.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(39.f * 64.f, 23.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(41.f * 64.f, 15.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+		this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(33.f * 64.f, 8.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+	}
 }
 
 void PlayingState::createEnemies(int phase)
 {
-	/*if (phase == FOREST_PHASE) {
-		this->currentPhase->createEntity(ENEMY, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
-	}*/
+	if (phase == FOREST_PHASE) {
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+	}
+	else if (phase == CASTLE_PHASE) {
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(950.f, 1400.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer.png", "ARCHER");
+	}
 }
 
 void PlayingState::createPlayers()
 {
 	this->player1 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(8.f * 64.f, 22.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP);
 	this->currentPhase->setPlayer(this->player1);
-	this->currentPhase->addEntity(this->player1);
 }
 
 void PlayingState::updateInput()
@@ -132,7 +151,7 @@ void PlayingState::updateCollision()
 				}
 
 				for (int k = 0; k < entityList->getSize() - 1; k++) {
-					if (entityList->operator[](k)->getId() == ENEMY) {
+					if (entityList->operator[](k)->getId() == SKELETON || entityList->operator[](k)->getId() == ARCHER) {
 						if (platformList[i][j].getCollider()->isColliding(entityList->operator[](k)->getCollider(), &directionEnemyTmp))
 							static_cast<Character*>(entityList->operator[](k))->updateCollision(directionEnemyTmp);
 

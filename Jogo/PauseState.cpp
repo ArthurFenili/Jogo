@@ -111,7 +111,7 @@ void PauseState::update(float dt)
 
 void PauseState::render()
 {
-	this->graphicsManager->clearWindow();
+	this->graphicsManager->clearWindow(-1);
 
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();

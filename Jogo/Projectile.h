@@ -1,26 +1,20 @@
 #pragma once
+
 #include "Entity.h"
-#include "Character.h"
 
-class EnemyProjectile;
+class Archer;
 
-class Projectile :
-    public Entity
+class Projectile : public Entity
 {
 private:
-    Character* user;
+    Archer* archer;
 
-    sf::RectangleShape* projectile;
-    std::vector<sf::RectangleShape*> projectiles;
 public:
+    Projectile(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, Archer* archer);
     Projectile();
     ~Projectile();
 
     void createProjectile();
-    void moveProjectile(int index, float direction);
-    void verifyErase(int index);
-    void setUser(Character* user) { this->user = user; }
-    int getVectorSize() { return (int)projectiles.size(); }
-    std::vector<sf::RectangleShape*>* getVectorProjectiles() { return &projectiles; }
-
+    void moveProjectile(float direction);
+    bool verifyErase();
 };

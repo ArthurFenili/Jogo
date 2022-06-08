@@ -3,8 +3,11 @@
 #include <fstream>
 #include <sstream>
 #include "EntityList.h"
-#include "Enemy.h"
-#include "Obstacle.h"
+#include "Archer.h"
+#include "Skeleton.h"
+#include "Fire.h"
+#include "Teleport.h"
+#include "Slow.h"
 
 class Phase : public Ent
 {

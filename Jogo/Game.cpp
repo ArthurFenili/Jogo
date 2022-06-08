@@ -25,7 +25,7 @@ void Game::update()
 	if (!this->states.empty()) {
 		this->states.top()->update(dt);
 	}
-	
+
 }
 
 // Verifica se o usuário pediu para fechar a janela

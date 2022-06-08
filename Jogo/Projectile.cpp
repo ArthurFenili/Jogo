@@ -1,33 +1,37 @@
 #include "Projectile.h"
-#include "Entity.h"
+#include "Archer.h"
 
-Projectile::Projectile()
+Projectile::Projectile(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, Archer* archer) :
+	Entity(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName)
 {
-	this->user = nullptr;
+	this->archer = archer;
+}
+
+Projectile::Projectile() :
+	Entity()
+{
+	this->archer = nullptr;
 }
 
 Projectile::~Projectile()
 {
+	this->archer = nullptr;
 }
 
 void Projectile::createProjectile()
 {
-	projectile = new sf::RectangleShape();
-	projectile->setFillColor(sf::Color::Magenta);
-	projectile->setSize(sf::Vector2f(10.f, 10.f));
-
-	projectile->setPosition(this->user->getPosition());
-	projectiles.push_back(projectile);
+	this->body.setFillColor(sf::Color::Magenta);
+	this->body.setPosition(this->archer->getPosition());
 }
 
-void Projectile::moveProjectile(int index, float direction)
+void Projectile::moveProjectile(float direction)
 {
-	projectiles[index]->move(direction * 300.f * (*dt), 0.f);
+	this->body.move(direction * 300.f * (*this->dt), 0.f);
 }
 
-void Projectile::verifyErase(int index)
+bool Projectile::verifyErase()
 {
-	if ((projectiles[index]->getPosition().x < 0) || (projectiles[index]->getPosition().x > 1280)) {
-		projectiles.erase(projectiles.begin() + index);
-	}
+	if ((this->body.getPosition().x < 0) || (this->body.getPosition().x > 1280))
+		return true;
+	return false;
 }

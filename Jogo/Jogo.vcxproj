@@ -154,6 +154,7 @@
     <ClCompile Include="Ent.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityList.cpp" />
+    <ClCompile Include="Fire.cpp" />
     <ClCompile Include="ForestPhase.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Skeleton.cpp" />
+    <ClCompile Include="Slow.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="SwordAttack.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -171,6 +173,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Phase.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationManager.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="Ent.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityList.h" />
+    <ClInclude Include="Fire.h" />
     <ClInclude Include="ForestPhase.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="MainMenuState.h" />
@@ -191,6 +195,7 @@
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Skeleton.h" />
+    <ClInclude Include="Slow.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="Collider.h" />
@@ -199,6 +204,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Phase.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Teleport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,35 +1,26 @@
 #pragma once
 
 #include "Enemy.h"
-#include "Player.h"
 #include "Projectile.h"
-#include<vector>
-#include<SFML/Graphics.hpp>
+#include <vector>
 
-class Archer :
-	public Enemy
+class Archer : public Enemy
 {
 private:
-    bool attacking;
-    int shootTimer;
-    Projectile* projectile;
+	bool attacking;
+	int shootTimer;
+
+	std::vector<Projectile*> arrows;
 
 public:
-    Archer(GraphicsManager* graphicsManager, float* dt, int id,
-        float spriteScale, sf::Vector2f position, sf::Vector2f bodySize,
-        std::string pathToTexture, std::string textureName, float speed,
-        long int hp);
-    Archer();
-    ~Archer();
+	Archer(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, long int hp);
+	Archer();
+	~Archer();
 
-    const float& getDT() { return *this->dt; }
-    bool getAttacking() { return this->attacking; }
+	void update();
+	void updateAttack();
 
-    std::vector<sf::RectangleShape*>* getVectorProjectiles() { return projectile->getVectorProjectiles(); }
+	std::vector<Projectile*>* getArrowsVector() { return &this->arrows; }
 
-    void update();
-    void updateMovement();
-    void updatePosition();
-    void updateAttack();
+	bool getAttacking() { return this->attacking; }
 };
-

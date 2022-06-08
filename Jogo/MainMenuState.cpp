@@ -126,7 +126,7 @@ void MainMenuState::update(float dt)
 
 void MainMenuState::render()
 {
-	this->graphicsManager->clearWindow();
+	this->graphicsManager->clearWindow(-1);
 
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();

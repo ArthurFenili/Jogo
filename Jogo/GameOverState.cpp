@@ -113,7 +113,7 @@ void GameOverState::update(float dt)
 
 void GameOverState::render()
 {
-	this->graphicsManager->clearWindow();
+	this->graphicsManager->clearWindow(-1);
 
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();

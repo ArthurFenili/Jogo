@@ -117,6 +117,15 @@
     <ClCompile Include="Archer.cpp">
       <Filter>ENTIDADES\PERSONAGENS</Filter>
     </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
+    <ClCompile Include="Slow.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleport.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -196,6 +205,15 @@
     </ClInclude>
     <ClInclude Include="Archer.h">
       <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Slow.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleport.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
