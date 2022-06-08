@@ -48,65 +48,6 @@ Entity Phase::createEntity(int id, float spriteScale, sf::Vector2f position, sf:
 	}
 }
 
-void Phase::loadMap(std::string pathToTilemap)
-{
-	std::ifstream mapFile;
-	mapFile.open(pathToTilemap, std::ifstream::in);
-
-	std::vector<std::vector<sf::Vector2i>> map;
-	std::vector<sf::Vector2i> tmpMap;
-	
-	if (mapFile.is_open()) {
-		while (!mapFile.eof()) {
-			std::string string, value;
-			std::getline(mapFile, string);
-			std::stringstream stream(string);
-			while (std::getline(stream, value, ' ')) {
-				std::string xx = value.substr(0, value.find(','));
-				std::string yy = value.substr(value.find(',') + 1);
-
-				int x, y, i, j;
-
-				for (i = 0; i < xx.length(); i++)
-					if (!isdigit(xx[i]))
-						break;
-
-				for (j = 0; j < yy.length(); j++)
-					if (!isdigit(yy[j]))
-						break;
-				x = (i == xx.length()) ? atoi(xx.c_str()) : -1;
-				y = (j == yy.length()) ? atoi(yy.c_str()) : -1;
-
-				tmpMap.push_back(sf::Vector2i(x, y));
-			}
-			map.push_back(tmpMap);
-			tmpMap.clear();
-		}
-	}
-	mapFile.close();
-
-	for (int i = 0; i < map.size(); i++) {
-		for (int j = 0; j < map[i].size(); j++) {
-			if (map[i][j].x != -1 && map[i][j].y != -1) {	
-				if (map[i][j].x == 0 && map[i][j].y == 0)
-					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile0.png", "TILE_0");
-				else if (map[i][j].x == 1 && map[i][j].y == 0)
-					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile1.png", "TILE_1");
-				else if (map[i][j].x == 2 && map[i][j].y == 0)
-					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile2.png", "TILE_2");
-				else if (map[i][j].x == 0 && map[i][j].y == 1)
-					this->platformList[i][j] = this->createEntity(DOOR, 2.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f * 2.f), "images/door.png", "DOOR");
-				else if (map[i][j].x == 1 && map[i][j].y == 1)
-					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile3.png", "TILE_3");
-				else if (map[i][j].x == 2 && map[i][j].y == 1)
-					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile4.png", "TILE_4");
-			}
-			else
-				this->platformList[i][j] = this->createEntity(BACKGROUND, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "", "BACKGROUND");	
-		}
-	}
-}
-
 void Phase::update()
 {
 	for (int i = 0; i < this->entityList.getSize(); i++) {
@@ -120,10 +61,10 @@ void Phase::update()
 
 void Phase::render()
 {
-	int fromX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) - 10;
-	int toX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) + 10;
-	int fromY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) - 10;
-	int toY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) + 10;
+	int fromX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) - 12;
+	int toX = (int)(this->graphicsManager->getView().getCenter().x / 64.f) + 12;
+	int fromY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) - 12;
+	int toY = (int)(this->graphicsManager->getView().getCenter().y / 64.f) + 12;
 
 	if (fromX < 0)
 		fromX = 0;
@@ -135,21 +76,20 @@ void Phase::render()
 	else if (toY >= 30)
 		toY = 29;
 
+	for (int i = 0; i < this->entityList.getSize(); i++) {
+		this->entityList[i]->renderSprite();
+		//this->entityList[i]->renderShape();
+	}
+
+	//if (this->player->getSwordHitbox())
+		//this->player->renderSwordHitBox_TMP();
+
 	for (int i = fromY; i < toY; i++)
 		for (int j = fromX; j < toX; j++)
 			if (this->platformList[i][j].getId() != BACKGROUND) {
 				this->platformList[i][j].renderSprite();
-				this->platformList[i][j].renderShape();
+				//this->platformList[i][j].renderShape();
 			}
-				
-				
-	for (int i = 0; i < this->entityList.getSize(); i++) {
-		this->entityList[i]->renderSprite();
-		this->entityList[i]->renderShape();
-	}
-
-	if (this->player->getSwordHitbox())
-		this->player->renderSwordHitBox_TMP();
 }
 
 void Phase::clearPlatformList()
@@ -157,4 +97,9 @@ void Phase::clearPlatformList()
 	for (int i = 0; i < 30; i++)
 		delete[] this->platformList[i];
 	delete this->platformList;
+}
+
+void Phase::clearEntityList()
+{
+	this->entityList.clearList();
 }

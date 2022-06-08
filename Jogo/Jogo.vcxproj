@@ -146,12 +146,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CastlePhase.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Ent.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityList.cpp" />
+    <ClCompile Include="ForestPhase.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="NewGameState.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="PauseState.cpp" />
+    <ClCompile Include="PlayingState.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="SwordAttack.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -162,12 +174,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="Archer.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CastlePhase.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Ent.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityList.h" />
+    <ClInclude Include="ForestPhase.h" />
+    <ClInclude Include="GameOverState.h" />
+    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="NewGameState.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="PauseState.h" />
+    <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Skeleton.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Game.h" />

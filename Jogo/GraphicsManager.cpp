@@ -53,3 +53,18 @@ void GraphicsManager::resizeView()
 	float aspectRatio = (float)this->window->getSize().x / (float)this->window->getSize().y;
 	this->view.setSize(VIEW_SIZE * aspectRatio, VIEW_SIZE);
 }
+
+void GraphicsManager::clearWindow(int phase)
+{
+	if (phase == 0)
+		this->window->clear(sf::Color(90, 161, 238));
+	else
+		this->window->clear(sf::Color(53, 53, 95));
+}
+
+void GraphicsManager::resetView()
+{
+	this->view.setSize((float)this->window->getSize().x, (float)this->window->getSize().y);
+	this->view.setCenter((float)this->window->getSize().x / 2.f, (float)this->window->getSize().y / 2.f);
+	this->setView();
+}

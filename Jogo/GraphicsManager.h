@@ -19,6 +19,8 @@ public:
 
 	void resizeView();
 
+	void clearWindow(int phase);
+
 	bool pollEvent(sf::Event* sfEvent) { return this->window->pollEvent(*sfEvent); }
 
 	bool isWindowOpen() { return this->window->isOpen(); }
@@ -33,8 +35,13 @@ public:
 	
 	void setView() { this->window->setView(this->view); }
 
+	void resetView();
+
 	sf::View getView() { return this->view; }
 
 	void renderShape(sf::RectangleShape* shape) { this->window->draw(*shape); }
 	void renderSprite(sf::Sprite* sprite) { this->window->draw(*sprite); }
+	void renderText(sf::Text* text) { this->window->draw(*text); }
+
+	sf::RenderWindow* getWindow() { return window; }
 };

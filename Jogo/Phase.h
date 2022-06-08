@@ -22,13 +22,14 @@ public:
 
 	Entity createEntity(int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName);
 
-	void loadMap(std::string pathToTilemap);
+	virtual void loadMap(std::string pathToTilemap) {}
 
 	void update();
 
 	void render();
 
 	void clearPlatformList();
+	void clearEntityList();
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }
 
