@@ -21,11 +21,13 @@ const float HEIGHT_AUX = 1.9f;
 const sf::Vector2f AUX_VECTOR = sf::Vector2f(46.f, 66.f);
 
 
-Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
-	std::string pathToTexture, std::string textureName, float speed, long int hp) :
+Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize,
+	std::string pathToTexture, std::string textureName, float speed, long int hp, int numPlayer) :
 	Character(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
 	this->initVariables();
+
+	this->numPlayer = numPlayer;
 
 	this->attackingTexture = this->graphicsManager->loadTextures("images/player_attacking.png", "PLAYER_ATTACKING");
 
@@ -90,14 +92,27 @@ void Player::updateMovementInput()
 {
 	this->velocity.x = 0.f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		this->move(1.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		this->move(-1.f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-		this->attacking = true;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && this->canJump)
-		this->jump();
+	if (this->numPlayer == 1) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			this->move(1.f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			this->move(-1.f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			this->attacking = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && this->canJump)
+			this->jump();
+	}
+	if (this->numPlayer == 2) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			this->move(1.f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			this->move(-1.f);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+			this->attacking = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && this->canJump)
+			this->jump();
+	}
+
 
 	this->updateVariables();
 

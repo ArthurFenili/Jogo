@@ -110,6 +110,13 @@ void MainMenuState::updateInput()
 		this->insertState(newGame);
 		this->updateStateChange();
 	}
+
+	if (leaderboardButton->isPressed()) {
+		State* leaderboard = new LeaderboardState(this->graphicsManager, this->states, this->dt);
+		this->insertState(leaderboard);
+		this->updateStateChange();
+	}
+
 	if (exitButton->isPressed()) {
 		this->removeCurrentState();
 		this->updateStateChange();

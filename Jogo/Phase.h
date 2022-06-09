@@ -8,15 +8,23 @@
 #include "Fire.h"
 #include "Teleport.h"
 #include "Slow.h"
+#include "CollisionsManager.h"
+
+class PlayingState;
 
 class Phase : public Ent
 {
 protected:
-	Player* player;
+	Player* player1;
+	Player* player2;
 
 	EntityList entityList;
 
 	Entity** platformList;
+
+	CollisionsManager collisionsManager;
+
+	bool phaseEnd;
 
 public:
 	Phase(GraphicsManager* graphicsManager, float* dt, int id);
@@ -36,9 +44,15 @@ public:
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }
 
-	void setPlayer(Player* player) { this->player = player; }
-	Player* getPlayer() { return this->player; }
+	void setPlayer1(Player* player) { this->player1 = player; }
+	Player* getPlayer1() { return this->player1; }
+
+	void setPlayer2(Player* player) { this->player2 = player; }
+	Player* getPlayer2() { return this->player2; }
 
 	EntityList* getEntityList() { return &this->entityList; }
 	Entity** getPlatformList() { return this->platformList; }
+
+	void setPhaseEnd(bool phaseEnd) { this->phaseEnd = phaseEnd; }
+	bool getPhaseEnd() { return this->phaseEnd; }
 };

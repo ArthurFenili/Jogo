@@ -27,6 +27,7 @@ protected:
 
 public:
 	State(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
+	State() {}
 	virtual ~State();
 
 	void insertState(State* pState, bool replace = false);

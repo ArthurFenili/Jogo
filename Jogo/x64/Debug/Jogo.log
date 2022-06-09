@@ -1,22 +1,2 @@
-﻿  Archer.cpp
-  Button.cpp
-  CastlePhase.cpp
-  Fire.cpp
-  ForestPhase.cpp
-  GameOverState.cpp
-  MainMenuState.cpp
-  NewGameState.cpp
-  Obstacle.cpp
-  PauseState.cpp
-  PlayingState.cpp
-  Projectile.cpp
-  Skeleton.cpp
-  Slow.cpp
-  State.cpp
-  Game.cpp
-  main.cpp
-  Phase.cpp
-  Player.cpp
-  Teleport.cpp
-  Gerando Código...
+﻿  Phase.cpp
   Jogo.vcxproj -> E:\Visual Studio\Projetos\Jogo\x64\Debug\Jogo.exe

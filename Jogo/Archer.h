@@ -23,4 +23,6 @@ public:
 	std::vector<Projectile*>* getArrowsVector() { return &this->arrows; }
 
 	bool getAttacking() { return this->attacking; }
+
+	void updateAnimation();
 };

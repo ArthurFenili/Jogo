@@ -7,6 +7,7 @@
 #include "CastlePhase.h"
 #include "PauseState.h"
 #include "GameOverState.h"
+#include <time.h>
 
 class PlayingState :
 	public State
@@ -14,13 +15,18 @@ class PlayingState :
 private:
 	Player* player1;
 
+	Player* player2;
+
 	Phase* currentPhase;
 
 	bool exit;
 
-	int score;
+	static int score;
 public:
-	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
+	static bool twoPlayers;
+
+public:
+	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool twoP);
 	~PlayingState();
 
 	void createMap();
@@ -28,7 +34,8 @@ public:
 	void createEnemies(int phase);
 	void createPlayers();
 
-	void updateCollision();
+	static int getScore() { return score; }
+	static void setScore(int points) { score += points; }
 
 	virtual void updateInput();
 	virtual void update(float dt);

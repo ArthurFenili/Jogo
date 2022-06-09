@@ -126,6 +126,15 @@
     <ClCompile Include="Teleport.cpp">
       <Filter>ENTIDADES\OBSTACULOS</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaderboardState.cpp">
+      <Filter>STATES</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionsManager.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -214,6 +223,15 @@
     </ClInclude>
     <ClInclude Include="Teleport.h">
       <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>GERENCIADORES</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderboardState.h">
+      <Filter>STATES</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionsManager.h">
+      <Filter>GERENCIADORES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

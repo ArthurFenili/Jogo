@@ -10,7 +10,7 @@ Fire::Fire(GraphicsManager* graphicsManager, float* dt, int id, float spriteScal
 	this->initAnimation(FIRE_ANIMATION_COLUMNS, ANIMATION_ROWS, SWITCH_TIME);
 
 	this->body.setPosition(sf::Vector2f(this->position.x, this->position.y + 64.f * 0.2f));
-	this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x * (1.3f / this->spriteScale), this->position.y - this->body.getSize().y + 5.f));
+	this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x * (1.3f / this->spriteScale), this->position.y - this->body.getSize().y + 6.f));
 
 	this->sprite.setScale(sf::Vector2f(this->spriteScale, 2.f));
 }

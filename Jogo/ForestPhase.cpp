@@ -3,17 +3,20 @@
 ForestPhase::ForestPhase(GraphicsManager* graphicsManager, float* dt, int id) :
 	Phase(graphicsManager, dt, id)
 {
+	this->collisionsManager = CollisionsManager(this);
 }
 
 ForestPhase::ForestPhase()
 {
-	this->player = nullptr;
+	this->player1 = nullptr;
+	this->player2 = nullptr;
 	this->platformList = nullptr;
 }
 
 ForestPhase::~ForestPhase()
 {
-	this->player = nullptr;
+	this->player1 = nullptr;
+	this->player2 = nullptr;
 }
 
 void ForestPhase::loadMap(std::string pathToTilemap)
@@ -63,7 +66,7 @@ void ForestPhase::loadMap(std::string pathToTilemap)
 				else if (map[i][j].x == 2 && map[i][j].y == 0)
 					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile2_p1.png", "TILE_2_P1");
 				else if (map[i][j].x == 0 && map[i][j].y == 1)
-					this->platformList[i][j] = this->createEntity(CASTLE, 2.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f * 2.f), "images/castle.png", "CASTLE");
+					this->platformList[i][j] = this->createEntity(CASTLE, 3.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f * 2.f), "images/castle.png", "CASTLE");
 				else if (map[i][j].x == 1 && map[i][j].y == 1)
 					this->platformList[i][j] = this->createEntity(BLOCK, 1.f, sf::Vector2f((float)j * 64.f, (float)i * 64.f), sf::Vector2f(64.f, 64.f), "images/tile3_p1.png", "TILE_3_P1");
 				else if (map[i][j].x == 2 && map[i][j].y == 1)

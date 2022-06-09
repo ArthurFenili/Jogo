@@ -15,6 +15,8 @@ Entity::Entity(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 
 	if (id == DOOR)
 		this->sprite.setPosition(sf::Vector2f(this->position.x, this->position.y + 40.f));
+	else if (id == CASTLE)
+		this->sprite.setPosition(sf::Vector2f(this->position.x, this->position.y + 40.f));
 	else
 		this->sprite.setPosition(this->position);
 	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));

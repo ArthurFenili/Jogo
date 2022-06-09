@@ -94,7 +94,12 @@ void NewGameState::updateInput()
 		this->updateStateChange();
 	}
 	if (onePlayerButton->isPressed()) {
-		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt, false), true);
+		this->updateStateChange();
+	}
+
+	if (twoPlayersButton->isPressed()) {
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt, true), true);
 		this->updateStateChange();
 	}
 }

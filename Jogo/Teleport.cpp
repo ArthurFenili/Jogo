@@ -5,7 +5,7 @@ const unsigned int ANIMATION_ROWS = 1;
 const float SWITCH_TIME = 0.2f;
 
 const float TELEPORT_WIDTH_AUX = 0.4f;
-const float TELEPORT_HEIGHT_AUX = 1.f;
+const float TELEPORT_HEIGHT_AUX = 2.f;
 
 Teleport::Teleport(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName) :
 	Obstacle(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName)

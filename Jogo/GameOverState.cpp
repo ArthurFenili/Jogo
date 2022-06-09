@@ -94,8 +94,15 @@ void GameOverState::renderButtons()
 void GameOverState::updateInput()
 {
 	if (this->playAgain->isPressed()) {
-		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt, PlayingState::twoPlayers), true);
 		this->updateStateChange();
+	}
+
+	if (this->saveGame->isPressed()) {
+
+		name = inputManager.readString(this->graphicsManager);
+
+		this->writeToLeaderboardFile();
 	}
 
 	if (this->mainMenu->isPressed()) {
@@ -121,4 +128,48 @@ void GameOverState::render()
 
 void GameOverState::resetState()
 {
+}
+
+/* INSPIRADO NO TUTORIAL DO MONITOR MATHEUS BURDA */
+void GameOverState::writeToLeaderboardFile()
+{
+	// ----------------------- read
+	std::ifstream readFile;
+
+	readFile.open("saves/leaderboard.txt", std::ios::in);
+	
+	std::multimap<int, std::string> nameAndScoreMap;
+
+	if (readFile) {
+		std::string name;
+		std::string pointsString;
+
+		for (int i = 0; i < 10; i++) {
+			std::getline(readFile, pointsString);
+			std::getline(readFile, name);
+
+			if (pointsString.length() > 0)
+				nameAndScoreMap.insert(std::pair<int, std::string>(std::stoi(pointsString), name));
+		}
+		readFile.close();
+	}
+
+	// ----------------------- write
+	if (PlayingState::getScore() != 0 && name.length() > 1)
+		nameAndScoreMap.insert(std::pair<int, std::string>(PlayingState::getScore(), name));
+
+	std::ofstream writeFile;
+
+	writeFile.open("saves/leaderboard.txt", std::ios::out | std::ios::trunc);
+
+	while (nameAndScoreMap.size() > 10)
+		nameAndScoreMap.erase(nameAndScoreMap.begin());
+
+	for (auto itr = nameAndScoreMap.rbegin(); itr != nameAndScoreMap.rend(); ++itr) {
+		writeFile << (*itr).first << std::endl;
+		writeFile << (*itr).second << std::endl;
+	}
+
+	writeFile.close();
+
 }

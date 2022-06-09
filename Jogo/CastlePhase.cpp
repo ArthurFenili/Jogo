@@ -3,17 +3,20 @@
 CastlePhase::CastlePhase(GraphicsManager* graphicsManager, float* dt, int id) :
 	Phase(graphicsManager, dt, id)
 {
+	this->collisionsManager = CollisionsManager(this);
 }
 
 CastlePhase::CastlePhase()
 {
-	this->player = nullptr;
+	this->player1 = nullptr;
+	this->player2 = nullptr;
 	this->platformList = nullptr;
 }
 
 CastlePhase::~CastlePhase()
 {
-	this->player = nullptr;
+	this->player1 = nullptr;
+	this->player2 = nullptr;
 }
 
 void CastlePhase::loadMap(std::string pathToTilemap)
