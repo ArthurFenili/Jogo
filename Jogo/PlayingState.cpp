@@ -264,10 +264,6 @@ void PlayingState::render()
 	this->currentPhase->render();
 }
 
-void PlayingState::resetState()
-{
-}
-
 void PlayingState::changeLevel()
 {
 	this->currentPhase->clearPlatformList();

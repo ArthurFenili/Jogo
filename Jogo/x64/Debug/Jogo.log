@@ -1,2 +1,6 @@
 ﻿  GameOverState.cpp
-  Jogo.vcxproj -> E:\Visual Studio\Projetos\Jogo\x64\Debug\Jogo.exe
+  LeaderboardState.cpp
+  MainMenuState.cpp
+  NewGameState.cpp
+  Gerando Código...
+  Jogo.vcxproj -> D:\Users\eduar\Desktop\Game\x64\Debug\Jogo.exe

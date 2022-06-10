@@ -17,6 +17,10 @@ protected:
 	GraphicsManager* graphicsManager;
 	float* dt;
 
+	sf::RectangleShape background;
+	sf::Texture backgroundTexture;
+	sf::Font font;
+
 	bool insert;
 	bool replace;
 	bool remove;
@@ -30,6 +34,9 @@ public:
 	State() {}
 	virtual ~State();
 
+	void initBackground();
+	void initFonts();
+
 	void insertState(State* pState, bool replace = false);
 	void removeCurrentState();
 	void updateStateChange();
@@ -37,9 +44,10 @@ public:
 
 	virtual void updateMousePositions();
 	virtual void updateInput() = 0;
-	virtual void update(float dt) = 0;
-	virtual void render() = 0;
-	virtual void resetState() = 0;
+	virtual void updateButtons() {}
+	virtual void update(float dt);
+	virtual void render();
+	virtual void renderButtons() {}
 
 	virtual void pause() {};
 	virtual void start() {};

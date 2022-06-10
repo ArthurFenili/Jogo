@@ -6,8 +6,6 @@ MainMenuState::MainMenuState(GraphicsManager* graphicsManager, std::stack<State*
 	this->dt = dt;
 
 	//---------------
-	this->initBackground();
-	this->initFonts();
 	this->initButtons();
 }
 
@@ -19,26 +17,10 @@ MainMenuState::~MainMenuState()
 	delete this->leaderboardButton;
 }
 
-void MainMenuState::initBackground()
-{
-	this->background.setSize(sf::Vector2f(this->graphicsManager->getWindow()->getSize()));
-
-	if (!this->backgroundTexture.loadFromFile("images/background.jpg"))
-		throw "ERROR::BACKGROUND_TEXTURE::COULD_NOT_LOAD_FROM_FILE";
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
-void MainMenuState::initFonts()
-{
-	if (!this->font.loadFromFile("fonts/georgia.ttf"))
-		throw "ERROR::FONT::COULD_NOT_LOAD_FROM_FILE";
-}
-
 void MainMenuState::initButtons()
 {
 	this->newGameButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - BUTTON_WIDTH / 2,
+		1280.f / 2 - BUTTON_WIDTH / 2,
 		100.f,
 		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "New Game",
@@ -48,7 +30,7 @@ void MainMenuState::initButtons()
 	);
 
 	this->continueButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - BUTTON_WIDTH / 2,
+		1280.f / 2 - BUTTON_WIDTH / 2,
 		250.f,
 		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "Continue",
@@ -58,7 +40,7 @@ void MainMenuState::initButtons()
 	);
 
 	this->leaderboardButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - BUTTON_WIDTH / 2,
+		1280.f / 2 - BUTTON_WIDTH / 2,
 		400.f,
 		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "Leaderboard",
@@ -68,7 +50,7 @@ void MainMenuState::initButtons()
 	);
 
 	this->exitButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - BUTTON_WIDTH / 2,
+		1280.f / 2 - BUTTON_WIDTH / 2,
 		550.f,
 		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "Exit",
@@ -120,23 +102,4 @@ void MainMenuState::updateInput()
 		this->updateStateChange();
 		this->graphicsManager->closeWindow();
 	}
-}
-
-void MainMenuState::update(float dt)
-{
-	this->updateInput();
-	this->updateMousePositions();
-	this->updateButtons();
-}
-
-void MainMenuState::render()
-{
-	this->graphicsManager->clearWindow(-1);
-
-	this->graphicsManager->renderShape(&background);
-	this->renderButtons();
-}
-
-void MainMenuState::resetState()
-{
 }

@@ -7,8 +7,6 @@ LeaderboardState::LeaderboardState(GraphicsManager* graphicsManager, std::stack<
 	this->dt = dt;
 
 	//---------------
-	this->initBackground();
-	this->initFonts();
 	this->initButtons();
 
 	this->buildLeaderboard();
@@ -19,26 +17,10 @@ LeaderboardState::~LeaderboardState()
 	delete this->backButton;
 }
 
-void LeaderboardState::initBackground()
-{
-	this->background.setSize(sf::Vector2f(this->graphicsManager->getWindow()->getSize()));
-
-	if (!this->backgroundTexture.loadFromFile("images/background.jpg"))
-		throw "ERROR::BACKGROUND_TEXTURE::COULD_NOT_LOAD_FROM_FILE";
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
-void LeaderboardState::initFonts()
-{
-	if (!this->font.loadFromFile("fonts/georgia.ttf"))
-		throw "ERROR::FONT::COULD_NOT_LOAD_FROM_FILE";
-}
-
 void LeaderboardState::initButtons()
 {
 	this->backButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - BUTTON_WIDTH / 2,
+		1280.f / 2 - BUTTON_WIDTH / 2,
 		500.f,
 		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "Back",
@@ -105,13 +87,6 @@ void LeaderboardState::updateInput()
 	}
 }
 
-void LeaderboardState::update(float dt)
-{
-	this->updateInput();
-	this->updateMousePositions();
-	this->updateButtons();
-}
-
 void LeaderboardState::render()
 {
 	this->graphicsManager->clearWindow(-1);
@@ -119,8 +94,4 @@ void LeaderboardState::render()
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();
 	this->renderLeaderboard();
-}
-
-void LeaderboardState::resetState()
-{
 }

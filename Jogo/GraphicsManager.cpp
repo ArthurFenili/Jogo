@@ -66,7 +66,7 @@ void GraphicsManager::clearWindow(int phase)
 
 void GraphicsManager::resetView()
 {
-	this->view.setSize((float)this->window->getSize().x, (float)this->window->getSize().y);
-	this->view.setCenter((float)this->window->getSize().x / 2.f, (float)this->window->getSize().y / 2.f);
+	this->view.setSize(1280.f, 720.f);
+	this->view.setCenter(1280.f / 2.f, 720.f / 2.f);
 	this->setView();
 }

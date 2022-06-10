@@ -37,10 +37,9 @@ public:
 	static int getScore() { return score; }
 	static void setScore(int points) { score += points; }
 
-	virtual void updateInput();
-	virtual void update(float dt);
-	virtual void render();
-	virtual void resetState();
+	void updateInput();
+	void update(float dt);
+	void render();
 
 	void changeLevel();
 

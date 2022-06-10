@@ -6,10 +6,29 @@ State::State(GraphicsManager* graphicsManager, std::stack<State*>* states, float
 
 	this->states = states;
 	this->graphicsManager = graphicsManager;
+
+	this->initBackground();
+	this->initFonts();
 }
 
 State::~State()
 {
+}
+
+void State::initBackground()
+{
+	this->background.setSize(sf::Vector2f(1280.f, 720.f));
+
+	if (!this->backgroundTexture.loadFromFile("images/background.jpg"))
+		throw "ERROR::BACKGROUND_TEXTURE::COULD_NOT_LOAD_FROM_FILE";
+
+	this->background.setTexture(&this->backgroundTexture);
+}
+
+void State::initFonts()
+{
+	if (!this->font.loadFromFile("fonts/georgia.ttf"))
+		throw "ERROR::FONT::COULD_NOT_LOAD_FROM_FILE";
 }
 
 void State::insertState(State* pState, bool replace)
@@ -61,4 +80,21 @@ void State::updateMousePositions()
 	this->mousePosWindow = sf::Mouse::getPosition(*this->graphicsManager->getWindow());
 	this->mousePosView = this->graphicsManager->getWindow()->mapPixelToCoords(sf::Mouse::getPosition(*this->graphicsManager->getWindow()));
 
+}
+
+void State::update(float dt)
+{
+	float aspectRatio = (float)this->graphicsManager->getWindow()->getSize().x / (float)this->graphicsManager->getWindow()->getSize().y;
+	this->graphicsManager->setViewSize(sf::Vector2f(1280.f * aspectRatio, 720.f));
+	this->updateInput();
+	this->updateMousePositions();
+	this->updateButtons();
+}
+
+void State::render()
+{
+	this->graphicsManager->clearWindow(-1);
+
+	this->graphicsManager->renderShape(&background);
+	this->renderButtons();
 }
