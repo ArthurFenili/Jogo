@@ -29,6 +29,7 @@ void GameOverState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(playAgain);
 
 	this->saveGame = new Button(
 		1280.f / 2 - 150,
@@ -39,6 +40,7 @@ void GameOverState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(saveGame);
 
 	this->mainMenu = new Button(
 		1280.f / 2 - 150,
@@ -49,6 +51,7 @@ void GameOverState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(mainMenu);
 
 }
 
@@ -74,7 +77,7 @@ void GameOverState::renderButtons()
 void GameOverState::updateInput()
 {
 	if (this->playAgain->isPressed()) {
-		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt, PlayingState::twoPlayers), true);
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
 		this->updateStateChange();
 	}
 
@@ -98,14 +101,14 @@ void GameOverState::writeToLeaderboardFile()
 	std::ifstream readFile;
 
 	readFile.open("saves/leaderboard.txt", std::ios::in);
-	
+
 	std::multimap<int, std::string> nameAndScoreMap;
 
 	if (readFile) {
 		std::string name;
 		std::string pointsString;
 
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 6; i++) {
 			std::getline(readFile, pointsString);
 			std::getline(readFile, name);
 
@@ -116,8 +119,8 @@ void GameOverState::writeToLeaderboardFile()
 	}
 
 	// ----------------------- write
-	if (PlayingState::getScore() != 0 && name.length() > 1)
-		nameAndScoreMap.insert(std::pair<int, std::string>(PlayingState::getScore(), name));
+	if (PlayingState::score != 0 && name.length() > 1)
+		nameAndScoreMap.insert(std::pair<int, std::string>(PlayingState::score, name));
 
 	std::ofstream writeFile;
 

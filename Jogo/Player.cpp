@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 const unsigned int PLAYER_ANIMATION_COLUMNS = 6;
 const unsigned int PLAYER_ANIMATION_ROWS = 3;
@@ -49,6 +50,7 @@ Player::Player() :
 	this->swordHitbox = nullptr;
 	this->attackingTexture = nullptr;
 	this->attackingAnimation = nullptr;
+	this->inCastle = false;
 }
 
 Player::~Player()
@@ -78,6 +80,7 @@ void Player::initVariables()
 	this->attacking = false;
 	this->animationRow = PLAYER_IDLE;
 	this->swordHitbox = nullptr;
+	this->inCastle = false;
 }
 
 // Verifica constantemente várias ações que são necessárias para o bom funcionamento do player
@@ -119,6 +122,7 @@ void Player::updateMovementInput()
 
 	this->updateVariables();
 
+
 	this->body.move(this->velocity * (*this->dt));
 }
 
@@ -132,8 +136,8 @@ void Player::updateVariables()
 
 	this->velocity.y += 2.f * this->gravity * (*this->dt);
 
-	if (this->isSlow)
-		this->velocity.x /= 2.f;
+	if (!this->isSlow)
+		this->speed = 250.f;
 }
 
 void Player::updateAnimationRow()

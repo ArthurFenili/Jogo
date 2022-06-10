@@ -5,10 +5,13 @@
 
 class InputManager
 {
+private:
+	sf::Event ev;
+	bool saved;
+	std::string strtmp;
 public:
 	InputManager();
 	~InputManager();
 
 	std::string readString(GraphicsManager* graphicsManager);
 };
-

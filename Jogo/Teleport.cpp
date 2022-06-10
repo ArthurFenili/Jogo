@@ -12,12 +12,18 @@ Teleport::Teleport(GraphicsManager* graphicsManager, float* dt, int id, float sp
 {
 	this->initAnimation(TELEPORT_ANIMATION_COLUMNS, ANIMATION_ROWS, SWITCH_TIME);
 
+	this->height = ((float)rand() / (float)(RAND_MAX / 0.8f)) + 0.4f;
+
+	this->body.setSize(sf::Vector2f(this->body.getSize().x, 64.f * this->height));
+
 	this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x * (TELEPORT_WIDTH_AUX / this->spriteScale) - 38.f, this->position.y - (this->body.getSize().y * (TELEPORT_HEIGHT_AUX / this->spriteScale))));
+	
 }
 
 Teleport::Teleport() :
 	Obstacle()
 {
+	
 }
 
 Teleport::~Teleport()

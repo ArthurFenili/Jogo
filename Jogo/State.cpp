@@ -3,6 +3,7 @@
 State::State(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt)
 {
 	this->dt = dt;
+	this->id = STATE;
 
 	this->states = states;
 	this->graphicsManager = graphicsManager;
@@ -13,6 +14,7 @@ State::State(GraphicsManager* graphicsManager, std::stack<State*>* states, float
 
 State::~State()
 {
+	this->buttonList.clearList();
 }
 
 void State::initBackground()

@@ -21,21 +21,20 @@ private:
 
 	bool exit;
 
-	static int score;
+
 public:
+	static int score;
+	static bool forestPhase;
 	static bool twoPlayers;
 
 public:
-	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool twoP);
+	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
 	~PlayingState();
 
 	void createMap();
 	void createObstacles(int phase);
 	void createEnemies(int phase);
 	void createPlayers();
-
-	static int getScore() { return score; }
-	static void setScore(int points) { score += points; }
 
 	void updateInput();
 	void update(float dt);

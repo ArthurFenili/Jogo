@@ -27,9 +27,11 @@ public:
 	bool isDead() { return this->hp <= 0 ? true : false; }
 
 	void setSpeed(float speed) { this->speed = speed; }
+	float getSpeed() { return this->speed; }
 
 	void setHp(long int hp) { this->hp = hp; }
-	void loseHp() { (this->hp)--; }
+	void loseHp(int damage) { this->hp -= damage; }
+	int getHP() { return this->hp; }
 
 	bool getFacingRight() { return this->facingRight; }
 };

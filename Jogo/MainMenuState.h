@@ -1,6 +1,6 @@
 #pragma once
 #include "State.h"
-#include "NewGameState.h"
+#include "SelectPhaseState.h"
 #include "LeaderboardState.h"
 
 class MainMenuState :
@@ -22,4 +22,3 @@ public:
 
 	void updateInput();
 };
-

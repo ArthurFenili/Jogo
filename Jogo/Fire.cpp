@@ -13,11 +13,14 @@ Fire::Fire(GraphicsManager* graphicsManager, float* dt, int id, float spriteScal
 	this->sprite.setPosition(sf::Vector2f(this->position.x - this->body.getSize().x * (1.3f / this->spriteScale), this->position.y - this->body.getSize().y + 6.f));
 
 	this->sprite.setScale(sf::Vector2f(this->spriteScale, 2.f));
+
+	this->burningDamage = (rand() % 5) + 1;
 }
 
 Fire::Fire() :
 	Obstacle()
 {
+	this->burningDamage = 1;
 }
 
 Fire::~Fire()
