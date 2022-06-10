@@ -4,11 +4,15 @@
 #include <stack>
 #include "Player.h"
 #include "Phase.h"
-#include "Enemy.h"
-#include "EnemyProjectile.h"
-#include "EntitiesList.h"
+#include "Skeleton.h"
+#include "Archer.h"
+#include "EntityList.h"
 #include "State.h"
 #include "MainMenuState.h"
+
+enum types {
+	FOREST_PHASE = 0, CASTLE_PHASE = 1, FIRE = 2, TELEPORT = 3, SLOW = 4, BLOCK = 5, DOOR = 6, CASTLE = 7, BACKGROUND = 8, PLAYER = 9, SWORD = 10, SKELETON = 11, ARCHER = 12
+};
 
 class Game
 {
@@ -19,7 +23,6 @@ private:
 	sf::Clock dtClock;
 	float dt;
 
-	//-----
 	std::stack<State*> states;
 
 
@@ -37,4 +40,3 @@ public:
 
 	void execute();
 };
-

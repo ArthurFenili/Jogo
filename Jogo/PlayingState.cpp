@@ -1,83 +1,241 @@
 #include "PlayingState.h"
 
-const float WINDOW_WIDTH = 1280.f;
-const float WINDOW_HEIGHT = 720.f;
-
 const float PLATFORM_WIDTH = 64.f;
 const float PLATFORM_HEIGHT = 64.f;
 
-const float PLAYER_WIDTH = 32.f * 2.f;
-const float PLAYER_HEIGHT = 35.f * 2.6f;
+const float PLAYER_WIDTH = 32.f * 1.6f;
+const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
-const float PLAYER_SPEED = 200.f;
+const float PLAYER_SPEED = 250.f;
+const long int PLAYER_HP = 90000;
 
 const float SKELETON_WIDTH = 32.f * 2.f;
 const float SKELETON_HEIGHT = 35.f * 2.6f;
 const float SKELETON_SPRITE_SCALE = 3.f;
-const float SKELETON_SPEED = 30.f;
 
 const float ARCHER_WIDTH = 31.f * 2.f;
 const float ARCHER_HEIGHT = 40.f * 2.6f;
 const float ARCHER_SPRITE_SCALE = 3.f;
 const float ARCHER_SPEED = 30.f;
 
-PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt):
+const float TELEPORT_SPRITE_SCALE = 2.3f;
+
+sf::Vector2f FIRE_SIZE = sf::Vector2f(64.f * 0.3f, 64.f * 0.8f);
+sf::Vector2f TELEPORT_SIZE = sf::Vector2f(64.f * 0.4f, 55.f);
+
+int PlayingState::score(0);
+bool PlayingState::twoPlayers(false);
+bool PlayingState::forestPhase(true);
+
+PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 {
-	std::cout << "PlayingState" << std::endl;
-
 	this->dt = dt;
-	this->phase1 = Phase(this->graphicsManager, &score);
+
+	if(forestPhase)
+		this->setPhase(new ForestPhase(this->graphicsManager, this->dt, FOREST_PHASE));
+	else
+		this->setPhase(new CastlePhase(this->graphicsManager, this->dt, CASTLE_PHASE));
+
 	this->exit = false;
 	this->score = 0;
 
+	this->createPlayers();
 	this->createMap();
 
-	this->initPlayers();
-	this->initEnemies();
+	srand((unsigned)time(0));
+
+	if (forestPhase) {
+		this->createObstacles(FOREST_PHASE);
+		this->createEnemies(FOREST_PHASE);
+	}
+	else {
+		this->createObstacles(CASTLE_PHASE);
+		this->createEnemies(CASTLE_PHASE);
+
+	}
+
+	this->currentPhase->addEntity(this->player1);
+
+	if (PlayingState::twoPlayers)
+		this->currentPhase->addEntity(this->player2);
 }
 
 PlayingState::~PlayingState()
 {
-	delete this->player1;
+	if (this->player1) {
+		delete this->player1;
+		this->player1 = nullptr;
+	}
 
+	if (this->player2) {
+		delete this->player2;
+		this->player2 = nullptr;
+	}
+
+	this->currentPhase->clearEntityList();
+	this->currentPhase->clearPlatformList();
+	delete this->currentPhase;
 }
 
 void PlayingState::createMap()
 {
-	for (int x = 0; x <= (int)WINDOW_WIDTH; x += (int)PLATFORM_WIDTH) {
-		if (x <= (int)WINDOW_WIDTH / 2)
-			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/ground1.png", "GROUND_1", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		else
-			this->phase1.setPlatform(sf::Vector2f((float)x, 384.f), "images/slime_floor.png", "SLOW", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 448.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 512.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 576.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-		this->phase1.setPlatform(sf::Vector2f((float)x, 640.f), "images/ground2.png", "GROUND_2", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-	}
-
-	this->phase1.setPlatform(sf::Vector2f(80.f, 384.f - 64.f), "images/fire.png", "FIRE", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
-	this->phase1.setPlatform(sf::Vector2f(300.f, 384.f - 64.f), "images/teleport.png", "TELEPORT", sf::Vector2f(PLATFORM_WIDTH, PLATFORM_HEIGHT));
+	if(forestPhase)
+		this->currentPhase->loadMap("images/forest_map.txt");
+	else
+		this->currentPhase->loadMap("images/castle_map.txt");
 
 }
 
-void PlayingState::initPlayers()
+void PlayingState::createObstacles(int phase)
 {
-	this->player1 = new Player(this->graphicsManager, sf::Vector2f(500.f, 0.f), "images/player.png", "PLAYER", sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), this->dt, PLAYER_SPRITE_SCALE, PLAYER_SPEED);
-	this->phase1.addEntity(this->player1);
-}
+	if (phase == FOREST_PHASE) {
 
-void PlayingState::initEnemies()
-{
-	std::srand((unsigned int)time(nullptr));
-	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
-		float pos = (float)(std::rand() % 1280);
-		this->phase1.setEnemy(sf::Vector2f(pos, 0.f), "images/skeleton.png", "SKELETON", sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), this->dt, SKELETON_SPRITE_SCALE, SKELETON_SPEED, this->player1);
+		int obstacle1, obstacle2;
+		obstacle1 = rand() % 3;
+		obstacle2 = obstacle1;
+		while (obstacle2 == obstacle1)
+			obstacle2 = rand() % 3;
+
+		int fireAmount = (rand() % 3) + 3;
+		int teleportAmount = (rand() % 2) + 3;
+		int slowAmount = (rand() % 5) + 3;
+
+		//fogo
+		if (obstacle1 == 0 || obstacle2 == 0) {
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(16.f * 64.f, 14.f * 64.f), FIRE_SIZE, "images/fire_p1.png", "FIRE_P1");
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(17.f * 64.f, 14.f * 64.f), FIRE_SIZE, "images/fire_p1.png", "FIRE_P1");
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(20.f * 64.f, 13.f * 64.f), FIRE_SIZE, "images/fire_p1.png", "FIRE_P1");
+			if (fireAmount > 3)
+				this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(19.f * 64.f, 6.f * 64.f), FIRE_SIZE, "images/fire_p1.png", "FIRE_P1");
+			if (fireAmount > 4)
+				this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(14.f * 64.f, 77.f * 64.f), FIRE_SIZE, "images/fire_p1.png", "FIRE_P1");
+		}
+		//teleport
+		if (obstacle1 == 1 || obstacle2 == 1) {
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(9.f * 64.f, 15.f * 64.f + 9.f), TELEPORT_SIZE, "images/teleport_p1.png", "TELEPORT_P1");
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(22.f * 64.f, 15.f * 64.f + 9.f), TELEPORT_SIZE, "images/teleport_p1.png", "TELEPORT_P1");
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(25.f * 64.f, 15.f * 64.f + 9.f), TELEPORT_SIZE, "images/teleport_p1.png", "TELEPORT_P1");
+			if (teleportAmount > 3)
+				this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(12.f * 64.f, 6.f * 64.f + 9.f), TELEPORT_SIZE, "images/teleport_p1.png", "TELEPORT_P1");
+		}
+		//slow
+		if (obstacle1 == 2 || obstacle2 == 2) {
+			this->currentPhase->getPlatformList()[16][7] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(7.f * 64.f, 16.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+			this->currentPhase->getPlatformList()[16][8] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(8.f * 64.f, 16.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+			this->currentPhase->getPlatformList()[13][13] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(13.f * 64.f, 13.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+			if (slowAmount > 3)
+				this->currentPhase->getPlatformList()[13][14] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(14.f * 64.f, 13.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+			if (slowAmount > 4)
+				this->currentPhase->getPlatformList()[9][22] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(22.f * 64.f, 9.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+			if (slowAmount > 5)
+				this->currentPhase->getPlatformList()[7][7] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(7.f * 64.f, 7.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+			if (slowAmount > 6)
+				this->currentPhase->getPlatformList()[7][8] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(8.f * 64.f, 7.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow_p1.png", "SLOW_P1");
+		}
 	}
 
-	for (int i = 0; i < (3 + rand() % (4 + 1 - 3)); i++) {
-		float pos = (float)(std::rand() % 1280);
-		this->phase1.setEnemy2(sf::Vector2f(pos, 0.f), "images/archer.png", "ARCHER", sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), this->dt, ARCHER_SPRITE_SCALE, ARCHER_SPEED, this->player1);
+	else if (phase == CASTLE_PHASE) {
+		int obstacle1, obstacle2;
+		obstacle1 = rand() % 3;
+		obstacle2 = obstacle1;
+		while (obstacle2 == obstacle1)
+			obstacle2 = rand() % 3;
+
+		int fireAmount = (rand() % 3) + 3;
+		int teleportAmount = (rand() % 2) + 3;
+		int slowAmount = (rand() % 6) + 3;
+
+		//fire
+		if (obstacle1 == 0 || obstacle2 == 0) {
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(11.f * 64.f, 14.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(15.f * 64.f, 13.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(17.f * 64.f, 16.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+			if (fireAmount > 3)
+				this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(24.f * 64.f, 10.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+			if (fireAmount > 4)
+				this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(25.f * 64.f, 10.f * 64.f), FIRE_SIZE, "images/fire.png", "FIRE");
+		}
+		//teleport
+		if (obstacle1 == 1 || obstacle2 == 1) {
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(9.f * 64.f, 16.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(22.f * 64.f, 16.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(18.f * 64.f, 8.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+			if (teleportAmount > 3)
+				this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(12.f * 64.f, 7.f * 64.f), TELEPORT_SIZE, "images/teleport.png", "TELEPORT");
+		}
+		//slow
+		if (obstacle1 == 2 || obstacle2 == 2) {
+			this->currentPhase->getPlatformList()[17][7] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(7.f * 64.f, 17.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			this->currentPhase->getPlatformList()[17][8] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(8.f * 64.f, 17.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			this->currentPhase->getPlatformList()[13][18] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(18.f * 64.f, 13.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			if (slowAmount > 3)
+				this->currentPhase->getPlatformList()[13][19] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(19.f * 64.f, 13.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			if (slowAmount > 4)
+				this->currentPhase->getPlatformList()[13][20] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(20.f * 64.f, 13.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			if (slowAmount > 5)
+				this->currentPhase->getPlatformList()[11][23] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(23.f * 64.f, 11.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			if (slowAmount > 6)
+				this->currentPhase->getPlatformList()[9][19] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(19.f * 64.f, 9.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+			if (slowAmount > 7)
+				this->currentPhase->getPlatformList()[9][20] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(20.f * 64.f, 9.f * 64.f), sf::Vector2f(64.f, 64.f), "images/slow.png", "SLOW");
+		}
+	}
+}
+
+void PlayingState::createEnemies(int phase)
+{
+	if (phase == FOREST_PHASE) {
+
+		int skeletonAmount = (rand() % 3) + 3;
+		int archerAmount = (rand() % 2) + 3;
+
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(7.f * 64.f, 15.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(13.f * 64.f, 12.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(19.f * 64.f, 12.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+
+		if (skeletonAmount > 3)
+			this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(23.f * 64.f, 15.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		if (skeletonAmount > 4)
+			this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(11.f * 64.f, 5.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(15.f * 64.f, 12.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(18.f * 64.f, 12.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(24.f * 64.f, 12.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+		if (archerAmount > 3)
+			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(18.f * 64.f, 6.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+	}
+
+	else if (phase == CASTLE_PHASE) {
+		int skeletonAmount = (rand() % 2) + 3;
+		int archerAmount = (rand() % 2) + 3;
+
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(6.f * 64.f, 16.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(18.f * 64.f, 16.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(20.f * 64.f, 16.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+
+		if (skeletonAmount > 3)
+			this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(24.f * 64.f, 16.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(12.f * 64.f, 14.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(14.f * 64.f, 13.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+		this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(26.f * 64.f, 10.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+
+		if (archerAmount > 3)
+			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(16.f * 64.f, 8.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+
+		// BOSS AQUI
+	}
+}
+
+void PlayingState::createPlayers()
+{
+	this->player1 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(4.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP, 1);
+	this->currentPhase->setPlayer1(this->player1);
+
+	if (twoPlayers) {
+		this->player2 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(5.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP, 2);
+		this->currentPhase->setPlayer2(this->player2);
 	}
 }
 
@@ -102,66 +260,51 @@ void PlayingState::updateInput()
 	}
 }
 
-// Verifica se está ocorrendo colisões entre o jogador e os outros objetos
-void PlayingState::updateCollision()
-{
-	sf::Vector2f directionPlayerTmp;  // Vetor de direções
-	sf::Vector2f directionEnemyTmp;
-
-	PlatformList* phasePlatformList = this->phase1.getPlatformList();
-	EntitiesList* phaseEntitiesList = this->phase1.getEntityList();
-
-	for (int i = 0; i < (int)phasePlatformList->getSize(); i++) {
-		if (phasePlatformList->operator[](i)->getCollider()->isColliding(this->player1->getCollider(), &directionPlayerTmp) && this->player1) {
-			this->player1->updateCollision(directionPlayerTmp);
-
-			/* FAZER UMA FUNÇÃO NA CLASSE DO PLAYER PARA ESSAS OPERAÇÕES: */
-			if (directionPlayerTmp.y < 0.f)
-				this->player1->setCanJump(true);
-
-			if (phasePlatformList->operator[](i)->getObstacleType() == 2) // SLOW
-				this->player1->setIsSlow(true);
-			else {
-				this->player1->setIsSlow(false);
-				if (phasePlatformList->operator[](i)->getObstacleType() == 1) // FIRE
-					this->player1->loseHp(1);
-				else if (phasePlatformList->operator[](i)->getObstacleType() == 3) // TELEPORT
-					this->player1->getShape()->setPosition(sf::Vector2f(340.f, 0.f));
-			}
-		}
-
-		for (int j = 1; j < (int)phaseEntitiesList->getSize(); j++) {
-			if (phasePlatformList->operator[](i)->getCollider()->isColliding(phaseEntitiesList->operator[](j)->getCollider(), &directionEnemyTmp))
-				static_cast<Character*>(phaseEntitiesList->operator[](j))->updateCollision(directionEnemyTmp);
-			if (this->player1 && this->player1->getSwordHitbox())
-				if (this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(phaseEntitiesList->operator[](j)->getShape()->getGlobalBounds()))
-					static_cast<Character*>(phaseEntitiesList->operator[](j))->loseHp(1);
-
-			// COLISÃO COM SKELETON
-			if (phaseEntitiesList->operator[](j)->getEntityType() == 2) // SKELETON
-				if (this->player1->getCollider()->isColliding(phaseEntitiesList->operator[](j)->getCollider(), &directionEnemyTmp))
-					this->player1->loseHp(2);
-		}
-	}
-}
-
 void PlayingState::update(float dt)
 {
 	this->updateInput();
-	this->phase1.update();
+
+	float aspectRatio = (float)this->graphicsManager->getWindow()->getSize().x / (float)this->graphicsManager->getWindow()->getSize().y;
+	this->graphicsManager->setViewSize(sf::Vector2f(512.f * aspectRatio, 512.f));
+
+	this->currentPhase->update();
+	if (this->currentPhase->getPhaseEnd())
+		this->changeLevel();
 	this->graphicsManager->updateView(this->player1->getShape());
-	this->updateCollision();
-
-	std::cout << this->score << std::endl;
-
 }
 
 void PlayingState::render()
 {
+	this->graphicsManager->clearWindow(this->currentPhase->getId());
 	this->graphicsManager->setView();
-	this->phase1.render();
+	this->currentPhase->render();
 }
 
-void PlayingState::resetState()
+void PlayingState::changeLevel()
 {
+	this->currentPhase->clearPlatformList();
+	this->currentPhase->clearEntityList();
+
+	delete this->currentPhase;
+
+	this->setPhase(new CastlePhase(this->graphicsManager, this->dt, CASTLE_PHASE));
+
+	this->currentPhase->loadMap("images/castle_map.txt");
+	this->currentPhase->setPlayer1(this->player1);
+
+	if (twoPlayers)
+		this->currentPhase->setPlayer2(this->player2);
+
+	this->createObstacles(CASTLE_PHASE);
+	this->createEnemies(CASTLE_PHASE);
+
+	this->currentPhase->addEntity(this->player1);
+
+	if (twoPlayers)
+		this->currentPhase->addEntity(this->player2);
+
+	this->player1->getShape()->setPosition(sf::Vector2f(4.f * 64.f, 15.f * 64.f));
+
+	if (twoPlayers)
+		this->player2->getShape()->setPosition(sf::Vector2f(5.f * 64.f, 15.f * 64.f));
 }

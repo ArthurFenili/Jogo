@@ -1,14 +1,10 @@
 #include "NewGameState.h"
 
-NewGameState::NewGameState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt):
+NewGameState::NewGameState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 {
-	std::cout << "NewGameState" << std::endl;
-
 	this->dt = dt;
 
-	this->initBackground();
-	this->initFonts();
 	this->initButtons();
 }
 
@@ -19,53 +15,40 @@ NewGameState::~NewGameState()
 	delete this->backButton;
 }
 
-void NewGameState::initBackground()
-{
-	this->background.setSize(sf::Vector2f(this->graphicsManager->getWindow()->getSize()));
-
-	if (!this->backgroundTexture.loadFromFile("images/background.jpg"))
-		throw "ERROR::BACKGROUND_TEXTURE::COULD_NOT_LOAD_FROM_FILE";
-
-	this->background.setTexture(&this->backgroundTexture);
-}
-
-void NewGameState::initFonts()
-{
-	if (!this->font.loadFromFile("fonts/georgia.ttf"))
-		throw "ERROR::FONT::COULD_NOT_LOAD_FROM_FILE";
-}
-
 void NewGameState::initButtons()
 {
 	this->onePlayerButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - 150,
+		1280.f / 2 - 150,
 		100.f,
-		300, 100,
+		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "One Player",
 		sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(onePlayerButton);
 
 	this->twoPlayersButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - 150,
+		1280.f / 2 - 150,
 		300.f,
-		300, 100,
+		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "Two Players",
 		sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(twoPlayersButton);
 
 	this->backButton = new Button(
-		(float)this->graphicsManager->getWindow()->getSize().x / 2 - 150,
+		1280.f / 2 - 150,
 		500.f,
-		300, 100,
+		BUTTON_WIDTH, BUTTON_HEIGHT,
 		&this->font, "Back",
 		sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(backButton);
 }
 
 void NewGameState::updateButtons()
@@ -94,24 +77,14 @@ void NewGameState::updateInput()
 		this->updateStateChange();
 	}
 	if (onePlayerButton->isPressed()) {
+		PlayingState::twoPlayers = false;
 		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
 		this->updateStateChange();
 	}
-}
 
-void NewGameState::update(float dt)
-{
-	this->updateInput();
-	this->updateMousePositions();
-	this->updateButtons();
-}
-
-void NewGameState::render()
-{
-	this->graphicsManager->renderShape(&background);
-	this->renderButtons();
-}
-
-void NewGameState::resetState()
-{
+	if (twoPlayersButton->isPressed()) {
+		PlayingState::twoPlayers = true;
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
+		this->updateStateChange();
+	}
 }

@@ -1,24 +1,26 @@
 #pragma once
 
-#include "Character.h"
 #include "Player.h"
 
 class Enemy : public Character
 {
 protected:
-	Player* player1;
-	AnimationManager* animation;
+	Player* player;
 
 public:
-	Enemy(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-		float* dt, float spriteScale, float speed);
+	Enemy(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, float speed, long int hp);
 	Enemy();
 	~Enemy();
 
-	void setPlayer(Player* player) { this->player1 = player; }
+	virtual void update() {}
 
-	void update();
 	void updateMovement();
+	void updatePosition(float widthAux, float heightAux);
+
+	/*void updateMovement();
 	void updatePositions();
-	void updateAnimation();
+	void updateAnimation();*/
+
+	void setPlayer(Player* player) { this->player = player; }
+	Player* getPlayer() { return this->player; }
 };

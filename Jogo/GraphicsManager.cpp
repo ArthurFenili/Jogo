@@ -1,14 +1,17 @@
 #include "GraphicsManager.h"
 
+const unsigned int WINDOW_WIDTH = 1280;
+const unsigned int WINDOW_HEIGHT = 720;
+const float VIEW_SIZE = 512.f;
+
 GraphicsManager::GraphicsManager()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Game TecProg");
-	this->view.setSize(1280.f, 720.f);
+	this->window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 64), "Game TecProg");
+	this->view.setSize(VIEW_SIZE, VIEW_SIZE);
 }
 
 GraphicsManager::~GraphicsManager()
 {
-
 	/* INSPIRADO NO TUTORIAL DO MONITOR MATHEUS BURDA */
 
 	/* Desaloca as texturas */
@@ -23,6 +26,10 @@ GraphicsManager::~GraphicsManager()
 // Carrega as texturas e inserem elas no mapa de texturas (caso ainda não tenham sido criadas)
 sf::Texture* GraphicsManager::loadTextures(std::string pathToTexture, std::string textureName)
 {
+
+	if (textureName == "NONE" || textureName == "BACKGROUND")
+		return nullptr;
+
 	/* Tenta encontrar a textura no mapa de texturas a partir da string textureName */
 	std::map<std::string, sf::Texture*>::iterator it;
 	for (it = this->textures.begin(); it != this->textures.end(); ++it)
@@ -41,14 +48,25 @@ sf::Texture* GraphicsManager::loadTextures(std::string pathToTexture, std::strin
 	return tmp;
 }
 
-void GraphicsManager::resetView()
-{
-	this->view.setCenter(sf::Vector2f(1280.f / 2, 720.f / 2));
-	this->setView();
-}
-
 void GraphicsManager::resizeView()
 {
 	float aspectRatio = (float)this->window->getSize().x / (float)this->window->getSize().y;
-	this->view.setSize(1280.f * aspectRatio, 720.f * aspectRatio);
+	this->view.setSize(VIEW_SIZE * aspectRatio, VIEW_SIZE);
+}
+
+void GraphicsManager::clearWindow(int phase)
+{
+	if (phase == 0)
+		this->window->clear(sf::Color(178, 218, 250));
+	else if (phase == 1)
+		this->window->clear(sf::Color(53, 53, 95));
+	else
+		this->window->clear();
+}
+
+void GraphicsManager::resetView()
+{
+	this->view.setSize(1280.f, 720.f);
+	this->view.setCenter(1280.f / 2.f, 720.f / 2.f);
+	this->setView();
 }

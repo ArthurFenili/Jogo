@@ -9,6 +9,7 @@ Game::Game()
 
 Game::~Game()
 {
+
 }
 
 void Game::initStates()
@@ -17,14 +18,14 @@ void Game::initStates()
 	this->states.push(mainMenu);
 }
 
-
 // Verifica constantemente várias ações que são necessárias para o bom funcionamento da aplicação
 void Game::update()
 {
 	this->updateSFMLEvents();
 	if (!this->states.empty()) {
-		this->states.top()->update(dt);
+		this->states.top()->update(this->dt);
 	}
+
 }
 
 // Verifica se o usuário pediu para fechar a janela
@@ -48,19 +49,17 @@ void Game::updateDeltaTime()
 		this->dt = 1.f / 20.f;
 }
 
-// Desenha todos os objetos do jogo na janela
 void Game::render()
 {
-	this->graphicsManager.clearWindow();  // Limpa a janela
+	//this->graphicsManager.clearWindow();  // Limpa a janela
 
 	if (!this->states.empty()) {
 		this->states.top()->render();
 	}
 
-	this->graphicsManager.displayWindow();  // Imprime todos os objetos que foram renderizados na janela
+	this->graphicsManager.displayWindow();  // Imprime todos os objetos que foram renderizados na janela}
 }
 
-// Loop principal do jogo
 void Game::execute()
 {
 	while (this->graphicsManager.isWindowOpen()) {

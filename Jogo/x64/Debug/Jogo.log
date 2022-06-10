@@ -1,8 +1,2 @@
-﻿  Game.cpp
-  GameOverState.cpp
-  MainMenuState.cpp
-  NewGameState.cpp
-  PlayingState.cpp
-  main.cpp
-  Gerando Código...
+﻿  PlayingState.cpp
   Jogo.vcxproj -> E:\Visual Studio\Projetos\Jogo\x64\Debug\Jogo.exe

@@ -8,7 +8,7 @@ Boss::Boss(GraphicsManager* graphicsManager, sf::Vector2f position, std::string 
 	Enemy(graphicsManager, position, pathToTexture, textureName, bodySize, dt, spriteScale, speed)
 {
 	this->speed = speed;
-	this->player1 = nullptr;
+	this->player = nullptr;
 
 	this->animation = new AnimationManager();
 	this->animation->setImageCount(sf::Vector2u(8, 1));
@@ -61,6 +61,26 @@ void Boss::updateMovement()
 
 void Boss::updateAttack()
 {
+	if (attackTimer < 2000) {
+		attackTimer++;
+	}
+
+	if (this->player->getPosition().x <= this->getPosition().x + 200 &&
+		this->player->getPosition().x >= this->getPosition().x - 200 &&
+		attackTimer >= 2000)
+	{
+		attackTimer = 0;
+		this->swordHitbox = new SwordAttack(this->position, this);
+		std::cout << "atacou" << std::endl;
+		this->swordHitbox->update();
+	}
+	else
+	{
+		if (swordHitbox) {
+			delete this->swordHitbox;
+			this->swordHitbox = nullptr;
+		}
+	}
 }
 
 void Boss::updatePosition()

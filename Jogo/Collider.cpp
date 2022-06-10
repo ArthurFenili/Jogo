@@ -7,6 +7,7 @@ Collider::Collider(sf::RectangleShape* body)
 
 Collider::~Collider()
 {
+	this->body = nullptr;
 }
 
 // Retorna true caso ocorra colisão entre o body do Collider que chamou a função (this) e o body do Collider "other"

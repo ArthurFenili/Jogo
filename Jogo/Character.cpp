@@ -2,34 +2,25 @@
 
 const float GRAVITY = 981.f;
 
-Character::Character(GraphicsManager* graphicsManager, sf::Vector2f position, std::string pathToTexture, std::string textureName, sf::Vector2f bodySize,
-	float* dt, float spriteScale, float speed) :
-	Entity(graphicsManager, position, pathToTexture, textureName, bodySize)
+Character::Character(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
+	std::string pathToTexture, std::string textureName, float speed, long int hp) :
+	Entity(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName)
 {
-	this->dt = dt;
-	this->spriteScale = spriteScale;
 	this->speed = speed;
-
-	this->sprite.setPosition(this->position + this->body.getSize());
-	this->sprite.setScale(sf::Vector2f(this->spriteScale, this->spriteScale));
-	this->sprite.setOrigin(this->body.getSize() / 2.f);
-
-	this->velocity = sf::Vector2f(0.f, 0.f);
+	this->hp = hp;
 	this->gravity = GRAVITY;
 	this->facingRight = true;
 
-	this->hp = 1000;
+	this->velocity = sf::Vector2f(0.f, 0.f);
 }
 
 Character::Character() :
 	Entity()
 {
-	this->spriteScale = 1.f;
-	this->speed = 1.f;
-	this->dt = nullptr;
-	this->facingRight = true;
+	this->speed = 100.f;
+	this->hp = 100;
 	this->gravity = GRAVITY;
-	this->hp = 1000;
+	this->facingRight = false;
 }
 
 Character::~Character()
@@ -69,9 +60,3 @@ void Character::flip()
 	this->facingRight = !this->facingRight;
 }
 
-bool Character::isDead()
-{
-	if (this->hp <= 0)
-		return true;
-	return false;
-}

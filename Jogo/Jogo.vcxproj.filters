@@ -13,78 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ENTITIES">
-      <UniqueIdentifier>{7166865c-4567-436d-a9d4-5d924235ac07}</UniqueIdentifier>
+    <Filter Include="ENTIDADES">
+      <UniqueIdentifier>{f646209a-4919-46c8-bd9b-3cd11e56458b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENTITIES\CHARACTERS">
-      <UniqueIdentifier>{997c9bde-f9f4-4f53-a2a2-54f6bb4ebab0}</UniqueIdentifier>
+    <Filter Include="ENTIDADES\PERSONAGENS">
+      <UniqueIdentifier>{715c7314-10be-4f93-974b-1954d9b2edaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LISTS">
-      <UniqueIdentifier>{2723fa28-d972-44ec-b027-352b83ae73b8}</UniqueIdentifier>
+    <Filter Include="ENTIDADES\OBSTACULOS">
+      <UniqueIdentifier>{453a2c05-aa89-4ebb-85a2-f3226696619d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MANAGERS">
-      <UniqueIdentifier>{e0edf7ea-c91b-401c-9981-55f56218dc1d}</UniqueIdentifier>
+    <Filter Include="FASES">
+      <UniqueIdentifier>{32439a04-e60f-43e6-af93-fefcc1e85dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LISTAS">
+      <UniqueIdentifier>{5ae57d32-f895-4ae2-8160-e7f8c6aedd41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GERENCIADORES">
+      <UniqueIdentifier>{8180d179-cc31-404a-9f03-a5ca5a6bfd4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="PRINCIPAL">
-      <UniqueIdentifier>{003063d1-b25f-4603-bb71-e2632ae0bb37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PHASE">
-      <UniqueIdentifier>{c5bb84cc-bb90-42b4-a7c0-0fc02d394618}</UniqueIdentifier>
+      <UniqueIdentifier>{c2061642-c07f-4350-a54c-6b6c909a025e}</UniqueIdentifier>
     </Filter>
     <Filter Include="STATES">
-      <UniqueIdentifier>{62d39d4f-6882-4ec3-a99a-dc55ca975689}</UniqueIdentifier>
+      <UniqueIdentifier>{b7d34b13-0a62-4520-91e5-1d79cee49415}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entity.cpp">
+      <Filter>ENTIDADES</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordAttack.cpp">
+      <Filter>ENTIDADES</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsManager.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityList.cpp">
+      <Filter>LISTAS</Filter>
+    </ClCompile>
+    <ClCompile Include="Phase.cpp">
+      <Filter>FASES</Filter>
+    </ClCompile>
+    <ClCompile Include="Ent.cpp">
+      <Filter>PRINCIPAL</Filter>
+    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>PRINCIPAL</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>PRINCIPAL</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationManager.cpp">
-      <Filter>MANAGERS</Filter>
+    <ClCompile Include="Button.cpp">
+      <Filter>GERENCIADORES</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>MANAGERS</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsManager.cpp">
-      <Filter>MANAGERS</Filter>
-    </ClCompile>
-    <ClCompile Include="SwordAttack.cpp">
-      <Filter>MANAGERS</Filter>
-    </ClCompile>
-    <ClCompile Include="PlatformList.cpp">
-      <Filter>LISTS</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>ENTITIES</Filter>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
-      <Filter>ENTITIES</Filter>
-    </ClCompile>
-    <ClCompile Include="Phase.cpp">
-      <Filter>PHASE</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyProjectile.cpp">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClCompile>
-    <ClCompile Include="EntitiesList.cpp">
-      <Filter>LISTS</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>ENTITIES</Filter>
-    </ClCompile>
-    <ClCompile Include="State.cpp">
+    <ClCompile Include="GameOverState.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
     <ClCompile Include="MainMenuState.cpp">
@@ -93,72 +93,102 @@
     <ClCompile Include="NewGameState.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
-    <ClCompile Include="PlayingState.cpp">
-      <Filter>STATES</Filter>
-    </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>MANAGERS</Filter>
+    <ClCompile Include="PlayingState.cpp">
+      <Filter>STATES</Filter>
     </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>ENTITIES\CHARACTERS</Filter>
+    <ClCompile Include="State.cpp">
+      <Filter>STATES</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClCompile>
+    <ClCompile Include="ForestPhase.cpp">
+      <Filter>FASES</Filter>
+    </ClCompile>
+    <ClCompile Include="CastlePhase.cpp">
+      <Filter>FASES</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>ENTIDADES</Filter>
+    </ClCompile>
+    <ClCompile Include="Archer.cpp">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
+    <ClCompile Include="Slow.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleport.cpp">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaderboardState.cpp">
+      <Filter>STATES</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionsManager.cpp">
+      <Filter>GERENCIADORES</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonList.cpp">
+      <Filter>LISTAS</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectPhaseState.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity.h">
+      <Filter>ENTIDADES</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordAttack.h">
+      <Filter>ENTIDADES</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>GERENCIADORES</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>GERENCIADORES</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsManager.h">
+      <Filter>GERENCIADORES</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>LISTAS</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityList.h">
+      <Filter>LISTAS</Filter>
+    </ClInclude>
+    <ClInclude Include="Phase.h">
+      <Filter>FASES</Filter>
+    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>PRINCIPAL</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>MANAGERS</Filter>
+    <ClInclude Include="Ent.h">
+      <Filter>PRINCIPAL</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>MANAGERS</Filter>
+    <ClInclude Include="Button.h">
+      <Filter>GERENCIADORES</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsManager.h">
-      <Filter>MANAGERS</Filter>
-    </ClInclude>
-    <ClInclude Include="SwordAttack.h">
-      <Filter>MANAGERS</Filter>
-    </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>LISTS</Filter>
-    </ClInclude>
-    <ClInclude Include="PlatformList.h">
-      <Filter>LISTS</Filter>
-    </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>ENTITIES</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClInclude>
-    <ClInclude Include="Platform.h">
-      <Filter>ENTITIES</Filter>
-    </ClInclude>
-    <ClInclude Include="Phase.h">
-      <Filter>PHASE</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyProjectile.h">
-      <Filter>ENTITIES\CHARACTERS</Filter>
-    </ClInclude>
-    <ClInclude Include="EntitiesList.h">
-      <Filter>LISTS</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>ENTITIES</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
+    <ClInclude Include="GameOverState.h">
       <Filter>STATES</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuState.h">
@@ -167,19 +197,52 @@
     <ClInclude Include="NewGameState.h">
       <Filter>STATES</Filter>
     </ClInclude>
-    <ClInclude Include="PlayingState.h">
-      <Filter>STATES</Filter>
-    </ClInclude>
     <ClInclude Include="PauseState.h">
       <Filter>STATES</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>MANAGERS</Filter>
+    <ClInclude Include="PlayingState.h">
+      <Filter>STATES</Filter>
     </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>ENTITIES\CHARACTERS</Filter>
+    <ClInclude Include="State.h">
+      <Filter>STATES</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverState.h">
+    <ClInclude Include="Skeleton.h">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClInclude>
+    <ClInclude Include="ForestPhase.h">
+      <Filter>FASES</Filter>
+    </ClInclude>
+    <ClInclude Include="CastlePhase.h">
+      <Filter>FASES</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>ENTIDADES</Filter>
+    </ClInclude>
+    <ClInclude Include="Archer.h">
+      <Filter>ENTIDADES\PERSONAGENS</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Slow.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleport.h">
+      <Filter>ENTIDADES\OBSTACULOS</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>GERENCIADORES</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderboardState.h">
+      <Filter>STATES</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionsManager.h">
+      <Filter>GERENCIADORES</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonList.h">
+      <Filter>LISTAS</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectPhaseState.h">
       <Filter>STATES</Filter>
     </ClInclude>
   </ItemGroup>
