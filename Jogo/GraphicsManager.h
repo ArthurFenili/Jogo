@@ -23,6 +23,8 @@ public:
 
 	void resetView();
 
+	void setViewSize(sf::Vector2f size) { this->view.setSize(size); }
+
 	bool pollEvent(sf::Event* sfEvent) { return this->window->pollEvent(*sfEvent); }
 
 	bool isWindowOpen() { return this->window->isOpen(); }

@@ -13,6 +13,7 @@ LeaderboardState::LeaderboardState(GraphicsManager* graphicsManager, std::stack<
 	this->initFonts();
 	this->initButtons();
 
+	this->buildLeaderboard();
 }
 
 LeaderboardState::~LeaderboardState()
@@ -49,6 +50,44 @@ void LeaderboardState::initButtons()
 	);
 }
 
+void LeaderboardState::buildLeaderboard()
+{
+    std::ifstream file;
+
+    file.open("saves/leaderboard.txt", std::ios::binary | std::ios::in);
+
+	std::string name;
+    std::string textString = "";
+    std::string pointsString;
+	std::stringstream ss;
+
+    sf::Text* txt;
+
+	int i = 1;
+	while (file >> pointsString >> name) {
+		textString = "0" + std::to_string(i) + " - " + name + "........" + pointsString;
+		i++;
+
+		txt = new sf::Text();
+		txt->setString(textString);
+		txt->setFont(this->font);
+		txt->setFillColor(sf::Color::White);
+		txt->setCharacterSize(56);
+		txt->setPosition(sf::Vector2f((this->graphicsManager->getWindow()->getSize().x / 2.f) - 270, (float)50 * i));
+
+		vectorString.push_back(txt);
+	}
+
+    file.close();
+}
+
+void LeaderboardState::renderLeaderboard()
+{
+	for (iterator = vectorString.begin(); iterator != vectorString.end(); iterator++) {
+		this->graphicsManager->renderText(*iterator);
+	}
+}
+
 void LeaderboardState::updateButtons()
 {
 	this->backButton->update(this->mousePosView);
@@ -81,6 +120,7 @@ void LeaderboardState::render()
 
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();
+	this->renderLeaderboard();
 }
 
 void LeaderboardState::resetState()

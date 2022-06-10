@@ -2,6 +2,7 @@
 #include "State.h"
 #include <vector>
 #include <fstream>
+#include<sstream>
 class LeaderboardState :
     public State
 {
@@ -12,6 +13,9 @@ private:
 	sf::Font font;
 	Button* backButton;
 
+	std::vector<sf::Text*> vectorString;
+	std::vector<sf::Text*>::iterator iterator;
+
 public:
 	LeaderboardState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
 	~LeaderboardState();
@@ -19,6 +23,9 @@ public:
 	void initBackground();
 	void initFonts();
 	void initButtons();
+
+	void buildLeaderboard();
+	void renderLeaderboard();
 
 	void updateButtons();
 	void renderButtons();

@@ -1,7 +1,7 @@
 #include "GraphicsManager.h"
 
-const unsigned int WINDOW_WIDTH = 800;
-const unsigned int WINDOW_HEIGHT = 600;
+const unsigned int WINDOW_WIDTH = 1280;
+const unsigned int WINDOW_HEIGHT = 720;
 const float VIEW_SIZE = 512.f;
 
 GraphicsManager::GraphicsManager()
@@ -57,7 +57,7 @@ void GraphicsManager::resizeView()
 void GraphicsManager::clearWindow(int phase)
 {
 	if (phase == 0)
-		this->window->clear(sf::Color(90, 161, 238));
+		this->window->clear(sf::Color(251, 121, 124));
 	else if (phase == 1)
 		this->window->clear(sf::Color(53, 53, 95));
 	else

@@ -20,7 +20,7 @@ Projectile::~Projectile()
 
 void Projectile::createProjectile()
 {
-	this->body.setFillColor(sf::Color::Magenta);
+	this->body.setFillColor(sf::Color::Green);
 	this->body.setPosition(this->archer->getPosition());
 }
 

@@ -1,6 +1,8 @@
-400
+700
+teste
+600
+eduardo
+600
 arthur
 350
-archer
-100
-arthur
+finalmente

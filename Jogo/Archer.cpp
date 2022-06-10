@@ -1,5 +1,6 @@
 #include "Archer.h"
 #include <iostream>
+
 const float WIDTH_AUX = 0.1f;
 const float HEIGHT_AUX = 3.3f;
 
@@ -31,10 +32,11 @@ void Archer::update() {
 
 void Archer::updateAttack()
 {
-	if (this->shootTimer < 2000)
-		(this->shootTimer)++;
+	if (this->shootTimer < 500) {
+		this->shootTimer++;
+	}
 
-	if (this->shootTimer >= 2000) {
+	if (this->shootTimer >= 500) {
 		Projectile* tmp = nullptr;
 		tmp = new Projectile(this->graphicsManager, this->dt, SWORD, 1.f, this->position, sf::Vector2f(10.f, 10.f), "", "NONE", this);
 		tmp->createProjectile();

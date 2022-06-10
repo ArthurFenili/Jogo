@@ -249,6 +249,10 @@ void PlayingState::updateInput()
 void PlayingState::update(float dt)
 {
 	this->updateInput();
+
+	float aspectRatio = (float)this->graphicsManager->getWindow()->getSize().x / (float)this->graphicsManager->getWindow()->getSize().y;
+	this->graphicsManager->setViewSize(sf::Vector2f(512.f * aspectRatio, 512.f));
+
 	this->currentPhase->update();
 	if (this->currentPhase->getPhaseEnd())
 		this->changeLevel();
