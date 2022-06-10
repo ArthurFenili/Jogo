@@ -3,8 +3,6 @@
 NewGameState::NewGameState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 {
-	std::cout << "NewGameState" << std::endl;
-
 	this->dt = dt;
 
 	this->initBackground();

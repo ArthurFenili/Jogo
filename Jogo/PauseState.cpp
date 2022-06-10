@@ -3,8 +3,6 @@
 PauseState::PauseState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool* exit) :
 	State(graphicsManager, states, dt)
 {
-	std::cout << "PauseState" << std::endl;
-
 	this->dt = dt;
 	this->exitGame = exit;
 

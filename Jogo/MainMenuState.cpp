@@ -3,8 +3,6 @@
 MainMenuState::MainMenuState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 {
-	std::cout << "MainMenuState" << std::endl;
-
 	this->dt = dt;
 
 	//---------------

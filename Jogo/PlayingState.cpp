@@ -29,8 +29,6 @@ bool PlayingState::twoPlayers(false);
 PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool twoP) :
 	State(graphicsManager, states, dt)
 {
-	std::cout << "PlayingState" << std::endl;
-
 	this->dt = dt;
 	this->setPhase(new ForestPhase(this->graphicsManager, this->dt, FOREST_PHASE));
 	this->exit = false;

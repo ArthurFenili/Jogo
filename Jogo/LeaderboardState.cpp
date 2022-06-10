@@ -4,8 +4,6 @@ LeaderboardState::LeaderboardState(GraphicsManager* graphicsManager, std::stack<
 	State(graphicsManager, states, dt)
 
 {
-	std::cout << "LeaderboardState" << std::endl;
-
 	this->dt = dt;
 
 	//---------------

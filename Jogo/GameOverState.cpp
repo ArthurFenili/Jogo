@@ -5,8 +5,6 @@ GameOverState::GameOverState(GraphicsManager* graphicsManager, std::stack<State*
 	State(graphicsManager, states, dt)
 
 {
-	std::cout << "GameOverState" << std::endl;
-
 	this->dt = dt;
 
 	//---------------
