@@ -7,6 +7,7 @@
 #include "CastlePhase.h"
 #include "PauseState.h"
 #include "GameOverState.h"
+#include "VictoryState.h"
 #include <time.h>
 
 class PlayingState :
@@ -26,6 +27,8 @@ public:
 	static int score;
 	static bool forestPhase;
 	static bool twoPlayers;
+	static bool enteredDoor;
+	static bool defeatedBoss;
 
 public:
 	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);

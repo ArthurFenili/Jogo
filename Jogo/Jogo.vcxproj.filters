@@ -135,14 +135,17 @@
     <ClCompile Include="Button.cpp">
       <Filter>MANAGERS</Filter>
     </ClCompile>
+    <ClCompile Include="DarkKnight.cpp">
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClCompile>
     <ClCompile Include="ButtonList.cpp">
       <Filter>LISTS</Filter>
     </ClCompile>
     <ClCompile Include="SelectPhaseState.cpp">
       <Filter>STATES</Filter>
     </ClCompile>
-    <ClCompile Include="DarkKnight.cpp">
-      <Filter>ENTITIES\CHARACTERS</Filter>
+    <ClCompile Include="VictoryState.cpp">
+      <Filter>STATES</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,14 +245,17 @@
     <ClInclude Include="CollisionsManager.h">
       <Filter>MANAGERS</Filter>
     </ClInclude>
+    <ClInclude Include="DarkKnight.h">
+      <Filter>ENTITIES\CHARACTERS</Filter>
+    </ClInclude>
     <ClInclude Include="ButtonList.h">
       <Filter>LISTS</Filter>
     </ClInclude>
     <ClInclude Include="SelectPhaseState.h">
       <Filter>STATES</Filter>
     </ClInclude>
-    <ClInclude Include="DarkKnight.h">
-      <Filter>ENTITIES\CHARACTERS</Filter>
+    <ClInclude Include="VictoryState.h">
+      <Filter>STATES</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

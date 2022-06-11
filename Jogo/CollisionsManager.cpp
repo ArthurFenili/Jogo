@@ -10,7 +10,7 @@ CollisionsManager::CollisionsManager(EntityList* entityList, Entity** platformLi
 
 CollisionsManager::~CollisionsManager()
 {
-	
+
 }
 
 void CollisionsManager::updateCollision()
@@ -22,6 +22,14 @@ void CollisionsManager::updateCollision()
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 30; j++) {
 			for (int k = 0; k < this->entityList->getSize(); k++) {
+
+				//if (entityList->operator[](k)->getId() == PLAYER) {
+				//	if (this->platformlist[i][j].getId() == DOOR) {
+				//		if (this->platformlist[i][j].getCollider()->isColliding(this->entityList->operator[](k)->getCollider(), &playerDirection)) {
+				//			
+				//		}
+				//	}
+				//}
 
 				if (this->entityList->operator[](k)->getId() != FIRE && this->entityList->operator[](k)->getId() != TELEPORT && this->entityList->operator[](k)->getId() != SLOW) {
 
@@ -49,13 +57,16 @@ void CollisionsManager::updateCollision()
 									static_cast<Player*>(this->entityList->operator[](k))->setCanJump(true);
 							}
 						}
-					}	
+					}
 
 					else if (this->player1 && this->platformlist[i][j].getId() == CASTLE && this->platformlist[i][j].getShape()->getGlobalBounds().intersects(this->player1->getShape()->getGlobalBounds())) {
 						this->player1->setInCastle(true);
 						break;
 					}
-						
+					else if (this->player1 && this->platformlist[i][j].getId() == DOOR && this->platformlist[i][j].getShape()->getGlobalBounds().intersects(this->player1->getShape()->getGlobalBounds())) {
+						PlayingState::enteredDoor = true;
+						break;
+					}
 				}
 			}
 		}
@@ -125,26 +136,36 @@ void CollisionsManager::updateCollision()
 				}
 
 				if (entityList->operator[](k)->getId() == SKELETON || entityList->operator[](k)->getId() == ARCHER) {
-					if (this->player1->getSwordHitbox() && this->player1->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
+					if (this->player1->getSwordHitbox() && this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
 						static_cast<Character*>(entityList->operator[](k))->loseHp(1);
 					}
 					if (PlayingState::twoPlayers && this->player2) {
-						if (this->player2->getSwordHitbox() && this->player2->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
+						if (this->player2->getSwordHitbox() && this->player2->getSwordHitbox()->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
 							static_cast<Character*>(entityList->operator[](k))->loseHp(1);
 						}
 					}
 				}
 				if (entityList->operator[](k)->getId() == DARKKNIGHT) {
-					if (this->player1->getSwordHitbox() && this->player1->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
+					if (this->player1->getSwordHitbox() && this->player1->getSwordHitbox()->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
 						static_cast<Character*>(entityList->operator[](k))->loseHp(1);
 						DarkKnight::gotHit++;
 					}
-					if (static_cast<DarkKnight*>(entityList->operator[](k))->getSwordHitbox() && entityList->operator[](k)->getShape()->getGlobalBounds().intersects(this->player1->getShape()->getGlobalBounds())) {
+					if (PlayingState::twoPlayers && this->player2) {
+						if (this->player2->getSwordHitbox() && this->player2->getSwordHitbox()->getShape()->getGlobalBounds().intersects(entityList->operator[](k)->getShape()->getGlobalBounds())) {
+							static_cast<Character*>(entityList->operator[](k))->loseHp(1);
+							DarkKnight::gotHit++;
+						}
+					}
+					if (static_cast<DarkKnight*>(entityList->operator[](k))->getSwordHitbox() && static_cast<DarkKnight*>(entityList->operator[](k))->getSwordHitbox()->getShape()->getGlobalBounds().intersects(this->player1->getShape()->getGlobalBounds())) {
 						this->player1->loseHp(200);
 					}
+					if (static_cast<DarkKnight*>(entityList->operator[](k))->isDead()) {
+						PlayingState::score += 1000;
+						PlayingState::defeatedBoss = true;
+					}
 				}
-				
-				
+
+
 
 				if (this->entityList->operator[](k)->getId() == ARCHER) {
 					Archer* currentArcher = static_cast<Archer*>(this->entityList->operator[](k));
@@ -157,7 +178,7 @@ void CollisionsManager::updateCollision()
 					}
 				}
 			}
-			
+
 		}
 	}
 }

@@ -1,4 +1,5 @@
 #include "State.h"
+#include "PlayingState.h"
 
 State::State(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt)
 {
@@ -31,6 +32,50 @@ void State::initFonts()
 {
 	if (!this->font.loadFromFile("fonts/georgia.ttf"))
 		throw "ERROR::FONT::COULD_NOT_LOAD_FROM_FILE";
+}
+
+/* INSPIRADO NO TUTORIAL DO MONITOR MATHEUS BURDA */
+void State::writeToLeaderboardFile()
+{
+	// ----------------------- read
+	std::ifstream readFile;
+
+	readFile.open("saves/leaderboard.txt", std::ios::in);
+
+	std::multimap<int, std::string> nameAndScoreMap;
+
+	if (readFile) {
+		std::string name;
+		std::string pointsString;
+
+		for (int i = 0; i < 6; i++) {
+			std::getline(readFile, pointsString);
+			std::getline(readFile, name);
+
+			if (pointsString.length() > 0)
+				nameAndScoreMap.insert(std::pair<int, std::string>(std::stoi(pointsString), name));
+		}
+		readFile.close();
+	}
+
+	// ----------------------- write
+	if (PlayingState::score != 0 && name.length() > 1)
+		nameAndScoreMap.insert(std::pair<int, std::string>(PlayingState::score, name));
+
+	std::ofstream writeFile;
+
+	writeFile.open("saves/leaderboard.txt", std::ios::out | std::ios::trunc);
+
+	while (nameAndScoreMap.size() > 10)
+		nameAndScoreMap.erase(nameAndScoreMap.begin());
+
+	for (auto itr = nameAndScoreMap.rbegin(); itr != nameAndScoreMap.rend(); ++itr) {
+		writeFile << (*itr).first << std::endl;
+		writeFile << (*itr).second << std::endl;
+	}
+
+	writeFile.close();
+
 }
 
 void State::insertState(State* pState, bool replace)
@@ -99,4 +144,5 @@ void State::render()
 
 	this->graphicsManager->renderShape(&background);
 	this->renderButtons();
+	this->renderTxt();
 }

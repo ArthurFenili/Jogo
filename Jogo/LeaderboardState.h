@@ -19,13 +19,12 @@ public:
 	void initButtons();
 
 	void buildLeaderboard();
-	void renderLeaderboard();
+	void renderTxt();
 
 	void updateButtons();
 	void renderButtons();
 
 	void updateInput();
 
-	void render();
 };
 

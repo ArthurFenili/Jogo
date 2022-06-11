@@ -180,6 +180,7 @@
     <ClCompile Include="Phase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Teleport.cpp" />
+    <ClCompile Include="VictoryState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationManager.h" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Phase.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Teleport.h" />
+    <ClInclude Include="VictoryState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

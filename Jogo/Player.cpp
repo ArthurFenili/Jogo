@@ -86,7 +86,6 @@ void Player::initVariables()
 // Verifica constantemente várias ações que são necessárias para o bom funcionamento do player
 void Player::update()
 {
-	std::cout << "player hp: " << this->hp << std::endl;
 	this->updateMovementInput();
 	this->updateAnimationRow();
 	this->updatePositions();

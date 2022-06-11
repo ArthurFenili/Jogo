@@ -2,10 +2,14 @@
 
 #include <iostream>
 #include <stack>
+#include <fstream>
 #include <SFML/Graphics.hpp>
+#include "InputManager.h"
 #include "Ent.h"
 #include "Button.h"
 #include "ButtonList.h"
+
+class PlayingState;
 
 const float BUTTON_WIDTH = 300;
 const float BUTTON_HEIGHT = 100;
@@ -31,6 +35,9 @@ protected:
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 
+	InputManager inputManager;
+	std::string name;
+
 public:
 	State(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
 	State() {}
@@ -39,6 +46,8 @@ public:
 	void initBackground();
 	void initFonts();
 	void initButtons() {}
+
+	void writeToLeaderboardFile();
 
 	void insertState(State* pState, bool replace = false);
 	void removeCurrentState();
@@ -52,6 +61,7 @@ public:
 
 	virtual void render();
 	virtual void renderButtons() {}
+	virtual void renderTxt() {}
 
 	virtual void pause() {};
 	virtual void start() {};

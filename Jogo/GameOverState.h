@@ -12,9 +12,6 @@ private:
 	Button* playAgain;
 	Button* saveGame;
 	Button* mainMenu;
-
-	InputManager inputManager;
-	std::string name;
 public:
 	GameOverState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
 	~GameOverState();
@@ -23,9 +20,8 @@ public:
 
 	void updateButtons();
 	void renderButtons();
+	void renderTxt();
 
 	void updateInput();
-
-	void writeToLeaderboardFile();
 };
 

@@ -26,6 +26,8 @@ sf::Vector2f TELEPORT_SIZE = sf::Vector2f(64.f * 0.4f, 55.f);
 int PlayingState::score(0);
 bool PlayingState::twoPlayers(false);
 bool PlayingState::forestPhase(true);
+bool PlayingState::enteredDoor(false);
+bool PlayingState::defeatedBoss(false);
 
 PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
@@ -222,7 +224,7 @@ void PlayingState::createEnemies(int phase)
 		if (archerAmount > 3)
 			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(16.f * 64.f, 8.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
 
-		this->currentPhase->createEntity(DARKKNIGHT, SKELETON_SPRITE_SCALE, sf::Vector2f(7.f * 64.f, 9.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		this->currentPhase->createEntity(DARKKNIGHT, 3.f, sf::Vector2f(7.f * 64.f, 9.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/dark_knight_walking.png", "DARK_KNIGHT");
 
 	}
 }
@@ -251,6 +253,12 @@ void PlayingState::updateInput()
 	if (this->player1->isDead()) {
 		this->graphicsManager->resetView();
 		this->insertState(new GameOverState(this->graphicsManager, this->states, this->dt), true);
+		this->updateStateChange();
+	}
+
+	if (enteredDoor && defeatedBoss) {
+		this->graphicsManager->resetView();
+		this->insertState(new VictoryState(this->graphicsManager, this->states, this->dt), true);
 		this->updateStateChange();
 	}
 

@@ -51,7 +51,7 @@ Entity Phase::createEntity(int id, float spriteScale, sf::Vector2f position, sf:
 
 	else if (id == DARKKNIGHT) {
 		DarkKnight* tmp = nullptr;
-		tmp = new DarkKnight(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, SKELETON_SPEED, 5000);
+		tmp = new DarkKnight(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, SKELETON_SPEED, 1000);
 		tmp->setPlayer(this->player1);
 		this->entityList.addEntity(tmp);
 		return *tmp;
@@ -126,9 +126,17 @@ void Phase::render()
 	else if (toY >= 20)
 		toY = 19;
 
-	for (int i = 0; i < this->entityList.getSize() - 2; i++) {
+	int numPlayers = PlayingState::twoPlayers ? 2 : 1;
+
+	for (int i = 0; i < this->entityList.getSize() - numPlayers; i++) {
 		this->entityList[i]->renderSprite();
 		this->entityList[i]->renderShape();
+
+		if (this->entityList[i]->getId() == DARKKNIGHT) {
+			if (static_cast<DarkKnight*>(this->entityList[i])->getSwordHitbox())
+				static_cast<DarkKnight*>(this->entityList[i])->renderSwordHitBox_TMP();
+		}
+
 		if (this->entityList[i]->getId() == ARCHER) {
 			Archer* tmp = static_cast<Archer*>(this->entityList[i]);
 			for (int j = 0; j < tmp->getArrowsVector()->size(); j++)
@@ -138,8 +146,8 @@ void Phase::render()
 
 	}
 
-	//if (this->player1->getSwordHitbox())
-		//this->player1->renderSwordHitBox_TMP();
+	if (this->player1->getSwordHitbox())
+		this->player1->renderSwordHitBox_TMP();
 
 	for (int i = fromY; i < toY; i++)
 		for (int j = fromX; j < toX; j++)
@@ -148,8 +156,14 @@ void Phase::render()
 				this->platformList[i][j].renderShape();
 			}
 
-	this->entityList[this->entityList.getSize() - 2]->renderSprite();
-	this->entityList[this->entityList.getSize() - 1]->renderSprite();
+	if (numPlayers > 1) {
+		this->entityList[this->entityList.getSize() - 2]->renderSprite();
+		this->entityList[this->entityList.getSize() - 2]->renderShape();
+	}
+	if (numPlayers >= 1) {
+		this->entityList[this->entityList.getSize() - 1]->renderSprite();
+		this->entityList[this->entityList.getSize() - 1]->renderShape();
+	}
 }
 
 void Phase::clearPlatformList()

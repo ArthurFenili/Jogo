@@ -11,7 +11,10 @@ private:
     float damage;
     float madnessCoefficient; //cada vez que o player acerta um hit, aumenta a furia e a colisão com o corpo do boss da mais dano;
     int attackTimer;
-    
+
+    sf::Texture* attackingTexture;
+    AnimationManager* attackingAnimation;
+
 public:
     static int gotHit;
 
@@ -23,12 +26,14 @@ public:
     float getDamage() { return damage; }
 
     void updateAttack();
+    void updateAttackingAnimation();
 
     void update();
-    //void updateAnimation();
+    void updateAnimation();
+
+    void initAttackingAnimation();
 
     SwordAttack* getSwordHitbox() { return this->swordHitbox; }
 
     void renderSwordHitBox_TMP() { this->graphicsManager->renderShape(this->swordHitbox->getShape()); }
 };
-

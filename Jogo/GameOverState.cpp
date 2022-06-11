@@ -74,6 +74,19 @@ void GameOverState::renderButtons()
 	this->graphicsManager->renderText(this->mainMenu->getText());
 }
 
+void GameOverState::renderTxt()
+{
+	sf::Text* txt;
+	txt = new sf::Text();
+	txt->setString("GAME OVER");
+	txt->setFont(this->font);
+	txt->setFillColor(sf::Color::White);
+	txt->setCharacterSize(64);
+	txt->setPosition(sf::Vector2f((this->graphicsManager->getWindow()->getSize().x / 2.f) - 200, (float)20));
+
+	this->graphicsManager->renderText(txt);
+}
+
 void GameOverState::updateInput()
 {
 	if (this->playAgain->isPressed()) {
@@ -92,48 +105,4 @@ void GameOverState::updateInput()
 		this->removeCurrentState();
 		this->updateStateChange();
 	}
-}
-
-/* INSPIRADO NO TUTORIAL DO MONITOR MATHEUS BURDA */
-void GameOverState::writeToLeaderboardFile()
-{
-	// ----------------------- read
-	std::ifstream readFile;
-
-	readFile.open("saves/leaderboard.txt", std::ios::in);
-
-	std::multimap<int, std::string> nameAndScoreMap;
-
-	if (readFile) {
-		std::string name;
-		std::string pointsString;
-
-		for (int i = 0; i < 6; i++) {
-			std::getline(readFile, pointsString);
-			std::getline(readFile, name);
-
-			if (pointsString.length() > 0)
-				nameAndScoreMap.insert(std::pair<int, std::string>(std::stoi(pointsString), name));
-		}
-		readFile.close();
-	}
-
-	// ----------------------- write
-	if (PlayingState::score != 0 && name.length() > 1)
-		nameAndScoreMap.insert(std::pair<int, std::string>(PlayingState::score, name));
-
-	std::ofstream writeFile;
-
-	writeFile.open("saves/leaderboard.txt", std::ios::out | std::ios::trunc);
-
-	while (nameAndScoreMap.size() > 10)
-		nameAndScoreMap.erase(nameAndScoreMap.begin());
-
-	for (auto itr = nameAndScoreMap.rbegin(); itr != nameAndScoreMap.rend(); ++itr) {
-		writeFile << (*itr).first << std::endl;
-		writeFile << (*itr).second << std::endl;
-	}
-
-	writeFile.close();
-
 }

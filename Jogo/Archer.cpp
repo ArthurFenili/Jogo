@@ -36,7 +36,7 @@ void Archer::updateAttack()
 		this->shootTimer++;
 	}
 
-	if ((this->shootTimer >= 500) && 
+	if ((this->shootTimer >= 500) &&
 		(this->player->getPosition().x <= this->getPosition().x + 500 && this->player->getPosition().x >= this->getPosition().x - 500)) {
 		Projectile* tmp = nullptr;
 		tmp = new Projectile(this->graphicsManager, this->dt, SWORD, 1.f, this->position, sf::Vector2f(10.f, 10.f), "", "NONE", this);

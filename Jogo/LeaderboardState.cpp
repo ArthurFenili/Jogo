@@ -62,7 +62,7 @@ void LeaderboardState::buildLeaderboard()
 	file.close();
 }
 
-void LeaderboardState::renderLeaderboard()
+void LeaderboardState::renderTxt()
 {
 	for (iterator = vectorString.begin(); iterator != vectorString.end(); iterator++) {
 		this->graphicsManager->renderText(*iterator);
@@ -86,13 +86,4 @@ void LeaderboardState::updateInput()
 		this->removeCurrentState();
 		this->updateStateChange();
 	}
-}
-
-void LeaderboardState::render()
-{
-	this->graphicsManager->clearWindow(-1);
-
-	this->graphicsManager->renderShape(&background);
-	this->renderButtons();
-	this->renderLeaderboard();
 }

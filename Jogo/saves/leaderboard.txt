@@ -1,6 +1,8 @@
 1700
 mario
 1000
+pontosdoboss
+1000
 jusivaldo
 700
 teste
@@ -8,5 +10,5 @@ teste
 arthur
 600
 eduardo
-350
-finalmente
+500
+pontossemboss

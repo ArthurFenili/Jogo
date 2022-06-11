@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "State.h"
 #include <SFML/Graphics.hpp>
+#include "GraphicsManager.h"
 
 class InputManager
 {

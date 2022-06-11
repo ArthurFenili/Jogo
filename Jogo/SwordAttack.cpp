@@ -3,7 +3,7 @@
 const float HITBOX_WIDTH = 85.f;
 const float HITBOX_HEIGHT = 80.f;
 
-SwordAttack::SwordAttack(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, 
+SwordAttack::SwordAttack(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize,
 	std::string pathToTexture, std::string textureName, Character* user) :
 	Entity(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName)
 {

@@ -28,8 +28,8 @@ Entity::Entity(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 	this->animation = nullptr;
 
 	this->body.setFillColor(sf::Color::Transparent);
-	this->body.setOutlineColor(sf::Color::Red);
-	this->body.setOutlineThickness(1.f);
+	//this->body.setOutlineColor(sf::Color::Red);
+	//this->body.setOutlineThickness(1.f);
 }
 
 Entity::Entity() :
