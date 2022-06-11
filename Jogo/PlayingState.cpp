@@ -7,7 +7,7 @@ const float PLAYER_WIDTH = 32.f * 1.6f;
 const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
 const float PLAYER_SPEED = 250.f;
-const long int PLAYER_HP = 90000;
+const long int PLAYER_HP = 10000;
 
 const float SKELETON_WIDTH = 32.f * 2.f;
 const float SKELETON_HEIGHT = 35.f * 2.6f;
@@ -32,7 +32,7 @@ PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>*
 {
 	this->dt = dt;
 
-	if(forestPhase)
+	if (forestPhase)
 		this->setPhase(new ForestPhase(this->graphicsManager, this->dt, FOREST_PHASE));
 	else
 		this->setPhase(new CastlePhase(this->graphicsManager, this->dt, CASTLE_PHASE));
@@ -80,11 +80,10 @@ PlayingState::~PlayingState()
 
 void PlayingState::createMap()
 {
-	if(forestPhase)
+	if (forestPhase)
 		this->currentPhase->loadMap("images/forest_map.txt");
 	else
 		this->currentPhase->loadMap("images/castle_map.txt");
-
 }
 
 void PlayingState::createObstacles(int phase)
@@ -186,7 +185,6 @@ void PlayingState::createObstacles(int phase)
 void PlayingState::createEnemies(int phase)
 {
 	if (phase == FOREST_PHASE) {
-
 		int skeletonAmount = (rand() % 3) + 3;
 		int archerAmount = (rand() % 2) + 3;
 
@@ -224,7 +222,8 @@ void PlayingState::createEnemies(int phase)
 		if (archerAmount > 3)
 			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(16.f * 64.f, 8.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
 
-		// BOSS AQUI
+		this->currentPhase->createEntity(DARKKNIGHT, SKELETON_SPRITE_SCALE, sf::Vector2f(7.f * 64.f, 9.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+
 	}
 }
 
@@ -234,9 +233,11 @@ void PlayingState::createPlayers()
 	this->currentPhase->setPlayer1(this->player1);
 
 	if (twoPlayers) {
-		this->player2 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(5.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP, 2);
+		this->player2 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(5.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player2.png", "PLAYER_2", PLAYER_SPEED, PLAYER_HP, 2);
 		this->currentPhase->setPlayer2(this->player2);
 	}
+
+	this->currentPhase->setCollisionsManagerPlayers();
 }
 
 void PlayingState::updateInput()
@@ -268,7 +269,7 @@ void PlayingState::update(float dt)
 	this->graphicsManager->setViewSize(sf::Vector2f(512.f * aspectRatio, 512.f));
 
 	this->currentPhase->update();
-	if (this->currentPhase->getPhaseEnd())
+	if (this->player1->getInCastle())
 		this->changeLevel();
 	this->graphicsManager->updateView(this->player1->getShape());
 }
@@ -294,6 +295,10 @@ void PlayingState::changeLevel()
 
 	if (twoPlayers)
 		this->currentPhase->setPlayer2(this->player2);
+
+	this->currentPhase->setCollisionsManagerPlayers();
+
+	this->player1->setInCastle(false);
 
 	this->createObstacles(CASTLE_PHASE);
 	this->createEnemies(CASTLE_PHASE);

@@ -101,7 +101,7 @@ void GameOverState::writeToLeaderboardFile()
 	std::ifstream readFile;
 
 	readFile.open("saves/leaderboard.txt", std::ios::in);
-	
+
 	std::multimap<int, std::string> nameAndScoreMap;
 
 	if (readFile) {

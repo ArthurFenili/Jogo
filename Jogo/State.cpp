@@ -21,7 +21,7 @@ void State::initBackground()
 {
 	this->background.setSize(sf::Vector2f(1280.f, 720.f));
 
-	if (!this->backgroundTexture.loadFromFile("images/background.jpg"))
+	if (!this->backgroundTexture.loadFromFile("images/background.png"))
 		throw "ERROR::BACKGROUND_TEXTURE::COULD_NOT_LOAD_FROM_FILE";
 
 	this->background.setTexture(&this->backgroundTexture);

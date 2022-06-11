@@ -26,4 +26,3 @@ std::string InputManager::readString(GraphicsManager* graphicsManager)
 	}
 	return strtmp;
 }
-

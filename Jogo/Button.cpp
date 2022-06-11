@@ -43,8 +43,10 @@ void Button::update(sf::Vector2f mousePos)
 	if (this->shape.getGlobalBounds().contains(mousePos)) {
 		this->buttonState = BTN_HOVER;
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			this->buttonState = BTN_PRESSED;
+		}
+			
 	}
 
 	switch (this->buttonState)

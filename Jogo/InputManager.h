@@ -15,4 +15,3 @@ public:
 
 	std::string readString(GraphicsManager* graphicsManager);
 };
-

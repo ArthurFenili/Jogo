@@ -3,7 +3,7 @@
 CastlePhase::CastlePhase(GraphicsManager* graphicsManager, float* dt, int id) :
 	Phase(graphicsManager, dt, id)
 {
-	this->collisionsManager = CollisionsManager(this);
+	this->collisionsManager = CollisionsManager(&this->entityList, this->platformList);
 }
 
 CastlePhase::CastlePhase()

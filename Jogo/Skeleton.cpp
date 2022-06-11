@@ -12,6 +12,7 @@ Skeleton::Skeleton(GraphicsManager* graphicsManager, float* dt, int id, float sp
 	Enemy(graphicsManager, dt, id, spriteScale, position, bodySize, pathToTexture, textureName, speed, hp)
 {
 	this->initAnimation(SKELETON_ANIMATION_COLUMNS, SKELETON_ANIMATION_ROWS, SKELETON_ANIMATION_SWITCH_TIME);
+	this->damage = (rand() % 5) + 1;
 
 }
 

@@ -1,6 +1,6 @@
 #include "LeaderboardState.h"
 
-LeaderboardState::LeaderboardState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt):
+LeaderboardState::LeaderboardState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 
 {
@@ -33,16 +33,16 @@ void LeaderboardState::initButtons()
 
 void LeaderboardState::buildLeaderboard()
 {
-    std::ifstream file;
+	std::ifstream file;
 
-    file.open("saves/leaderboard.txt", std::ios::binary | std::ios::in);
+	file.open("saves/leaderboard.txt", std::ios::binary | std::ios::in);
 
 	std::string name;
-    std::string textString = "";
-    std::string pointsString;
+	std::string textString = "";
+	std::string pointsString;
 	std::stringstream ss;
 
-    sf::Text* txt;
+	sf::Text* txt;
 
 	int i = 1;
 	while (file >> pointsString >> name) {
@@ -59,7 +59,7 @@ void LeaderboardState::buildLeaderboard()
 		vectorString.push_back(txt);
 	}
 
-    file.close();
+	file.close();
 }
 
 void LeaderboardState::renderLeaderboard()

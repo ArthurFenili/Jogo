@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <iostream>
 
 const unsigned int PLAYER_ANIMATION_COLUMNS = 6;
 const unsigned int PLAYER_ANIMATION_ROWS = 3;
@@ -29,7 +30,10 @@ Player::Player(GraphicsManager* graphicsManager, float* dt, int id, float sprite
 
 	this->numPlayer = numPlayer;
 
-	this->attackingTexture = this->graphicsManager->loadTextures("images/player_attacking.png", "PLAYER_ATTACKING");
+	if (this->numPlayer == 1)
+		this->attackingTexture = this->graphicsManager->loadTextures("images/player_attacking.png", "PLAYER_ATTACKING");
+	if (this->numPlayer == 2)
+		this->attackingTexture = this->graphicsManager->loadTextures("images/player2_attacking.png", "PLAYER_2_ATTACKING");
 
 	this->initAnimation(PLAYER_ANIMATION_COLUMNS, PLAYER_ANIMATION_ROWS, PLAYER_ANIMATION_SWITCH_TIME);
 	this->initAttackingAnimation();
@@ -46,6 +50,7 @@ Player::Player() :
 	this->swordHitbox = nullptr;
 	this->attackingTexture = nullptr;
 	this->attackingAnimation = nullptr;
+	this->inCastle = false;
 }
 
 Player::~Player()
@@ -75,11 +80,13 @@ void Player::initVariables()
 	this->attacking = false;
 	this->animationRow = PLAYER_IDLE;
 	this->swordHitbox = nullptr;
+	this->inCastle = false;
 }
 
 // Verifica constantemente várias ações que são necessárias para o bom funcionamento do player
 void Player::update()
 {
+	std::cout << "player hp: " << this->hp << std::endl;
 	this->updateMovementInput();
 	this->updateAnimationRow();
 	this->updatePositions();
@@ -116,6 +123,7 @@ void Player::updateMovementInput()
 
 	this->updateVariables();
 
+
 	this->body.move(this->velocity * (*this->dt));
 }
 
@@ -129,8 +137,8 @@ void Player::updateVariables()
 
 	this->velocity.y += 2.f * this->gravity * (*this->dt);
 
-	if (this->isSlow)
-		this->velocity.x /= 2.f;
+	if (!this->isSlow)
+		this->speed = 250.f;
 }
 
 void Player::updateAnimationRow()

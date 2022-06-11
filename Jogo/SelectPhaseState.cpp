@@ -1,6 +1,6 @@
 #include "SelectPhaseState.h"
 
-SelectPhaseState::SelectPhaseState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt):
+SelectPhaseState::SelectPhaseState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 {
 	this->dt = dt;

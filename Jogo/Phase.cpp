@@ -2,16 +2,15 @@
 #include "PlayingState.h"
 
 const float SKELETON_SPEED = 30.f;
-const long int SKELETON_HP = 10000;
+const long int SKELETON_HP = 20;
 
 Phase::Phase(GraphicsManager* graphicsManager, float* dt, int id) :
 	Ent(graphicsManager, dt, id)
 {
 	this->player1 = nullptr;
 	this->player2 = nullptr;
-	this->phaseEnd = false;
 
-	this->collisionsManager = CollisionsManager(this);
+	this->collisionsManager = CollisionsManager(&this->entityList, this->platformList);
 
 	this->platformList = new Entity * [20];
 	for (int i = 0; i < 20; i++)
@@ -21,7 +20,6 @@ Phase::Phase(GraphicsManager* graphicsManager, float* dt, int id) :
 Phase::Phase() :
 	Ent()
 {
-	this->phaseEnd = false;
 	this->player1 = nullptr;
 	this->player2 = nullptr;
 	this->platformList = nullptr;
@@ -46,6 +44,14 @@ Entity Phase::createEntity(int id, float spriteScale, sf::Vector2f position, sf:
 	else if (id == ARCHER) {
 		Archer* tmp = nullptr;
 		tmp = new Archer(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, SKELETON_SPEED, SKELETON_HP);
+		tmp->setPlayer(this->player1);
+		this->entityList.addEntity(tmp);
+		return *tmp;
+	}
+
+	else if (id == DARKKNIGHT) {
+		DarkKnight* tmp = nullptr;
+		tmp = new DarkKnight(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, SKELETON_SPEED, 5000);
 		tmp->setPlayer(this->player1);
 		this->entityList.addEntity(tmp);
 		return *tmp;
@@ -85,7 +91,7 @@ void Phase::update()
 	for (int i = 0; i < this->entityList.getSize(); i++) {
 		if (this->entityList[i]->getId() != SLOW)
 			this->entityList[i]->update();
-		if (this->entityList[i]->getId() == SKELETON || this->entityList[i]->getId() == ARCHER) {
+		if (this->entityList[i]->getId() == SKELETON || this->entityList[i]->getId() == ARCHER || this->entityList[i]->getId() == DARKKNIGHT) {
 			if (static_cast<Character*>(this->entityList[i])->isDead()) {
 				this->entityList.pop(this->entityList[i]);
 				if (dynamic_cast<Skeleton*>(this->entityList[i]) != nullptr)
@@ -139,7 +145,7 @@ void Phase::render()
 		for (int j = fromX; j < toX; j++)
 			if (this->platformList[i][j].getId() != BACKGROUND) {
 				this->platformList[i][j].renderSprite();
-				//this->platformList[i][j].renderShape();
+				this->platformList[i][j].renderShape();
 			}
 
 	this->entityList[this->entityList.getSize() - 2]->renderSprite();
@@ -156,4 +162,10 @@ void Phase::clearPlatformList()
 void Phase::clearEntityList()
 {
 	this->entityList.clearList();
+}
+
+void Phase::setCollisionsManagerPlayers()
+{
+	this->collisionsManager.setPlayer1(this->player1);
+	this->collisionsManager.setPlayer2(this->player2);
 }

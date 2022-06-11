@@ -23,4 +23,3 @@ public:
 
 	Button* pop(Button* button) { return this->buttonList.pop(button); }
 };
-
