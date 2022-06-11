@@ -5,6 +5,7 @@
 #include "EntityList.h"
 #include "Archer.h"
 #include "Skeleton.h"
+#include "DarkKnight.h"
 #include "Fire.h"
 #include "Teleport.h"
 #include "Slow.h"

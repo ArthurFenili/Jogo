@@ -1,17 +1,16 @@
 #pragma once
 
 #include "Entity.h"
-
-class Player;
+#include "Character.h"
 
 class SwordAttack : public Entity
 {
 private:
-	Player* player;
-	sf::RectangleShape* playerBody;
-	
+	Character* user;
+	sf::RectangleShape* userBody;
+
 public:
-	SwordAttack(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, Player* player = nullptr);
+	SwordAttack(GraphicsManager* graphicsManager, float* dt, int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName, Character* user = nullptr);
 	SwordAttack();
 	~SwordAttack();
 
@@ -19,4 +18,3 @@ public:
 	void updatePosition();
 	void updateFlip();
 };
-

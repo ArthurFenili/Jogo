@@ -185,7 +185,6 @@ void PlayingState::createObstacles(int phase)
 void PlayingState::createEnemies(int phase)
 {
 	if (phase == FOREST_PHASE) {
-
 		int skeletonAmount = (rand() % 3) + 3;
 		int archerAmount = (rand() % 2) + 3;
 
@@ -223,7 +222,8 @@ void PlayingState::createEnemies(int phase)
 		if (archerAmount > 3)
 			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(16.f * 64.f, 8.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
 
-		// BOSS AQUI
+		this->currentPhase->createEntity(DARKKNIGHT, 3.f, sf::Vector2f(7.f * 64.f, 9.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/dark_knight_walking.png", "DARK_KNIGHT");
+
 	}
 }
 

@@ -24,6 +24,11 @@ void Enemy::updateMovement()
 	else if (this->player->getPosition().x < this->getPosition().x)
 		this->move(-1.f);
 
+	if (this->getId() == DARKKNIGHT) {
+		if (this->player->getPosition().x >= 11.f * 64.f)
+			this->velocity.x = 0.f;
+	}
+
 	this->velocity.y += 2.f * this->gravity * (*this->dt);
 
 	this->body.move(this->velocity * (*this->dt));
