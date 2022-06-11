@@ -8,9 +8,9 @@ Slow::Slow(GraphicsManager* graphicsManager, float* dt, int id, float spriteScal
 	if (tmp == 0)
 		this->slowCoefficient = 0.5f;
 	else if (tmp == 1)
-		this->slowCoefficient = 0.4f;
+		this->slowCoefficient = 0.35f;
 	else if (tmp == 2)
-		this->slowCoefficient = 0.3f;
+		this->slowCoefficient = 0.25f;
 }
 
 Slow::Slow() :

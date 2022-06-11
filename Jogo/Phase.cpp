@@ -136,7 +136,11 @@ Entity Phase::createEntity(int id, float spriteScale, sf::Vector2f position, sf:
 
 	else if (id == TELEPORT) {
 		Teleport* tmp = nullptr;
-		tmp = new Teleport(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName);
+
+		if (this->getId() == FOREST_PHASE)
+			tmp = new Teleport(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, 0);
+		else
+			tmp = new Teleport(this->graphicsManager, this->dt, id, spriteScale, position, bodySize, pathToTexture, textureName, 1);
 		this->entityList.addEntity(tmp);
 		return *tmp;
 	}

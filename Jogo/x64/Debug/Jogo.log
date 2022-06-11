@@ -1,7 +1,2 @@
-﻿  CastlePhase.cpp
-  CollisionsManager.cpp
-D:\Users\eduar\Downloads\Jogo-eduardo4\Jogo\CollisionsManager.cpp(121,98): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
-D:\Users\eduar\Downloads\Jogo-eduardo4\Jogo\CollisionsManager.cpp(139,99): warning C4244: 'argumento': conversão de 'float' para 'int', possível perda de dados
-  Phase.cpp
-  Gerando Código...
+﻿  Slow.cpp
   Jogo.vcxproj -> D:\Users\eduar\Downloads\Jogo-eduardo4\x64\Debug\Jogo.exe

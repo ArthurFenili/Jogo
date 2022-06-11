@@ -9,7 +9,7 @@ const unsigned int ATTACKING_ANIMATION_COLUMNS = 6;
 const unsigned int ATTACKING_ANIMATION_ROWS = 1;
 const float ATTACKING_ANIMATION_SWITCH_TIME = 0.1f;
 
-const float JUMP_HEIGHT = 450.f;
+const float JUMP_HEIGHT = 400.f;
 const float GRAVITY = 981.f;
 const float JUMP_SPEED = -sqrtf(2.f * GRAVITY * JUMP_HEIGHT);
 

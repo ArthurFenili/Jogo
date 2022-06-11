@@ -6,8 +6,9 @@ const float PLATFORM_HEIGHT = 64.f;
 const float PLAYER_WIDTH = 32.f * 1.6f;
 const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
-const float PLAYER_SPEED = 250.f;
-const long int PLAYER_HP = 10000;
+
+const float PLAYER_SPEED = 200.f;
+const long int PLAYER_HP = 5000;
 
 const float SKELETON_WIDTH = 32.f * 2.f;
 const float SKELETON_HEIGHT = 35.f * 2.6f;
@@ -16,7 +17,6 @@ const float SKELETON_SPRITE_SCALE = 3.f;
 const float ARCHER_WIDTH = 31.f * 2.f;
 const float ARCHER_HEIGHT = 40.f * 2.6f;
 const float ARCHER_SPRITE_SCALE = 3.f;
-const float ARCHER_SPEED = 30.f;
 
 const float TELEPORT_SPRITE_SCALE = 2.3f;
 

@@ -6,7 +6,7 @@ class Character : public Entity
 {
 protected:
 	float speed;
-	long int hp;
+	float hp;
 	float gravity;
 	bool facingRight;
 	
@@ -24,14 +24,14 @@ public:
 	void move(float dir_x);
 	void flip();
 
-	bool isDead() { return this->hp <= 0 ? true : false; }
+	bool isDead() { return this->hp <= 0.f ? true : false; }
 
 	void setSpeed(float speed) { this->speed = speed; }
 	float getSpeed() { return this->speed; }
 
-	void setHp(long int hp) { this->hp = hp; }
-	void loseHp(int damage) { this->hp -= damage; }
-	int getHP() { return this->hp; }
+	void setHp(float hp) { this->hp = hp; }
+	void loseHp(float damage) { this->hp -= damage; }
+	float getHP() { return this->hp; }
 
 	bool getFacingRight() { return this->facingRight; }
 };

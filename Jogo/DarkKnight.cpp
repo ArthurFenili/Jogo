@@ -1,9 +1,11 @@
 #include "DarkKnight.h"
 #include <iostream>
 
+const int ATTACK_TIMER = 2000;
+
 const float WIDTH_AUX = 0.5f;
 const float HEIGHT_AUX = 0.01f;
-const double HEIGHT_AUX_ATTACKING = 0.0000000000000000001f;
+const double HEIGHT_AUX_ATTACKING = 0.000001f;
 
 const float HITBOX_WIDTH = 85.f;
 const float HITBOX_HEIGHT = 80.f;
@@ -47,7 +49,7 @@ void DarkKnight::updateAttack()
 		this->damage += madnessCoefficient;
 	}
 
-	if (this->attackTimer < 2000) {
+	if (this->attackTimer < ATTACK_TIMER) {
 		this->attackTimer++;
 	}
 }
@@ -67,15 +69,15 @@ void DarkKnight::updateAttackingAnimation()
 void DarkKnight::update()
 {
 	this->updateMovement();
-	if (this->attackTimer < 2000)
+	if (this->attackTimer < ATTACK_TIMER)
 		this->updatePosition(WIDTH_AUX, HEIGHT_AUX);
-	else if (this->attackTimer >= 2000) {
+	else if (this->attackTimer >= ATTACK_TIMER) {
 		this->updatePosition(WIDTH_AUX, HEIGHT_AUX_ATTACKING);
 	}
 		
 	this->updateAttack();
 
-	if (this->attackTimer >= 2000) {
+	if (this->attackTimer >= ATTACK_TIMER) {
 		this->updateAttackingAnimation();
 		this->swordHitbox = new SwordAttack(this->graphicsManager, this->dt, SWORD, 0.f, this->position, sf::Vector2f(HITBOX_WIDTH, HITBOX_HEIGHT), "", "NONE", this);
 		this->swordHitbox->update();
@@ -91,7 +93,7 @@ void DarkKnight::update()
 
 void DarkKnight::updateAnimation()
 {
-	if (this->attackTimer >= 1800)
+	if (this->attackTimer >= ATTACK_TIMER - 200)
 		this->sprite.setTexture(*this->chargingTexture);
 	else
 		this->sprite.setTexture(*this->texture);
