@@ -28,6 +28,7 @@ void MainMenuState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(newGameButton);
 
 	this->continueButton = new Button(
 		1280.f / 2 - BUTTON_WIDTH / 2,
@@ -38,6 +39,7 @@ void MainMenuState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(continueButton);
 
 	this->leaderboardButton = new Button(
 		1280.f / 2 - BUTTON_WIDTH / 2,
@@ -48,6 +50,7 @@ void MainMenuState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(leaderboardButton);
 
 	this->exitButton = new Button(
 		1280.f / 2 - BUTTON_WIDTH / 2,
@@ -58,6 +61,7 @@ void MainMenuState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(exitButton);
 }
 
 void MainMenuState::updateButtons()
@@ -86,8 +90,8 @@ void MainMenuState::renderButtons()
 void MainMenuState::updateInput()
 {
 	if (newGameButton->isPressed()) {
-		State* newGame = new NewGameState(this->graphicsManager, this->states, this->dt);
-		this->insertState(newGame);
+		State* selectPhase = new SelectPhaseState(this->graphicsManager, this->states, this->dt);
+		this->insertState(selectPhase);
 		this->updateStateChange();
 	}
 

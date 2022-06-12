@@ -19,6 +19,8 @@ private:
 	bool isSlow;
 	bool attacking;
 
+	bool inCastle;
+
 	int numPlayer;
 
 	SwordAttack* swordHitbox;
@@ -44,6 +46,9 @@ public:
 
 	void setCanJump(bool canJump) { this->canJump = canJump; }
 	void setIsSlow(bool isSlow) { this->isSlow = isSlow; }
+
+	void setInCastle(bool inCastle) { this->inCastle = inCastle; }
+	bool getInCastle() { return this->inCastle; }
 
 	SwordAttack* getSwordHitbox() { return this->swordHitbox; }
 

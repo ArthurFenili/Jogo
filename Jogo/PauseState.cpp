@@ -27,6 +27,7 @@ void PauseState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(continueButton);
 
 	this->saveButton = new Button(
 		(float)this->graphicsManager->getWindow()->getSize().x / 2 - 150,
@@ -37,6 +38,7 @@ void PauseState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(saveButton);
 
 	this->exitButton = new Button(
 		(float)this->graphicsManager->getWindow()->getSize().x / 2 - 150,
@@ -47,6 +49,7 @@ void PauseState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(exitButton);
 }
 
 void PauseState::updateButtons()

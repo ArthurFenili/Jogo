@@ -4,7 +4,7 @@
 #include <fstream>
 #include<sstream>
 class LeaderboardState :
-    public State
+	public State
 {
 private:
 	Button* backButton;
@@ -19,13 +19,12 @@ public:
 	void initButtons();
 
 	void buildLeaderboard();
-	void renderLeaderboard();
+	void renderTxt();
 
 	void updateButtons();
 	void renderButtons();
 
 	void updateInput();
 
-	void render();
 };
 

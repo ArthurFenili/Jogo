@@ -10,7 +10,5 @@ public:
 	CastlePhase(GraphicsManager* graphicsManager, float* dt, int id);
 	CastlePhase();
 	~CastlePhase();
-
-	void loadMap(std::string pathToTilemap);
 };
 

@@ -10,6 +10,4 @@ public:
 	ForestPhase(GraphicsManager* graphicsManager, float* dt, int id);
 	ForestPhase();
 	~ForestPhase();
-
-	void loadMap(std::string pathToTilemap);
 };

@@ -9,9 +9,7 @@ InputManager::~InputManager()
 }
 std::string InputManager::readString(GraphicsManager* graphicsManager)
 {
-	sf::Event ev;
-	bool saved = false;
-	std::string strtmp;
+	saved = false;
 	while (!saved) {
 		while (graphicsManager->pollEvent(&ev))
 		{
@@ -28,4 +26,3 @@ std::string InputManager::readString(GraphicsManager* graphicsManager)
 	}
 	return strtmp;
 }
-

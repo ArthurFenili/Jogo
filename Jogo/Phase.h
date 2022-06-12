@@ -5,6 +5,7 @@
 #include "EntityList.h"
 #include "Archer.h"
 #include "Skeleton.h"
+#include "DarkKnight.h"
 #include "Fire.h"
 #include "Teleport.h"
 #include "Slow.h"
@@ -24,7 +25,8 @@ protected:
 
 	CollisionsManager collisionsManager;
 
-	bool phaseEnd;
+	std::vector<std::string> texturePaths;
+	std::vector <std::string> textureNames;
 
 public:
 	Phase(GraphicsManager* graphicsManager, float* dt, int id);
@@ -33,7 +35,7 @@ public:
 
 	Entity createEntity(int id, float spriteScale, sf::Vector2f position, sf::Vector2f bodySize, std::string pathToTexture, std::string textureName);
 
-	virtual void loadMap(std::string pathToTilemap) {}
+	void loadMap(std::string pathToTilemap);
 
 	void update();
 
@@ -41,6 +43,8 @@ public:
 
 	void clearPlatformList();
 	void clearEntityList();
+
+	void initCollisionsManager();
 
 	void addEntity(Entity* entity) { this->entityList.addEntity(entity); }
 
@@ -52,7 +56,4 @@ public:
 
 	EntityList* getEntityList() { return &this->entityList; }
 	Entity** getPlatformList() { return this->platformList; }
-
-	void setPhaseEnd(bool phaseEnd) { this->phaseEnd = phaseEnd; }
-	bool getPhaseEnd() { return this->phaseEnd; }
 };

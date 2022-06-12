@@ -6,8 +6,9 @@ const float PLATFORM_HEIGHT = 64.f;
 const float PLAYER_WIDTH = 32.f * 1.6f;
 const float PLAYER_HEIGHT = 35.f * 2.2f;
 const float PLAYER_SPRITE_SCALE = 3.f;
-const float PLAYER_SPEED = 250.f;
-const long int PLAYER_HP = 90000;
+
+const float PLAYER_SPEED = 200.f;
+const long int PLAYER_HP = 5000;
 
 const float SKELETON_WIDTH = 32.f * 2.f;
 const float SKELETON_HEIGHT = 35.f * 2.6f;
@@ -16,7 +17,6 @@ const float SKELETON_SPRITE_SCALE = 3.f;
 const float ARCHER_WIDTH = 31.f * 2.f;
 const float ARCHER_HEIGHT = 40.f * 2.6f;
 const float ARCHER_SPRITE_SCALE = 3.f;
-const float ARCHER_SPEED = 30.f;
 
 const float TELEPORT_SPRITE_SCALE = 2.3f;
 
@@ -25,23 +25,37 @@ sf::Vector2f TELEPORT_SIZE = sf::Vector2f(64.f * 0.4f, 55.f);
 
 int PlayingState::score(0);
 bool PlayingState::twoPlayers(false);
+bool PlayingState::forestPhase(true);
+bool PlayingState::enteredDoor(false);
+bool PlayingState::defeatedBoss(false);
 
-PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool twoP) :
+PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
 {
 	this->dt = dt;
-	this->setPhase(new ForestPhase(this->graphicsManager, this->dt, FOREST_PHASE));
+
+	if (forestPhase)
+		this->setPhase(new ForestPhase(this->graphicsManager, this->dt, FOREST_PHASE));
+	else
+		this->setPhase(new CastlePhase(this->graphicsManager, this->dt, CASTLE_PHASE));
+
 	this->exit = false;
 	this->score = 0;
-	this->twoPlayers = twoP;
 
 	this->createPlayers();
 	this->createMap();
 
 	srand((unsigned)time(0));
 
-	this->createObstacles(FOREST_PHASE);
-	this->createEnemies(FOREST_PHASE);
+	if (forestPhase) {
+		this->createObstacles(FOREST_PHASE);
+		this->createEnemies(FOREST_PHASE);
+	}
+	else {
+		this->createObstacles(CASTLE_PHASE);
+		this->createEnemies(CASTLE_PHASE);
+
+	}
 
 	this->currentPhase->addEntity(this->player1);
 
@@ -68,7 +82,10 @@ PlayingState::~PlayingState()
 
 void PlayingState::createMap()
 {
-	this->currentPhase->loadMap("images/forest_map.txt");
+	if (forestPhase)
+		this->currentPhase->loadMap("images/forest_map.txt");
+	else
+		this->currentPhase->loadMap("images/castle_map.txt");
 }
 
 void PlayingState::createObstacles(int phase)
@@ -170,7 +187,6 @@ void PlayingState::createObstacles(int phase)
 void PlayingState::createEnemies(int phase)
 {
 	if (phase == FOREST_PHASE) {
-
 		int skeletonAmount = (rand() % 3) + 3;
 		int archerAmount = (rand() % 2) + 3;
 
@@ -208,7 +224,8 @@ void PlayingState::createEnemies(int phase)
 		if (archerAmount > 3)
 			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(16.f * 64.f, 8.f * 64.f), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
 
-		// BOSS AQUI
+		this->currentPhase->createEntity(DARKKNIGHT, 3.f, sf::Vector2f(7.f * 64.f, 9.f * 64.f), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/dark_knight_walking.png", "DARK_KNIGHT");
+
 	}
 }
 
@@ -218,9 +235,11 @@ void PlayingState::createPlayers()
 	this->currentPhase->setPlayer1(this->player1);
 
 	if (twoPlayers) {
-		this->player2 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(5.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP, 2);
+		this->player2 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(5.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player2.png", "PLAYER_2", PLAYER_SPEED, PLAYER_HP, 2);
 		this->currentPhase->setPlayer2(this->player2);
 	}
+
+	this->currentPhase->initCollisionsManager();
 }
 
 void PlayingState::updateInput()
@@ -234,6 +253,12 @@ void PlayingState::updateInput()
 	if (this->player1->isDead()) {
 		this->graphicsManager->resetView();
 		this->insertState(new GameOverState(this->graphicsManager, this->states, this->dt), true);
+		this->updateStateChange();
+	}
+
+	if (enteredDoor && defeatedBoss) {
+		this->graphicsManager->resetView();
+		this->insertState(new VictoryState(this->graphicsManager, this->states, this->dt), true);
 		this->updateStateChange();
 	}
 
@@ -252,7 +277,7 @@ void PlayingState::update(float dt)
 	this->graphicsManager->setViewSize(sf::Vector2f(512.f * aspectRatio, 512.f));
 
 	this->currentPhase->update();
-	if (this->currentPhase->getPhaseEnd())
+	if (this->player1->getInCastle())
 		this->changeLevel();
 	this->graphicsManager->updateView(this->player1->getShape());
 }
@@ -272,12 +297,17 @@ void PlayingState::changeLevel()
 	delete this->currentPhase;
 
 	this->setPhase(new CastlePhase(this->graphicsManager, this->dt, CASTLE_PHASE));
+	this->forestPhase = false;
 
 	this->currentPhase->loadMap("images/castle_map.txt");
 	this->currentPhase->setPlayer1(this->player1);
 
 	if (twoPlayers)
 		this->currentPhase->setPlayer2(this->player2);
+
+	this->currentPhase->initCollisionsManager();
+
+	this->player1->setInCastle(false);
 
 	this->createObstacles(CASTLE_PHASE);
 	this->createEnemies(CASTLE_PHASE);

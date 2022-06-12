@@ -26,6 +26,7 @@ void NewGameState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(onePlayerButton);
 
 	this->twoPlayersButton = new Button(
 		1280.f / 2 - 150,
@@ -36,6 +37,7 @@ void NewGameState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(twoPlayersButton);
 
 	this->backButton = new Button(
 		1280.f / 2 - 150,
@@ -46,6 +48,7 @@ void NewGameState::initButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 200)
 	);
+	this->buttonList.addButton(backButton);
 }
 
 void NewGameState::updateButtons()
@@ -74,12 +77,14 @@ void NewGameState::updateInput()
 		this->updateStateChange();
 	}
 	if (onePlayerButton->isPressed()) {
-		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt, false), true);
+		PlayingState::twoPlayers = false;
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
 		this->updateStateChange();
 	}
 
 	if (twoPlayersButton->isPressed()) {
-		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt, true), true);
+		PlayingState::twoPlayers = true;
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt), true);
 		this->updateStateChange();
 	}
 }
