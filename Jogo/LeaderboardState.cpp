@@ -40,7 +40,6 @@ void LeaderboardState::buildLeaderboard()
 	std::string name;
 	std::string textString = "";
 	std::string pointsString;
-	std::stringstream ss;
 
 	sf::Text* txt;
 

@@ -21,4 +21,6 @@ public:
 	void renderButtons();
 
 	void updateInput();
+
+	void loadPhase();
 };

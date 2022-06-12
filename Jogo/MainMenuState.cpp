@@ -90,8 +90,16 @@ void MainMenuState::renderButtons()
 void MainMenuState::updateInput()
 {
 	if (newGameButton->isPressed()) {
+		PlayingState::loadGame = false;
 		State* selectPhase = new SelectPhaseState(this->graphicsManager, this->states, this->dt);
 		this->insertState(selectPhase);
+		this->updateStateChange();
+	}
+
+	if (continueButton->isPressed()) {
+		PlayingState::loadGame = true;
+		this->loadPhase();
+		this->insertState(new PlayingState(this->graphicsManager, this->states, this->dt));
 		this->updateStateChange();
 	}
 
@@ -106,4 +114,33 @@ void MainMenuState::updateInput()
 		this->updateStateChange();
 		this->graphicsManager->closeWindow();
 	}
+}
+
+void MainMenuState::loadPhase()
+{
+	// ----------------------- read
+	std::ifstream readFile;
+
+	readFile.open("saves/savedPhase.txt", std::ios::in);
+
+	if (readFile) {
+		std::string forest;
+		std::string twoP;
+
+		std::getline(readFile, forest);
+		std::getline(readFile, twoP);
+
+		if (forest == "1")
+			PlayingState::forestPhase = true;
+		else 
+			PlayingState::forestPhase = false;
+		if (twoP == "1")
+			PlayingState::twoPlayers = true;
+		else 
+			PlayingState::twoPlayers = false;
+
+
+		readFile.close();
+	}
+
 }

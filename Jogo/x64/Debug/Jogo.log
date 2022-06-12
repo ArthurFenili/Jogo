@@ -1,44 +1,22 @@
-﻿  AnimationManager.cpp
-  Archer.cpp
-  Button.cpp
-  ButtonList.cpp
-  CastlePhase.cpp
-  Character.cpp
-E:\Visual Studio\Projetos\master\Jogo\Character.cpp(10,13): warning C4244: '=': conversão de 'long' para 'float', possível perda de dados
+﻿  CastlePhase.cpp
   CollisionsManager.cpp
 E:\Visual Studio\Projetos\master\Jogo\CollisionsManager.cpp(117,99): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
 E:\Visual Studio\Projetos\master\Jogo\CollisionsManager.cpp(135,100): warning C4244: 'argumento': conversão de 'int' para 'float', possível perda de dados
-  DarkKnight.cpp
-  Enemy.cpp
-  Ent.cpp
-  Entity.cpp
-  EntityList.cpp
   Fire.cpp
   ForestPhase.cpp
+  Game.cpp
   GameOverState.cpp
-  InputManager.cpp
-  LeaderboardState.cpp
   MainMenuState.cpp
   NewGameState.cpp
   Obstacle.cpp
-  Gerando Código...
-  Compilando...
   PauseState.cpp
+  Phase.cpp
   PlayingState.cpp
-  Projectile.cpp
   SelectPhaseState.cpp
-  Skeleton.cpp
   Slow.cpp
   State.cpp
-  SwordAttack.cpp
-  Collider.cpp
-  Game.cpp
-  GraphicsManager.cpp
-  main.cpp
-  Phase.cpp
-  Player.cpp
   Teleport.cpp
   VictoryState.cpp
+  main.cpp
   Gerando Código...
-  LINK : E:\Visual Studio\Projetos\master\x64\Debug\Jogo.exe não encontrado ou não compilado pelo o último link incremental; executando link completo
   Jogo.vcxproj -> E:\Visual Studio\Projetos\master\x64\Debug\Jogo.exe

@@ -1,10 +1,12 @@
 #include "PauseState.h"
+#include "PlayingState.h"
 
-PauseState::PauseState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool* exit) :
+PauseState::PauseState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt, bool* exit, Phase* currentPhase) :
 	State(graphicsManager, states, dt)
 {
 	this->dt = dt;
 	this->exitGame = exit;
+	this->currentPhase = currentPhase;
 
 	this->initButtons();
 }
@@ -78,9 +80,52 @@ void PauseState::updateInput()
 		this->removeCurrentState();
 		this->updateStateChange();
 	}
+
+	if (saveButton->isPressed())
+	{
+		this->entityList = this->currentPhase->getEntityList();
+
+		this->writeToSavedGameFile();
+	}
 	if (exitButton->isPressed()) {
 		*exitGame = true;
 		this->removeCurrentState();
 		this->updateStateChange();
 	}
+}
+
+void PauseState::writeToSavedGameFile()
+{
+	// ----------------------- write
+	std::ofstream writeFile;
+
+	writeFile.open("saves/savedGame.txt", std::ios::out | std::ios::trunc);
+
+	int numPlayers = PlayingState::twoPlayers ? 2 : 1;
+
+	if (numPlayers > 1) {
+		writeFile << entityList->operator[](entityList->getSize() - 2)->getPosition().x << std::endl;
+		writeFile << entityList->operator[](entityList->getSize() - 2)->getPosition().y << std::endl;
+		writeFile << entityList->operator[](entityList->getSize() - 2)->getId() << std::endl;
+	}
+	if (numPlayers >= 1) {
+		writeFile << entityList->operator[](entityList->getSize() - 1)->getPosition().x << std::endl;
+		writeFile << entityList->operator[](entityList->getSize() - 1)->getPosition().y << std::endl;
+		writeFile << entityList->operator[](entityList->getSize() - 1)->getId() << std::endl;
+	}
+
+	for (int i = 0; i < entityList->getSize() - numPlayers; i++) {
+		writeFile << entityList->operator[](i)->getPosition().x << std::endl;
+		writeFile << entityList->operator[](i)->getPosition().y << std::endl;
+		writeFile << entityList->operator[](i)->getId() << std::endl;
+	}
+
+	writeFile.close();
+
+	writeFile.open("saves/savedPhase.txt", std::ios::out | std::ios::trunc);
+
+	writeFile << PlayingState::forestPhase << std::endl;
+	writeFile << PlayingState::twoPlayers << std::endl;
+
+	writeFile.close();
 }

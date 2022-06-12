@@ -29,6 +29,7 @@ public:
 	static bool twoPlayers;
 	static bool enteredDoor;
 	static bool defeatedBoss;
+	static bool loadGame;
 
 public:
 	PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt);
@@ -37,7 +38,10 @@ public:
 	void createMap();
 	void createObstacles(int phase);
 	void createEnemies(int phase);
+	void createObstacles();
+	void createEnemies();
 	void createPlayers();
+	void loadPlayers();
 
 	void updateInput();
 	void update(float dt);

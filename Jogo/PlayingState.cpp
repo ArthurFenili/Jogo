@@ -28,6 +28,8 @@ bool PlayingState::twoPlayers(false);
 bool PlayingState::forestPhase(true);
 bool PlayingState::enteredDoor(false);
 bool PlayingState::defeatedBoss(false);
+bool PlayingState::loadGame(false);
+
 
 PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>* states, float* dt) :
 	State(graphicsManager, states, dt)
@@ -42,19 +44,28 @@ PlayingState::PlayingState(GraphicsManager* graphicsManager, std::stack<State*>*
 	this->exit = false;
 	this->score = 0;
 
-	this->createPlayers();
+
 	this->createMap();
 
 	srand((unsigned)time(0));
 
-	if (forestPhase) {
-		this->createObstacles(FOREST_PHASE);
-		this->createEnemies(FOREST_PHASE);
+	if (loadGame == true) {
+		this->loadPlayers();
+		this->createObstacles();
+		this->createEnemies();
 	}
 	else {
-		this->createObstacles(CASTLE_PHASE);
-		this->createEnemies(CASTLE_PHASE);
+		this->createPlayers();
+		if (forestPhase) {
 
+			this->createObstacles(FOREST_PHASE);
+			this->createEnemies(FOREST_PHASE);
+		}
+		else {
+			this->createObstacles(CASTLE_PHASE);
+			this->createEnemies(CASTLE_PHASE);
+
+		}
 	}
 
 	this->currentPhase->addEntity(this->player1);
@@ -229,6 +240,81 @@ void PlayingState::createEnemies(int phase)
 	}
 }
 
+void PlayingState::createObstacles()
+{
+	std::ifstream file;
+
+	file.open("saves/savedGame.txt", std::ios::binary | std::ios::in);
+
+	float pos_x;
+	float pos_y; 
+	int id;
+
+	std::string pathFire;
+	std::string pathTeleport;
+	std::string pathSlow;
+	std::string fire;
+	std::string teleport;
+	std::string slow;
+
+	if (this->currentPhase->getId() == CASTLE_PHASE) {
+		pathFire = "images/fire.png";
+		pathTeleport = "images/teleport.png";
+		pathSlow = "images/slow.png";
+		fire = "FIRE";
+		teleport = "TELEPORT";
+		slow = "SLOW";
+	}
+	else if (this->currentPhase->getId() == FOREST_PHASE) {
+		pathFire = "images/fire_p1.png";
+		pathTeleport = "images/teleport_p1.png";
+		pathSlow = "images/slow_p1.png";
+		fire = "FIRE_P1";
+		teleport = "TELEPORT_P1";
+		slow = "SLOW_P1";
+	}
+
+	while (file >> pos_x >> pos_y >> id) {
+		if (id == static_cast<int>(FIRE)) {
+			this->currentPhase->createEntity(FIRE, 1.f, sf::Vector2f(pos_x, pos_y), FIRE_SIZE, pathFire, fire);
+		}
+		else if (id == static_cast<int>(TELEPORT)) {
+			this->currentPhase->createEntity(TELEPORT, TELEPORT_SPRITE_SCALE, sf::Vector2f(pos_x, pos_y), TELEPORT_SIZE, pathTeleport, teleport);
+		}
+		else if (id == static_cast<int>(SLOW)) {
+			this->currentPhase->getPlatformList()[(int)((int)pos_y / 64)][(int)((int)pos_x / 64)] = this->currentPhase->createEntity(SLOW, 1.f, sf::Vector2f(pos_x, pos_y), sf::Vector2f(64.f, 64.f), pathSlow, slow);
+		}
+	}
+	
+
+	file.close();
+}
+
+void PlayingState::createEnemies()
+{
+	std::ifstream file;
+
+	file.open("saves/savedGame.txt", std::ios::binary | std::ios::in);
+
+	float pos_x;
+	float pos_y;
+	int id;
+
+	while (file >> pos_x >> pos_y >> id) {
+		if (id == static_cast<int>(SKELETON)) {
+			this->currentPhase->createEntity(SKELETON, SKELETON_SPRITE_SCALE, sf::Vector2f(pos_x, pos_y), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/skeleton.png", "SKELETON");
+		}
+		else if (id == static_cast<int>(ARCHER)) {
+			this->currentPhase->createEntity(ARCHER, ARCHER_SPRITE_SCALE, sf::Vector2f(pos_x, pos_y), sf::Vector2f(ARCHER_WIDTH, ARCHER_HEIGHT), "images/archer_running.png", "ARCHER");
+		}
+		else if (id == static_cast<int>(DARKKNIGHT)) {
+			this->currentPhase->createEntity(DARKKNIGHT, 3.f, sf::Vector2f(pos_x, pos_y), sf::Vector2f(SKELETON_WIDTH, SKELETON_HEIGHT), "images/dark_knight_walking.png", "DARK_KNIGHT");
+		}
+	}
+
+	file.close();
+}
+
 void PlayingState::createPlayers()
 {
 	this->player1 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(4.f * 64.f, 15.f * 64.f), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP, 1);
@@ -242,11 +328,32 @@ void PlayingState::createPlayers()
 	this->currentPhase->initCollisionsManager();
 }
 
+void PlayingState::loadPlayers()
+{
+	std::ifstream file;
+
+	file.open("saves/savedGame.txt", std::ios::binary | std::ios::in);
+
+	float pos_x;
+	float pos_y;
+	int id;
+
+	while (file >> pos_x >> pos_y >> id) {
+		if (id == static_cast<int>(PLAYER)) {
+			this->player1 = new Player(this->graphicsManager, this->dt, PLAYER, PLAYER_SPRITE_SCALE, sf::Vector2f(pos_x, pos_y), sf::Vector2f(PLAYER_WIDTH, PLAYER_HEIGHT), "images/player.png", "PLAYER", PLAYER_SPEED, PLAYER_HP, 1);
+			this->currentPhase->setPlayer1(this->player1);
+		}
+	}
+	file.close();
+
+	this->currentPhase->initCollisionsManager();
+}
+
 void PlayingState::updateInput()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 		this->graphicsManager->resetView();
-		this->insertState(new PauseState(this->graphicsManager, this->states, this->dt, &this->exit));
+		this->insertState(new PauseState(this->graphicsManager, this->states, this->dt, &this->exit, this->currentPhase));
 		this->updateStateChange();
 	}
 
